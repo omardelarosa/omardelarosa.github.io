@@ -6,6 +6,7 @@
   "dependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.21.0",
+    "lodash": "^4.17.3",
     "react": "^15.4.1",
     "react-dom": "^15.4.1"
   },

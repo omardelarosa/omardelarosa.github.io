@@ -1,9 +1,31 @@
-const React = require('react');
+import _ from 'lodash';
+import { default as React, Component } from 'react';
+import SVGBackground from '../components/SVGBackground';
 
-class MainContainer extends React.Component {
+class MainContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      elWidth: 0,
+      elHeight: 0
+    }
+  }
+  
+  componentDidMount() {
+    const newState = {
+      elWidth: window.innerWidth,
+      elHeight: window.innerHeight
+    };
+    this.setState(newState);
+  }
+
   render () {
-    return <h1 className='heading'>Main Container</h1>;
+    return (
+      <div id='main-container'>
+        <SVGBackground elWidth={this.state.elWidth} elHeight={this.state.elHeight}/>
+      </div>
+    );
   }
 }
 
-module.exports = MainContainer;
+export default MainContainer;
