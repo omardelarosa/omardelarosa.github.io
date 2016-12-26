@@ -2,10 +2,30 @@ import _ from 'lodash';
 import { default as React, Component } from 'react';
 
 const getRGBColor = (rowNum, colNum) => {
-  return `rgb(${rowNum * 2},${colNum * 2},${255})`;
+  return `rgb(255,${rowNum * 2},${colNum * 1})`;
 };
 
-const shouldRenderBox = () => _.random(0,100) >= 50; 
+const shouldRenderBox = (rowNum, colNum, rows, cols) => {
+
+  const pictureFunction = [
+    // Draw peaks and valleys
+    (rowNum, colNum) => {
+      const colMaxes = _.times(cols, (n) => _.random(Math.floor(rows/4), rows - Math.floor(rows/4)));
+      return rowNum <= colMaxes[colNum];
+    },
+
+    // Leave n% empty squares
+    (rowNum, colNum) => {
+      return _.random(1,100) >= 75;
+    }
+  ];
+
+  return _.sample(pictureFunction)(rowNum, colNum);
+}
+
+const peaksAndValleys = (rowNum, colNum) => {
+  const colMaxes = _.times(cols, (n) => _.random(Math.floor(rows/4), rows - Math.floor(rows/4)));
+}
 
 class SVGBackground extends Component {
   constructor(props) {
@@ -22,8 +42,8 @@ class SVGBackground extends Component {
     const strokeWidth = 1;
     const boxWidth = this.props.boxWidth || 10;
     const boxHeight = this.props.boxHeight || 10;
-    const calcNumRows = (height) => Math.floor(height / ( boxHeight + (2 * strokeWidth) ));
-    const calcNumCols = (width) => Math.floor(width / ( boxWidth + (2 * strokeWidth) ));
+    const calcNumRows = (height) => Math.floor(height / ( boxHeight + (2 * strokeWidth) )) + 1;
+    const calcNumCols = (width) => Math.floor(width / ( boxWidth + (2 * strokeWidth) )) + 3;
 
     const rows = this.props.rows || calcNumRows(elHeight);
     const cols = this.props.cols || calcNumCols(elWidth);
@@ -32,17 +52,21 @@ class SVGBackground extends Component {
     const adjustedWidth = calcAdjustedWidth(cols);
     const adjustedHeight = calcAdjustedHeight(rows);
     const boxes = [];
+    const radiusY = Math.floor(boxHeight / 2);
+    const radiusX = Math.floor(boxWidth / 2);
     _.times(
       rows, 
       (rowNum) => _.times(
         cols,
         (colNum) => {
-          // if (!shouldRenderBox()) return; 
+          if (!shouldRenderBox(rowNum, colNum, rows, cols)) return;
           boxes.push(
              <rect 
               key={ 'box_' + rowNum + '_' + colNum }
               width={ boxWidth} 
               height={ boxHeight }
+              ry={ radiusY }
+              rx={ radiusX }
               x={ calcAdjustedWidth(colNum - 1) }
               y={ calcAdjustedHeight(rowNum - 1) }
               style={{ strokeWidth: strokeWidth, fill: getRGBColor(rowNum, colNum) }}
@@ -54,10 +78,10 @@ class SVGBackground extends Component {
 
     return (
       <svg 
-        className='main-grid'
-        width={ adjustedWidth }
-        height={ adjustedHeight }
-        viewBox={ '0 0 ' + adjustedWidth + ' ' + adjustedHeight }
+        className='svg-grid'
+        width={ elWidth }
+        height={ elHeight }
+        viewBox={ '0 0 ' + elWidth + ' ' + elHeight }
         xmlns='http://www.w3.org/2000/svg'
         >
           { boxes }
