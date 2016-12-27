@@ -10,8 +10,9 @@ const compiler = webpack(config);
 
 const server = new WebpackDevServer(compiler, {
   stats: { colors: true },
+  inline: true,
   hot: true,
-  publicPath: '/dist',
+  publicPath: `http://localhost:${PORT}/dist/`,
 });
 
 server.listen(8085);

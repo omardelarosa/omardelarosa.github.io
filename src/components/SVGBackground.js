@@ -30,37 +30,34 @@ const peaksAndValleys = (rowNum, colNum) => {
 class SVGBackground extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      boxes: []
+    }
   }
 
-  render () {
-    // Don't calculate anything when size is 0
-    if (!this.props.elWidth || !this.props.elHeight) return (<svg className='main-grid'></svg>);
-
-    const elWidth = this.props.elWidth;
-    const elHeight = this.props.elHeight;
-    const strokeWidth = 1;
-    const boxWidth = this.props.boxWidth || 10;
-    const boxHeight = this.props.boxHeight || 10;
+  generateBoxes(elWidth, elHeight) {
+    const strokeWidth = 0;
+    const boxWidth = 10;
+    const boxHeight = 10;
     const calcNumRows = (height) => Math.floor(height / ( boxHeight + (2 * strokeWidth) )) + 1;
     const calcNumCols = (width) => Math.floor(width / ( boxWidth + (2 * strokeWidth) )) + 3;
 
-    const rows = this.props.rows || calcNumRows(elHeight);
-    const cols = this.props.cols || calcNumCols(elWidth);
+    const rows = calcNumRows(elHeight);
+    const cols = calcNumCols(elWidth);
     const calcAdjustedWidth = (cols) => (cols * boxWidth) + (cols * strokeWidth * 2);
     const calcAdjustedHeight = (rows) => (rows * boxHeight) + (rows * strokeWidth * 2);
     const adjustedWidth = calcAdjustedWidth(cols);
     const adjustedHeight = calcAdjustedHeight(rows);
     const boxes = [];
-    const radiusY = Math.floor(boxHeight / 2);
-    const radiusX = Math.floor(boxWidth / 2);
-    _.times(
+    const radiusY = 0;
+    const radiusX = 0;
+    return _.times(
       rows, 
       (rowNum) => _.times(
         cols,
         (colNum) => {
-          if (!shouldRenderBox(rowNum, colNum, rows, cols)) return;
-          boxes.push(
+          if (!shouldRenderBox(rowNum, colNum, rows, cols)) return null;
+          return (
              <rect 
               key={ 'box_' + rowNum + '_' + colNum }
               width={ boxWidth} 
@@ -74,8 +71,12 @@ class SVGBackground extends Component {
            )
         }
       )
-    );
+    ).filter(b => !!b);
+  }
 
+  render () {
+    const { elWidth, elHeight } = this.props;
+    const boxes = this.generateBoxes(elWidth, elHeight);
     return (
       <svg 
         className='svg-grid'

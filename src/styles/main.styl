@@ -1,5 +1,54 @@
 @import '~normalize.css'
+
+$base-font-stack = 'Press Start 2P', sans-serif;
+$heading-font-size = 2.0rem;
+
 body
   background-color black
+#root
+  width 100%
+  height 100%
+
+.main-container
+  position absolute
+  top 0
+  left 0
+
 .svg-grid
+  position absolute
+  top 0
+  left 0
   opacity 0.3
+  // filter blur(2px)
+  
+.main-overlay
+  font-family $base-font-stack
+  position absolute
+  top 0
+  left 0
+  color #fff
+  width 100vw
+
+  .pusher
+    height 30vh
+
+  .title-container
+    font-family 'Press Start 2P', sans-serif
+    font-size $heading-font-size
+    font-style normal
+    .heading
+      margin 0 auto 0 auto
+      text-transform lowercase
+      text-align center
+      width 50vw
+
+  .links-container
+    .links
+      margin 0 auto 0 auto
+      width 50vw
+      list-style-type none
+      display flex
+      .link
+        flex 1 4
+        text-align center
+

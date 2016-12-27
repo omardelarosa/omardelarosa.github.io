@@ -1,28 +1,41 @@
 import _ from 'lodash';
 import { default as React, Component } from 'react';
 import SVGBackground from '../components/SVGBackground';
+import MainOverlay from '../components/MainOverlay';
+import store from '../state/store';
 
 class MainContainer extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
       elWidth: 0,
-      elHeight: 0
+      elHeight: 0,
+      resizeCallback: () => this.updateViewportSize()
     }
   }
   
   componentDidMount() {
-    const newState = {
+    this.updateViewportSize();
+    window.addEventListener('resize', this.state.resizeCallback);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.state.resizeCallback);
+  }
+
+  updateViewportSize() {
+    this.setState({
       elWidth: window.innerWidth,
       elHeight: window.innerHeight
-    };
-    this.setState(newState);
+    });
   }
 
   render () {
     return (
-      <div id='main-container'>
+      <div className='main-container'>
         <SVGBackground elWidth={this.state.elWidth} elHeight={this.state.elHeight}/>
+        <MainOverlay siteTitle={store.siteTitle} />
       </div>
     );
   }
