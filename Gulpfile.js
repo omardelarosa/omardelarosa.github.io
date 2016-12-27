@@ -3,8 +3,8 @@ const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const nodemon = require('gulp-nodemon');
 
-const FILES_FOR_DEV_SERVER_TO_WATCH = [ 'build/**/*.js', 'package.json' ];
-const FILES_TO_LINT = [ './**/*.js', '!dist/', '!node_modules/'];
+const FILES_FOR_DEV_SERVER_TO_WATCH = ['build/**/*.js', 'package.json', '!assets/'];
+const FILES_TO_LINT = ['./**/*.js', '!dist/', '!node_modules/', '!assets/'];
 
 gulp.task('lint', () => {
   return gulp.src(FILES_TO_LINT)

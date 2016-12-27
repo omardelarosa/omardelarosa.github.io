@@ -2,6 +2,9 @@
 
 $base-font-stack = 'Press Start 2P', sans-serif;
 $heading-font-size = 2.0rem;
+$base-font-color = #ffffff;
+$base-font-color-inverse = #000000;
+$subheading-font-size = 0.85rem;
 
 body
   background-color black
@@ -20,7 +23,7 @@ body
   left 0
   opacity 0.3
   // filter blur(2px)
-  
+
 .main-overlay
   font-family $base-font-stack
   position absolute
@@ -42,15 +45,34 @@ body
       margin 0 auto 0 auto
       text-transform lowercase
       text-align center
-      width 50vw
+      width 70vw
 
   .links-container
     .links
+      padding 0
+      margin 0
+      font-size $subheading-font-size
       margin 0 auto 0 auto
-      width 50vw
       list-style-type none
       display flex
+      width 70vw
+      flex-direction row
       .link
-        flex 1 4
-        text-align center
-
+        flex 4 4
+        width 120px
+        text-align right
+        .nav-item
+          &--anchor
+            text-decoration none
+            color $base-font-color
+            &:visited
+              color $base-font-color
+            &:hover
+              &::before
+                content '> '
+              font-weight bold
+              text-decoration underline
+          &--finger-pointer
+            transform rotate(0.25turn)
+            height 2.0rem
+            width 2.0rem

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NavBar from '../containers/NavBar';
 
 class MainOverlay extends Component {
   render() {
@@ -10,13 +11,7 @@ class MainOverlay extends Component {
           <div className='pusher'></div>
           <h1 className='heading'>{ siteTitle }</h1>
         </div>
-        <div className='links-container'>
-          <ul className='links'>
-            <li className='link'>LINK 1</li>
-            <li className='link'>LINK 2</li>
-            <li className='link'>LINK 3</li>
-          </ul>
-        </div>
+        <NavBar />
       </div>
     );
   }

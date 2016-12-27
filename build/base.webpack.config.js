@@ -18,7 +18,7 @@ module.exports = {
       { test: /\.styl$/, loader: 'style!css!stylus' },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file?name=dist/fonts/[name].[ext]'
+        loader: 'file?name=dist/static/[name].[ext]'
       }
     ]
   },
