@@ -1,10 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const gulp = require('gulp');
 const eslint = require('gulp-eslint');
 const nodemon = require('gulp-nodemon');
 
 const FILES_FOR_DEV_SERVER_TO_WATCH = [ 'build/**/*.js', 'package.json' ];
-const FILES_TO_LINT = [ '**/*.js', '!dist/', '!node_modules/'];
-const FILES_TO_WATCH = [ ...FILES_TO_LINT ];
+const FILES_TO_LINT = [ './**/*.js', '!dist/', '!node_modules/'];
 
 gulp.task('lint', () => {
   return gulp.src(FILES_TO_LINT)
@@ -13,11 +13,13 @@ gulp.task('lint', () => {
     .pipe(eslint.failAfterError());
 });
 
-gulp.task('lint-watch', () => {
+gulp.task('lint-no-fail', () => {
   return gulp.src(FILES_TO_LINT)
     .pipe(eslint())
-    .pipe(eslint.format())
+    .pipe(eslint.format());
 });
+
+gulp.task('lint-watch', () => gulp.watch(FILES_TO_LINT, gulp.series('lint-no-fail')));
 
 gulp.task('dev-server', () => {
   return nodemon({

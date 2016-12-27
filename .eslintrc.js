@@ -9,6 +9,7 @@ module.exports = {
   'env': {
     'shared-node-browser': true,
     'mocha': true,
+    'browser': true
   },
   'root': true,
   extends: 'airbnb/base',
@@ -39,7 +40,7 @@ module.exports = {
     'eqeqeq': [2, 'allow-null'],
     'new-cap': 0,
     'camelcase': 0,
-
+    'class-methods-use-this': 0,
     // Nice to haves, raise warnings only
     'object-curly-spacing': 0,
     'key-spacing': 0,

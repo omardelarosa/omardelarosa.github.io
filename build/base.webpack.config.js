@@ -8,7 +8,7 @@ module.exports = {
     path: path.join(__dirname, '../dist'),
     filename: '[name].js'
   },
-  devServer: { 
+  devServer: {
     inline: true,
     contentBase: './'
   },
@@ -23,7 +23,7 @@ module.exports = {
     ]
   },
   externals: {
-    "React": "react"
+    'React': 'react'
   },
   plugins: []
-}
+};

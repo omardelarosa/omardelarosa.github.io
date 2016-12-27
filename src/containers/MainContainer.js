@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { default as React, Component } from 'react';
+import React, { Component } from 'react';
 import SVGBackground from '../components/SVGBackground';
 import MainOverlay from '../components/MainOverlay';
 import store from '../state/store';
@@ -12,9 +12,9 @@ class MainContainer extends Component {
       elWidth: 0,
       elHeight: 0,
       resizeCallback: () => this.updateViewportSize()
-    }
+    };
   }
-  
+
   componentDidMount() {
     this.updateViewportSize();
     window.addEventListener('resize', this.state.resizeCallback);
