@@ -1,11 +1,11 @@
 // TODO: replace this with redux
-import _ from 'lodash';
+import _get from 'lodash/get';
 import constants from '../../config/constants';
 
 export default {
   // Safe getter
   get(path, defaultValue) {
-    return _.get(this, path, defaultValue);
+    return _get(this, path, defaultValue);
   },
   siteTitle: constants.SITE_HEADING_TEXT,
   subTitle: 'Engineer / Musician / Etc',

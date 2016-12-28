@@ -45,7 +45,7 @@
     "lint": "gulp lint",
     "clean": "rm -rf dist/*",
     "dev": "gulp dev",
-    "build": "npm run clean && webpack --config build/prod.webpack.config.js",
+    "build": "npm run clean && gulp build",
     "test": "gulp lint"
   },
   "author": "",

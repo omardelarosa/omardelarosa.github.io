@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import times from 'lodash/times';
+import random from 'lodash/random';
+import sample from 'lodash/sample';
 import React, { Component } from 'react';
 
 const getRGBColor = (rowNum, colNum, isDark = true) => {
@@ -11,17 +13,17 @@ const shouldRenderBox = (rowNum, colNum, rows, cols) => {
   const pictureFunction = [
     // Draw peaks and valleys
     (rowNum, colNum) => {
-      const colMaxes = _.times(cols, (n) => _.random(Math.floor(rows / 4), rows - Math.floor(rows / 4)));
+      const colMaxes = times(cols, (n) => random(Math.floor(rows / 4), rows - Math.floor(rows / 4)));
       return rowNum <= colMaxes[colNum];
     },
 
     // Leave n% empty squares
     (rowNum, colNum) => {
-      return _.random(1, 100) >= 75;
+      return random(1, 100) >= 75;
     }
   ];
 
-  return _.sample(pictureFunction)(rowNum, colNum);
+  return sample(pictureFunction)(rowNum, colNum);
 };
 
 class SVGBackground extends Component {
@@ -48,9 +50,9 @@ class SVGBackground extends Component {
     const boxes = [];
     const radiusY = 0;
     const radiusX = 0;
-    return _.times(
+    return times(
       rows,
-      (rowNum) => _.times(
+      (rowNum) => times(
         cols,
         (colNum) => {
           if (!shouldRenderBox(rowNum, colNum, rows, cols)) return null;

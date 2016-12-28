@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import SVGBackground from '../components/SVGBackground';
 import MainOverlay from '../components/MainOverlay';

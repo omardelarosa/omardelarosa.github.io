@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import store from '../state/store';
 import Links from '../components/Links';
