@@ -1,0 +1,14 @@
+extends _layout.pug
+
+block title
+  title #{ htmlWebpackPlugin.options.post.meta.title }
+
+block content
+  if htmlWebpackPlugin.options.post
+    div(class='post-container')
+      h1(class='post--title') #{ htmlWebpackPlugin.options.post.meta.title }
+      div(class='post--author') by #{ htmlWebpackPlugin.options.post.meta.author }
+      div(class='post--published') #{ htmlWebpackPlugin.options.post.meta.timestamp }
+      div(class='post--body') !{ htmlWebpackPlugin.options.post.html }
+  else
+    h1 404!

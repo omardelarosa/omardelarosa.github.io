@@ -1,3 +1,4 @@
+// Define Static Page Routes
 
 module.exports = [
   {

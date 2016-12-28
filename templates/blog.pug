@@ -1,0 +1,12 @@
+extends _layout.pug
+
+block title
+  title Blog
+
+block content
+  h1(class='blog heading') Blog
+  div(class='blog blog-links-container')
+    ul(class='blog blog-links-list')
+      each post in htmlWebpackPlugin.options.posts
+        li
+          a(href='/'+post.meta.permalink) #{post.meta.title}

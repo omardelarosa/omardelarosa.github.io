@@ -29,7 +29,7 @@ export default {
       },
       {
         text: 'Blog',
-        href: '/_pages/about.html',
+        href: '/_blog/',
         icon: 'bio',
       },
       {

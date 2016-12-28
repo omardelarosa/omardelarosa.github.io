@@ -3,9 +3,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MarkdownInjectPlugin = require('../utils/markdown-inject-plugin');
 const constants = require('../config/constants');
 
 const staticPages = require('../config/static-pages');
+const blogPosts = require('./blog-post-builder');
 
 module.exports = {
   entry: {
@@ -31,6 +33,7 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin('[name].css'),
     // Generate all static pages based on config/routes.js
-    ...staticPages.map(p => new HtmlWebpackPlugin(p))
+    ...staticPages.map(p => new HtmlWebpackPlugin(p)),
+    ...blogPosts.map(p => new HtmlWebpackPlugin(p)),
   ]
 };
