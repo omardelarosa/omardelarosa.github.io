@@ -29,14 +29,5 @@ module.exports = {
   externals: {
     'React': 'react'
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: constants.SITE_TITLE,
-      filename: path.join(__dirname, '..', 'index.html'),
-      template: 'pug!templates/main.pug',
-      inject: true,
-      hash: false,
-      cache: false
-    })
-  ]
+  plugins: []
 };
