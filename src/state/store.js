@@ -1,12 +1,13 @@
 // TODO: replace this with redux
 import _ from 'lodash';
+import constants from '../../config/constants';
 
 export default {
   // Safe getter
   get(path, defaultValue) {
     return _.get(this, path, defaultValue);
   },
-  siteTitle: 'Omar Delarosa',
+  siteTitle: constants.SITE_HEADING_TEXT,
   subTitle: 'Engineer / Musician / Etc',
   description: 'The personal website of Omar Delarosa',
   navBar: {

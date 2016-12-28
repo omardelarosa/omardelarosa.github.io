@@ -1,8 +1,10 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 
-const getRGBColor = (rowNum, colNum) => {
-  return `rgb(255,${rowNum * 2},${colNum * 1})`;
+const getRGBColor = (rowNum, colNum, isDark = true) => {
+  return isDark
+    ? `rgb(255, ${rowNum * 2},${colNum * 1})`
+    : `rgb(${rowNum * 2},${colNum * 1},255`;
 };
 
 const shouldRenderBox = (rowNum, colNum, rows, cols) => {
@@ -31,7 +33,7 @@ class SVGBackground extends Component {
   }
 
   generateBoxes(elWidth, elHeight) {
-    const strokeWidth = 0;
+    const strokeWidth = 1;
     const boxWidth = 10;
     const boxHeight = 10;
     const calcNumRows = (height) => Math.floor(height / (boxHeight + (2 * strokeWidth))) + 1;

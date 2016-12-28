@@ -1,4 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
+
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const constants = require('../config/constants');
 
 module.exports = {
   entry: {
@@ -25,5 +29,14 @@ module.exports = {
   externals: {
     'React': 'react'
   },
-  plugins: []
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: constants.SITE_TITLE,
+      filename: path.join(__dirname, '..', 'index.html'),
+      template: 'pug!templates/main.pug',
+      inject: true,
+      hash: false,
+      cache: false
+    })
+  ]
 };
