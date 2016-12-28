@@ -12,31 +12,25 @@ body
   width 100%
   height 100%
 
-.main-container
-  position absolute
-  top 0
-  left 0
+// .main-container
+//   position absolute
+//   top 0
+//   left 0
 
 .svg-grid
+  z-index -1
   position absolute
   top 0
   left 0
   opacity 0.3
   // filter blur(2px)
 
-.main-overlay
+.home-content
   font-family $base-font-stack
-  position absolute
-  top 0
-  left 0
   color $base-font-color
   width 100vw
   height 100vh
   overflow scroll
-
-  .pusher
-    height 20vh
-
   .title-container
     font-family 'Press Start 2P', sans-serif
     font-size $heading-font-size
@@ -46,33 +40,48 @@ body
       text-transform lowercase
       text-align center
       width 70vw
-
-  .links-container
-    .links
-      padding 0
-      margin 0
+    .subheading
       font-size $subheading-font-size
       margin 0 auto 0 auto
-      list-style-type none
-      display flex
+      text-transform lowercase
+      text-align center
       width 70vw
-      flex-direction row
-      .link
-        flex 4 4
-        width 120px
-        text-align right
-        .nav-item
-          &--anchor
-            text-decoration none
+.pusher
+  height 30vh
+
+.header-container
+  width 100%
+  height 30vh
+
+.links-container
+  padding-top 20px
+  font-family $base-font-stack
+  color $base-font-color
+  .links
+    padding 0
+    margin 0
+    font-size $subheading-font-size
+    margin 0 auto 0 auto
+    list-style-type none
+    display flex
+    width 70vw
+    flex-direction row
+    .link
+      flex 4 4
+      width 120px
+      text-align right
+      .nav-item
+        &--anchor
+          text-decoration none
+          color $base-font-color
+          &:visited
             color $base-font-color
-            &:visited
-              color $base-font-color
-            &:hover
-              &::before
-                content '> '
-              font-weight bold
-              text-decoration underline
-          &--finger-pointer
-            transform rotate(0.25turn)
-            height 2.0rem
-            width 2.0rem
+          &:hover
+            &::before
+              content '> '
+            font-weight bold
+            text-decoration underline
+        &--finger-pointer
+          transform rotate(0.25turn)
+          height 2.0rem
+          width 2.0rem

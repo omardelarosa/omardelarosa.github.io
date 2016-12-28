@@ -2,7 +2,10 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const constants = require('../config/constants');
+
+const staticPages = require('../config/static-pages');
 
 module.exports = {
   entry: {
@@ -15,11 +18,19 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel' },
-      { test: /\.styl$/, loader: 'style!css!stylus' }
+      { test: /\.styl$/,
+        loader: ExtractTextPlugin.extract(
+          'style-loader', 'css-loader!stylus-loader'
+        )
+      }
     ]
   },
   externals: {
     'React': 'react'
   },
-  plugins: []
+  plugins: [
+    new ExtractTextPlugin('[name].css'),
+    // Generate all static pages based on config/routes.js
+    ...staticPages.map(p => new HtmlWebpackPlugin(p))
+  ]
 };

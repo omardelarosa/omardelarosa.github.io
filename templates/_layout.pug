@@ -1,7 +1,8 @@
 doctype html
 html
   head
-    title #{ htmlWebpackPlugin.options.title }
+    block title
+      title omardelarosa.com
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible' content='IE=edge, chrome=1')
     meta(name='description' content='The personal website of Omar Delaorsa')
@@ -9,5 +10,9 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet")
   body(role='document')
-    h1 hello
-    div(role='main' id='root')
+    div(id='header-container')
+    div(id='main-container')
+      div(id='background-container')
+      div(id='content-container')
+        block content
+    div(id='footer')

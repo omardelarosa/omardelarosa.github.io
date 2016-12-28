@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import SVGBackground from '../components/SVGBackground';
-import MainOverlay from '../components/MainOverlay';
-import store from '../state/store';
 
-class MainContainer extends Component {
+class BackgroundContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -30,14 +28,11 @@ class MainContainer extends Component {
     });
   }
 
-  render () {
+  render() {
     return (
-      <div className='main-container'>
-        <SVGBackground elWidth={this.state.elWidth} elHeight={this.state.elHeight}/>
-        <MainOverlay siteTitle={store.siteTitle} />
-      </div>
+      <SVGBackground elWidth={this.state.elWidth} elHeight={this.state.elHeight}/>
     );
   }
 }
 
-export default MainContainer;
+export default BackgroundContainer;

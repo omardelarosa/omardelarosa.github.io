@@ -19,7 +19,7 @@ class Links extends Component {
           <a
             className='nav-item--anchor'
             href={link.href}
-            target={ link.noNewWindow ? undefined : '_blank' }
+            target={ link.newWindow ? '_blank' : undefined }
             >{ link.text }</a>
       </li>
     ));

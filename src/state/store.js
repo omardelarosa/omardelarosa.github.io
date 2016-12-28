@@ -13,40 +13,30 @@ export default {
   navBar: {
     links: [
       {
+        text: 'Home',
+        href: '/',
+        icon: 'home',
+      },
+      {
         text: 'About',
-        href: '#bio',
+        href: '/_pages/about.html',
         icon: 'bio',
-        noNewWindow: true
       },
       {
-        text: 'LinkedIn',
-        href: 'https://www.linkedin.com/in/omardelarosa',
-        icon: 'linkedin',
-      },
-      {
-        text: 'Github',
-        href: 'http://github.com/omardelarosa',
-        icon: 'github',
-      },
-      {
-        text: 'Instagram',
-        href: 'http://instagram.com/omdel',
-        icon: 'instagram',
+        text: 'Links',
+        href: '/_pages/about.html',
+        icon: 'bio',
       },
       {
         text: 'Blog',
-        href: 'http://blog.omardelarosa.com',
-        icon: 'blogger',
+        href: '/_pages/about.html',
+        icon: 'bio',
       },
       {
-        text: 'Music',
-        href: 'http://littleinsects.com',
-        icon: 'music'
+        text: 'Code',
+        href: '/_pages/about.html',
+        icon: 'bio',
       }
     ]
   },
-  bio: {
-    en: 'Bio coming soon...',
-    es: 'Biene pronto...'
-  }
 };
