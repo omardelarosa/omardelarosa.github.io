@@ -50,7 +50,7 @@
     "yargs": "^6.5.0"
   },
   "scripts": {
-    "start": "npm run build && npm run server",
+    "start": "npm run server",
     "lint": "gulp lint",
     "clean": "rm -rf dist/* posts/* pages/*",
     "dev": "gulp dev",

@@ -3,7 +3,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const MarkdownInjectPlugin = require('../utils/markdown-inject-plugin');
 const constants = require('../config/constants');
 
 const staticPages = require('../config/static-pages');

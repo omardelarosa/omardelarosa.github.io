@@ -4,6 +4,7 @@ const _ = require('lodash');
 const slugify = require('slug');
 const fs = require('fs');
 const clc = require('cli-color');
+const markdown = require('./markdown');
 
 const POSTS_PATH = '_posts/';
 const FULL_POSTS_PATH = path.join(__dirname, '..', POSTS_PATH);
@@ -28,6 +29,15 @@ class Posts {
       .map(m => m[1]);
   }
 
+  get absoluteFilePaths () {
+    return this.fileNames.map((f) => path.join(__dirname, '..', f));
+  }
+
+  loadAllPosts() {
+    return this.absoluteFilePaths
+      .map(this.loadPost.bind(this));
+  }
+
   generateSlug(slug, title) {
     // If no slug is provided, slugify the title
     if (!slug) {
@@ -40,6 +50,12 @@ class Posts {
     }
 
     return slug;
+  }
+
+  loadPost(postMarkdownFilepath) {
+    const rawMarkdown = fs.readFileSync(postMarkdownFilepath);
+    const post = this.normalizeMarkdownImport(markdown.parseMarkdown(rawMarkdown));
+    return post;
   }
 
   createPost(opts = {}) {
@@ -75,6 +91,10 @@ class Posts {
     };
   }
 
+  generatePermalinkOfPost(post) {
+    return `posts/${post.meta.slug}.html`;
+  }
+
   createPostAndWriteToDisk(opts = {}) {
     const post = this.createPost(opts);
     fs.writeFileSync(post.file.path, post.file.string);
@@ -82,6 +102,29 @@ class Posts {
     console.log(clc.green.bold('Successfully created new post file: '));
     console.log(clc.cyan(post.file.path));
     console.log(clc.green(post.file.string));
+  }
+
+  normalizeMarkdownImport({ meta, html, markdown }) {
+    const post = {
+      meta: {
+        title: 'Untitled Post',
+        author: 'Anonymous',
+        timestamp: Date.now(),
+        ...meta,
+      },
+      html,
+      markdown
+    };
+
+    // Generate slug if there isn't one
+    if (!post.meta.slug) {
+      post.meta.slug = this.generateSlug(null, post.meta.title);
+    }
+
+    // Attaches Permalink to Post data
+    post.meta.permalink = this.generatePermalinkOfPost(post);
+
+    return post;
   }
 
   static postsPath() {

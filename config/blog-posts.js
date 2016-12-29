@@ -1,11 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 const constants = require('../config/constants');
-const MarkdownInjectPlugin = require('../utils/markdown-inject-plugin');
 const _ = require('lodash');
-const glob = require('glob-fs')({ gitignore: true });
-
-const files = glob.readdirSync('./_posts/**/*.md');
+const Posts = require('../utils/posts');
+const postUtils = new Posts();
 
 const baseConfig = {
   inject: true,
@@ -21,7 +19,7 @@ const buildConfigForPost = ({ meta }) => ({
   template: 'pug!templates/_post.pug',
 });
 
-const posts = files.map((file) => MarkdownInjectPlugin.loadMDContent(file));
+const posts = postUtils.loadAllPosts();
 
 const postConfigs = posts.map(
   (post) => ({
