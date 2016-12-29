@@ -19,22 +19,22 @@ export default {
       },
       {
         text: 'About',
-        href: '/_pages/about.html',
+        href: '/pages/about.html',
         icon: 'bio',
       },
       {
         text: 'Links',
-        href: '/_pages/about.html',
+        href: '/pages/about.html',
         icon: 'bio',
       },
       {
-        text: 'Blog',
-        href: '/_blog/',
+        text: 'Posts',
+        href: '/posts/',
         icon: 'bio',
       },
       {
         text: 'Code',
-        href: '/_pages/about.html',
+        href: '/pages/about.html',
         icon: 'bio',
       }
     ]

@@ -112,12 +112,11 @@ pre code {
 }
 .blog {
   margin: 0 auto 0 auto;
-  text-align: center;
+  text-align: left;
   width: 50vw;
 }
 .blog.heading {
-  font-family: 'Roboto', sans-serif;
-  font-size: $heading-font-size;
+  font-family: 'Press Start 2P', sans-serif;
 }
 .blog.blog-links-container {
   font-family: 'Roboto', sans-serif;

@@ -21,6 +21,7 @@
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-2": "^6.18.0",
+    "cli-color": "^1.1.0",
     "css-loader": "^0.26.1",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
@@ -45,16 +46,18 @@
     "stylus-loader": "^2.4.0",
     "webpack": "~1.14.0",
     "webpack-dev-middleware": "^1.9.0",
-    "webpack-dev-server": "^1.16.2"
+    "webpack-dev-server": "^1.16.2",
+    "yargs": "^6.5.0"
   },
   "scripts": {
     "start": "npm run build && npm run server",
     "lint": "gulp lint",
-    "clean": "rm -rf dist/* _blog/* _pages/*",
+    "clean": "rm -rf dist/* posts/* pages/*",
     "dev": "gulp dev",
     "server": "gulp dev-server",
     "build": "npm run clean && gulp build",
-    "test": "gulp lint"
+    "test": "gulp lint",
+    "create-post": "node tasks/create-post.js"
   },
   "author": "",
   "license": "ISC"

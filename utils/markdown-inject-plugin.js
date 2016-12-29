@@ -14,7 +14,7 @@ marked.setOptions({
 const getAbsoluteMdPath = (mdPath) => path.join(__dirname, '..', mdPath);
 // TODO: figure out slug uniquness
 const generateSlug = (post) => slugify(`${post.meta.timestamp}-${post.meta.title}`);
-const generatePermalink = (post) => `_blog/${post.meta.timestamp}-${post.meta.slug}.html`;
+const generatePermalink = (post) => `posts/${post.meta.timestamp}-${post.meta.slug}.html`;
 
 const normalizeMDContent = ({ meta, html, markdown }) => {
   const post = {

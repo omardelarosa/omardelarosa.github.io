@@ -5,7 +5,7 @@ const MarkdownInjectPlugin = require('../utils/markdown-inject-plugin');
 const _ = require('lodash');
 const glob = require('glob-fs')({ gitignore: true });
 
-const files = glob.readdirSync('./src/markdown/**/*.md');
+const files = glob.readdirSync('./_posts/**/*.md');
 
 const baseConfig = {
   inject: true,
@@ -35,7 +35,7 @@ const recentPosts = _.take(posts, 10);
 const blogIndexConfig = {
   ...baseConfig,
   title: 'Blog',
-  filename: path.join(__dirname, '..', '_blog/index.html'),
+  filename: path.join(__dirname, '..', 'posts/index.html'),
   template: 'pug!templates/blog.pug',
   posts: recentPosts
 };

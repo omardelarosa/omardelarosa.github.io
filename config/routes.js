@@ -7,7 +7,7 @@ module.exports = [
     template: 'index.pug'
   },
   {
-    path: '/_pages/about.html',
+    path: '/pages/about.html',
     title: 'About',
     template: 'about.pug'
   }
