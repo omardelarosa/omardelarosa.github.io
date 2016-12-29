@@ -8,7 +8,8 @@ const baseConfig = {
   template: 'pug!templates/main.pug',
   inject: true,
   hash: false,
-  cache: true
+  cache: true,
+  chunks: [ 'app' ],
 };
 
 module.exports = [

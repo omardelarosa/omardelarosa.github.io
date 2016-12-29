@@ -512,57 +512,6 @@ body {
   width: 100%;
   height: 30vh;
 }
-.blog {
-  margin: 0 auto 0 auto;
-  text-align: center;
-  width: 50vw;
-}
-.blog.heading {
-  font-family: 'Press Start 2P', sans-serif;
-  font-size: 2rem;
-}
-.blog.blog-links-container {
-  font-family: 'Press Start 2P', sans-serif;
-  font-size: 0.85rem;
-}
-.blog ul {
-  list-style-type: none;
-  text-align: left;
-}
-.blog a {
-  text-decoration: none;
-  color: #fff;
-}
-.blog a:visited {
-  color: #fff;
-}
-.blog a:hover {
-  font-weight: bold;
-  text-decoration: underline;
-}
-.blog a:hover::before {
-  content: '> ';
-}
-.post-container {
-  margin: 0 auto 0 auto;
-  text-align: left;
-  width: 50vw;
-}
-.post-container .post--title {
-  font-family: 'Press Start 2P', sans-serif;
-  font-size: 2rem;
-}
-.post-container .post--author {
-  font-family: 'Press Start 2P', sans-serif;
-  font-size: 0.85rem;
-}
-.post-container .post--published {
-  font-family: 'Press Start 2P', sans-serif;
-  font-size: 0.5em;
-}
-.post-container .post--body {
-  font-family: 'Press Start 2P', sans-serif;
-}
 .links-container {
   text-transform: lowercase;
   padding-top: 20px;

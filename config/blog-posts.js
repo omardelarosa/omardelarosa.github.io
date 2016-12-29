@@ -10,7 +10,8 @@ const files = glob.readdirSync('./src/markdown/**/*.md');
 const baseConfig = {
   inject: true,
   hash: false,
-  cache: false // TODO: figure out how to cache these
+  cache: false, // TODO: figure out how to cache these
+  chunks: [ 'app', 'blog' ],
 };
 
 const buildConfigForPost = ({ meta }) => ({

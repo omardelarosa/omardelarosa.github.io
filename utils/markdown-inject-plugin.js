@@ -4,6 +4,13 @@ const marked = require('meta-marked');
 const fs = require('fs');
 const slugify = require('slug');
 
+// Set markdown options
+marked.setOptions({
+  highlight(code) {
+    return require('highlight.js').highlightAuto(code).value;
+  }
+});
+
 const getAbsoluteMdPath = (mdPath) => path.join(__dirname, '..', mdPath);
 // TODO: figure out slug uniquness
 const generateSlug = (post) => slugify(`${post.meta.timestamp}-${post.meta.title}`);

@@ -7,11 +7,12 @@ const MarkdownInjectPlugin = require('../utils/markdown-inject-plugin');
 const constants = require('../config/constants');
 
 const staticPages = require('../config/static-pages');
-const blogPosts = require('./blog-post-builder');
+const blogPosts = require('../config/blog-posts');
 
 module.exports = {
   entry: {
     app: [ './src/main.js' ],
+    blog: [ './src/blog.js' ]
   },
   output: {
     path: path.join(__dirname, '../dist'),
@@ -19,8 +20,13 @@ module.exports = {
   },
   module: {
     loaders: [
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+      },
       { test: /\.js$/, loader: 'babel' },
-      { test: /\.styl$/,
+      {
+        test: /\.styl$/,
         loader: ExtractTextPlugin.extract(
           'style-loader', 'css-loader!stylus-loader'
         )
