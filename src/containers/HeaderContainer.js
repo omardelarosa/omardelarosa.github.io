@@ -15,7 +15,6 @@ class HeadingContainer extends Component {
     const { state: { selectedLinkIndex }} = this;
     const links = store.get('navBar.links', []);
     const siteTitle = store.get('siteTitle', '');
-    console.log('LINKS', links);
     return <Links
       siteTitle={ siteTitle }
       items={ links }

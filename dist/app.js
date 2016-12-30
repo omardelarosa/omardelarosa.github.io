@@ -26045,7 +26045,6 @@
 	      var iconName = this.props.iconName;
 
 	      var iconUrl = this.getIconURL(iconName);
-	      console.log('PROPS', iconName, iconUrl);
 	      fetch(iconUrl).then(function (res) {
 	        if (res.status >= 400) {
 	          throw new Error('Unable to load icon ' + iconUrl);
@@ -26461,7 +26460,6 @@
 
 	      var links = _store2.default.get('navBar.links', []);
 	      var siteTitle = _store2.default.get('siteTitle', '');
-	      console.log('LINKS', links);
 	      return _react2.default.createElement(_Links2.default, {
 	        siteTitle: siteTitle,
 	        items: links,

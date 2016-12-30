@@ -18,7 +18,6 @@ class IconSVG extends Component {
   componentWillMount() {
     const { props: { iconName }} = this;
     const iconUrl = this.getIconURL(iconName);
-    console.log('PROPS', iconName, iconUrl);
     fetch(iconUrl)
       .then((res) => {
         if (res.status >= 400) {

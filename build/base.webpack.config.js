@@ -3,10 +3,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const constants = require('../config/constants');
-
-const staticPages = require('../config/static-pages');
-const blogPosts = require('../config/blog-posts');
 const rupture = require('rupture');
 
 module.exports = {
@@ -45,9 +41,6 @@ module.exports = {
     'React': 'react'
   },
   plugins: [
-    new ExtractTextPlugin('[name].css'),
-    // Generate all static pages based on config/routes.js
-    ...staticPages.map(p => new HtmlWebpackPlugin(p)),
-    ...blogPosts.map(p => new HtmlWebpackPlugin(p)),
+    new ExtractTextPlugin('[name].css')
   ]
 };
