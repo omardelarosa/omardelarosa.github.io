@@ -30,5 +30,27 @@ module.exports = {
       href: '/pages/contact.html',
       icon: 'contact.svg',
     }
+  ],
+  HOMEPAGE_SOCIALS: [
+    {
+      text: 'LinkedIn',
+      href: 'https://www.linkedin.com/omardelarosa',
+      icon: 'linkedin-logo.svg'
+    },
+    {
+      text: 'Github',
+      href: 'https://github.com/omardelarosa',
+      icon: 'github-logo.svg'
+    },
+    {
+      text: 'Instagram',
+      href: 'http://instagram.com/omdel',
+      icon: 'ig-logo.svg'
+    },
+    {
+      text: 'Tumblr',
+      href: 'http://omardelarosa.tumblr.com',
+      icon: 'tumblr-logo.svg'
+    }
   ]
 };

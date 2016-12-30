@@ -5,7 +5,7 @@ const routes = require('./routes');
 const baseConfig = {
   title: constants.SITE_TITLE,
   filename: path.join(__dirname, '..', 'index.html'),
-  template: 'pug!templates/main.pug',
+  template: 'pug?pretty!templates/main.pug',
   inject: true,
   hash: false,
   cache: true,
@@ -18,7 +18,7 @@ module.exports = [
       ...baseConfig,
       title: `${route.title.toLowerCase()} // omardelarosa.com`,
       filename: path.join(__dirname, '..', route.path),
-      template: `pug!templates/${route.template}`
+      template: `pug?pretty!templates/${route.template}`
     })
   )
 ];

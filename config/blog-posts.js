@@ -16,7 +16,7 @@ const buildConfigForPost = ({ meta }) => ({
   ...baseConfig,
   title: `${meta.title}`,
   filename: path.join(__dirname, '..', meta.permalink),
-  template: 'pug!templates/_post.pug',
+  template: 'pug?pretty!templates/_post.pug',
 });
 
 const posts = postUtils.loadAllPosts();
@@ -34,7 +34,7 @@ const blogIndexConfig = {
   ...baseConfig,
   title: 'Blog',
   filename: path.join(__dirname, '..', 'posts/index.html'),
-  template: 'pug!templates/blog.pug',
+  template: 'pug?pretty!templates/blog.pug',
   posts: recentPosts
 };
 

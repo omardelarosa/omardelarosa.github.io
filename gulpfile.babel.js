@@ -83,7 +83,7 @@ gulp.task('webpack-dev', () => {
 
 gulp.task('build', gulp.series('lint', 'webpack-prod', 'generate-posts-index'));
 
-gulp.task('webpack-dev-watch', () => gulp.watch(FILES_FOR_WEBPACK_TO_WATCH, gulp.series('webpack-dev', 'generate-posts-index', 'broadcast-reload')));
+gulp.task('webpack-dev-watch', () => gulp.watch(FILES_FOR_WEBPACK_TO_WATCH, gulp.series('webpack-dev', 'broadcast-reload')));
 
 gulp.task('dev-server', () => {
   return nodemon({

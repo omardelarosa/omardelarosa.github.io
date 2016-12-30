@@ -74,12 +74,37 @@ body
   &__container
     width 100%
     height 100%
+    .social-links
+      &__container
+        +above(0)
+          margin 0
+        +above('s')
+          margin 0 100px 0 100px
+        +above('xl')
+          margin 0
+      &__list
+        list-style-type none
+        display flex
+        padding-left 0
+        flex-wrap wrap
+        &--item
+          padding $base-padding
+          font-family $heading-font-stack
+          text-align center
+          flex 4 4
+          .icon-svg
+            svg
+              height $base-font-size * 4
+              width $base-font-size * 4
+              fill $base-font-color
+  &__subheading
+    display none
   &__heading
     font-family $heading-font-stack
     +above(0)
       font-size $heading-font-size * 2
     +above('xl')
-      font-size $heading-font-size * 1.5
+      font-size $heading-font-size * 1.75
     text-transform lowercase
     color $base-font-color
     text-align center
@@ -90,6 +115,9 @@ body
     +above('xl')
       display block
     &--fragment
+      &.is-space
+        &:after
+          content ' '
       +above(0)
         margin 0
         padding 0

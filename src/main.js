@@ -7,6 +7,7 @@ import './styles/main.styl';
 
 import HeaderContainer from './containers/HeaderContainer';
 import BackgroundContainer from './containers/BackgroundContainer';
+import SocialLinksContainer from './containers/SocialLinksContainer';
 
 require('es6-promise').polyfill();
 
@@ -21,3 +22,12 @@ ReactDOM.render(
   <HeaderContainer />,
   document.getElementById('header-container')
 );
+
+const socialLinksEl = document.querySelectorAll('.social-links__container')[0];
+
+if (socialLinksEl) {
+  ReactDOM.render(
+    <SocialLinksContainer />,
+    socialLinksEl
+  );
+}

@@ -1,7 +1,7 @@
 // TODO: replace this with redux
 import _get from 'lodash/get';
 import { SITE_HEADING_TEXT } from '../../config/constants';
-import { LINKS } from '../../config/navigation';
+import { LINKS, HOMEPAGE_SOCIALS } from '../../config/navigation';
 
 export default {
   // Safe getter
@@ -14,4 +14,7 @@ export default {
   navBar: {
     links: LINKS
   },
+  homepage: {
+    links: HOMEPAGE_SOCIALS
+  }
 };
