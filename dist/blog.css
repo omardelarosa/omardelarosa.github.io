@@ -1,0 +1,128 @@
+/*
+
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #23241f;
+}
+
+.hljs,
+.hljs-tag,
+.hljs-subst {
+  color: #f8f8f2;
+}
+
+.hljs-strong,
+.hljs-emphasis {
+  color: #a8a8a2;
+}
+
+.hljs-bullet,
+.hljs-quote,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal,
+.hljs-link {
+  color: #ae81ff;
+}
+
+.hljs-code,
+.hljs-title,
+.hljs-section,
+.hljs-selector-class {
+  color: #a6e22e;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-name,
+.hljs-attr {
+  color: #f92672;
+}
+
+.hljs-symbol,
+.hljs-attribute {
+  color: #66d9ef;
+}
+
+.hljs-params,
+.hljs-class .hljs-title {
+  color: #f8f8f2;
+}
+
+.hljs-string,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-selector-id,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-variable {
+  color: #e6db74;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta {
+  color: #75715e;
+}
+pre {
+  background-color: #000;
+  border: 1px solid #888;
+  padding: 10px;
+}
+pre code {
+  font-family: 'Inconsolata', monospace;
+  letter-spacing: 0.025em;
+}
+.post__container {
+  padding: 10px;
+  margin: 10px auto 0 auto;
+  text-align: left;
+  background-color: rgba(0,0,0,0.8);
+  overflow: scroll;
+}
+@media only screen {
+  .post__container {
+    width: 90%;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .post__container {
+    width: 100%;
+  }
+}
+.post__title {
+  font-family: 'Roboto', sans-serif;
+}
+.post__author {
+  font-family: 'Inconsolata', monospace;
+  font-size: 0.75em;
+  letter-spacing: 0.025em;
+}
+.post__body {
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.025em;
+}
+.posts__list {
+  margin: 0;
+  padding-left: 0;
+}
+.posts__list__item {
+  margin-bottom: 20px;
+}
