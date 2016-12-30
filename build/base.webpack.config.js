@@ -7,6 +7,7 @@ const constants = require('../config/constants');
 
 const staticPages = require('../config/static-pages');
 const blogPosts = require('../config/blog-posts');
+const rupture = require('rupture');
 
 module.exports = {
   entry: {
@@ -31,6 +32,14 @@ module.exports = {
         )
       }
     ]
+  },
+  stylus: {
+    use: [
+      rupture()
+    ],
+    import: [
+      '~rupture/rupture/index.styl',
+    ],
   },
   externals: {
     'React': 'react'

@@ -6,6 +6,7 @@ const nodemon = require('gulp-nodemon');
 const webpack = require('gulp-webpack');
 const WebSocket = require('ws');
 const serverConf = require('./config/server');
+const fs = require('fs');
 
 const SERVER_HOST = serverConf.HOST;
 const SERVER_PORT = serverConf.PORT;
@@ -28,9 +29,20 @@ const FILES_FOR_WEBPACK_TO_WATCH = [
   'src/',
   'assets/',
   'build/',
+  '_posts/',
   'config/',
   'templates/'
 ];
+
+gulp.task('generate-posts-index', (done) => {
+  const Posts = require('./utils/posts');
+  const posts = new Posts();
+  const filteredPostData = posts
+    .allPosts
+    .map(({ meta, markdown }) => ({ meta, markdown }));
+  const jsonString = JSON.stringify(filteredPostData);
+  fs.writeFile('./posts/index.json', jsonString, done);
+});
 
 gulp.task('broadcast-reload', (done) => {
   const ws = new WebSocket(`ws://${SERVER_HOST}:${SERVER_PORT}${WEBPACK_SOCKET_PATH}`);
@@ -69,9 +81,9 @@ gulp.task('webpack-dev', () => {
     .pipe(gulp.dest('dist/'));
 });
 
-gulp.task('build', gulp.series('lint', 'webpack-prod'));
+gulp.task('build', gulp.series('lint', 'webpack-prod', 'generate-posts-index'));
 
-gulp.task('webpack-dev-watch', () => gulp.watch(FILES_FOR_WEBPACK_TO_WATCH, gulp.series('webpack-dev', 'broadcast-reload')));
+gulp.task('webpack-dev-watch', () => gulp.watch(FILES_FOR_WEBPACK_TO_WATCH, gulp.series('webpack-dev', 'generate-posts-index', 'broadcast-reload')));
 
 gulp.task('dev-server', () => {
   return nodemon({
@@ -84,6 +96,7 @@ gulp.task('dev',
   gulp.parallel(
     'lint-watch',
     'webpack-dev',
+    'generate-posts-index',
     'dev-server',
     'webpack-dev-watch'
   )

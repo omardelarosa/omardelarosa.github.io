@@ -13,7 +13,12 @@ class HeadingContainer extends Component {
   render() {
     const { state: { selectedLinkIndex }} = this;
     const links = store.get('navBar.links', []);
-    return <Links items={ links } selectedIndex={ selectedLinkIndex } />;
+    const siteTitle = store.get('siteTitle', '');
+
+    return <Links
+      siteTitle={ siteTitle }
+      items={ links }
+      selectedIndex={ selectedLinkIndex } />;
   }
 }
 

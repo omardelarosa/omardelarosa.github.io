@@ -1,4 +1,5 @@
 @import '~highlight.js/styles/monokai-sublime.css'
+@import '_variables';
 
 $heading-font-stack = 'Press Start 2P', sans-serif
 $base-font-stack = 'Roboto', sans-serif
@@ -8,41 +9,49 @@ $monospace-font-stack = 'Inconsolata', monospace
 pre
   background-color rgba(0,0,0,1.0)
   border 1px solid #888
-  padding 2%
+  padding $base-padding
   code
     font-family $monospace-font-stack
     letter-spacing 0.025em
 
-.post-container
-  margin 10px auto 0 auto
-  text-align left
-  width 50vw
-  background-color rgba(0,0,0,0.8)
-  padding 10px 2%
-  overflow scroll
 .post
-  &--title
-    font-family $heading-font-stack
-  &--author
+  &__container
+    +above(0)
+      width 90%
+    +above('m')
+      width 100%
+    padding $base-padding
+    margin 10px auto 0 auto
+    text-align left
+    background-color rgba(0,0,0,0.8)
+    overflow scroll
+  &__title
+    font-family $base-font-stack
+  &__author
     font-family $monospace-font-stack
     font-size 0.75em
     letter-spacing 0.025em
-
-  &--body
+  &__body
     font-family $base-font-stack
     letter-spacing 0.025em
 
-.blog
-  margin 0 auto 0 auto
-  text-align left
-  width 50vw
-  &.heading
-    font-family $heading-font-stack
-  &.blog-links-container
-    font-family $base-font-stack
-    font-size $subheading-font-size
-  ul
-    list-style-type none
-    text-align left
-  a
-    anchor-tag-style()
+.posts
+  &__list
+    margin 0
+    padding-left 0
+    &__item
+      margin-bottom $base-padding * 2
+// .blog
+//   margin 0 auto 0 auto
+//   text-align left
+//   width 50vw
+//   &.heading
+//     font-family $heading-font-stack
+//   &.blog-links-container
+//     font-family $base-font-stack
+//     font-size $subheading-font-size
+//   ul
+//     list-style-type none
+//     text-align left
+//   a
+//     anchor-tag-style()

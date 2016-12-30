@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './styles/main.styl';
 
-import HeaderContainer from './containers/HeadingContainer';
+import HeaderContainer from './containers/HeaderContainer';
 import BackgroundContainer from './containers/BackgroundContainer';
 
 // Render Background Container

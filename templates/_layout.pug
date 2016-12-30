@@ -10,9 +10,9 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(href="https://fonts.googleapis.com/css?family=Inconsolata:700|Press+Start+2P|Roboto:400,400i,700" rel="stylesheet")
   body(role='document')
-    div(id='header-container')
-    div(id='main-container')
-      div(id='background-container')
-      div(id='content-container')
+    #header-container
+    #main-container
+      #background-container
+      #content-container
         block content
-    div(id='footer') !{ htmlWebpackPlugin.options.footer }
+    #footer !{ htmlWebpackPlugin.options.footer }

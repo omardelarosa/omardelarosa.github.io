@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const path = require('path');
 const glob = require('glob-fs')({ gitignore: true });
 const _ = require('lodash');
@@ -33,9 +34,28 @@ class Posts {
     return this.fileNames.map((f) => path.join(__dirname, '..', f));
   }
 
-  loadAllPosts() {
-    return this.absoluteFilePaths
+  loadAllPosts(force = false) {
+    if (this.__allPosts && !force) {
+      return this.__allPosts;
+    }
+
+    // Load and cache all posts
+    this.__allPosts = this.absoluteFilePaths
       .map(this.loadPost.bind(this));
+
+    return this.__allPosts;
+  }
+
+  get allPosts() {
+    if (this.__allPosts) {
+      return this.__allPosts;
+    } else {
+      return this.loadAllPosts();
+    }
+  }
+
+  generatePostIndex() {
+    return this.allPosts;
   }
 
   generateSlug(slug, title) {

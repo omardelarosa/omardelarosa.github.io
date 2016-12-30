@@ -1,0 +1,10 @@
+mixin breadcrumbs(...items)
+  ul.breadcrumbs
+    li.breadcrumbs__item
+      a.breadcrumbs__item--link(href='/') ~
+    each item in items
+      li.breadcrumbs__item
+        if item.href
+          a.breadcrumbs__item--link(href=item.href)= item.text
+        else
+          span.breadcrumbs__item--no-link= item.text

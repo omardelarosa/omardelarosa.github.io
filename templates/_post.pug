@@ -1,14 +1,19 @@
 extends _layout.pug
+include _mixins.pug
 
 block title
   title #{ htmlWebpackPlugin.options.post.meta.title }
 
 block content
   if htmlWebpackPlugin.options.post
-    div(class='post-container')
-      h1(class='post--title') #{ htmlWebpackPlugin.options.post.meta.title }
-      div(class='post--author') by #{ htmlWebpackPlugin.options.post.meta.author }
-      div(class='post--published') #{ htmlWebpackPlugin.options.post.meta.timestamp }
-      div(class='post--body') !{ htmlWebpackPlugin.options.post.html }
+    h1.section-heading
+      +breadcrumbs({ text: 'Posts', href: '/posts' }, { text: htmlWebpackPlugin.options.post.meta.slug })
+    .post__container
+      .post__title
+      h2.post__title= htmlWebpackPlugin.options.post.meta.title
+      .post__author by #{ htmlWebpackPlugin.options.post.meta.author }
+      .post__published= htmlWebpackPlugin.options.post.meta.timestamp
+      .post__body !{ htmlWebpackPlugin.options.post.html }
+
   else
     h1 404!

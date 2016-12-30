@@ -84,45 +84,45 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 pre {
   background-color: #000;
   border: 1px solid #888;
-  padding: 2%;
+  padding: 10px;
 }
 pre code {
   font-family: 'Inconsolata', monospace;
   letter-spacing: 0.025em;
 }
-.post-container {
+.post__container {
+  padding: 10px;
   margin: 10px auto 0 auto;
   text-align: left;
-  width: 50vw;
   background-color: rgba(0,0,0,0.8);
-  padding: 10px 2%;
   overflow: scroll;
 }
-.post--title {
-  font-family: 'Press Start 2P', sans-serif;
+@media only screen {
+  .post__container {
+    width: 90%;
+  }
 }
-.post--author {
+@media only screen and (min-width: 600px) {
+  .post__container {
+    width: 100%;
+  }
+}
+.post__title {
+  font-family: 'Roboto', sans-serif;
+}
+.post__author {
   font-family: 'Inconsolata', monospace;
   font-size: 0.75em;
   letter-spacing: 0.025em;
 }
-.post--body {
+.post__body {
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.025em;
 }
-.blog {
-  margin: 0 auto 0 auto;
-  text-align: left;
-  width: 50vw;
+.posts__list {
+  margin: 0;
+  padding-left: 0;
 }
-.blog.heading {
-  font-family: 'Press Start 2P', sans-serif;
-}
-.blog.blog-links-container {
-  font-family: 'Roboto', sans-serif;
-  font-size: $subheading-font-size;
-}
-.blog ul {
-  list-style-type: none;
-  text-align: left;
+.posts__list__item {
+  margin-bottom: 20px;
 }

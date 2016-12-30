@@ -462,9 +462,10 @@ template {
 body {
   background-color: #000;
 }
-#root {
-  width: 100%;
-  height: 100%;
+#root,
+#main-container {
+  width: 100vw;
+  height: 90vh;
 }
 .svg-grid {
   z-index: -1;
@@ -475,80 +476,144 @@ body {
 }
 #content-container {
   color: #fff;
-}
-.home-content {
-  font-family: 'Press Start 2P', sans-serif;
-  color: #fff;
-  width: 100vw;
-  height: 100vh;
   overflow: scroll;
+  height: 90vh;
 }
-.home-content .title-container {
+@media only screen {
+  #content-container {
+    padding: 0;
+    margin: 10vh 0 0 0;
+  }
+}
+@media only screen and (min-width: 600px) {
+  #content-container {
+    width: 70%;
+    margin: 10vh auto 0 auto;
+  }
+}
+.section-heading {
   font-family: 'Press Start 2P', sans-serif;
-  font-size: 2rem;
-  font-style: normal;
-}
-.home-content .title-container .heading {
-  margin: 0 auto 0 auto;
   text-transform: lowercase;
-  text-align: center;
-  width: 70vw;
+  padding: 10px;
+  background-color: rgba(0,0,0,0.8);
 }
-.home-content .title-container .subheading {
-  font-size: 0.85rem;
-  margin: 0 auto 0 auto;
-  text-transform: lowercase;
-  text-align: center;
-  width: 70vw;
+@media only screen {
+  .section-heading {
+    margin: 0 10px;
+    width: 90%;
+  }
 }
-.pusher {
-  height: 30vh;
+@media only screen and (min-width: 600px) {
+  .section-heading {
+    width: 100%;
+    margin: 0 auto 0 auto;
+  }
 }
-.content-container {
-  margin: 0 auto 0 auto;
-  width: 70vw;
-}
-.header-container {
-  width: 100%;
-  height: 30vh;
-}
-.links-container {
-  text-transform: lowercase;
-  padding-top: 20px;
-  font-family: 'Press Start 2P', sans-serif;
-  color: #fff;
-}
-.links-container .links {
-  padding: 0;
+.breadcrumbs {
   margin: 0;
-  font-size: 0.85rem;
-  margin: 0 auto 0 auto;
+  padding: 0;
+}
+@media only screen {
+  .breadcrumbs {
+    font-size: 0.5em;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .breadcrumbs {
+    font-size: 1em;
+  }
+}
+.breadcrumbs__item {
   list-style-type: none;
-  display: flex;
-  width: 70vw;
-  flex-direction: row;
+  display: inline;
+  padding: 10px;
 }
-.links-container .links .link {
-  flex: 4 4;
-  width: 120px;
-  text-align: right;
+.breadcrumbs__item:first-child {
+  padding-left: 0;
 }
-.links-container .links .link .nav-item--anchor {
+.breadcrumbs__item--link {
   text-decoration: none;
   color: #fff;
 }
-.links-container .links .link .nav-item--anchor:visited {
+.breadcrumbs__item--link:visited {
   color: #fff;
 }
-.links-container .links .link .nav-item--anchor:hover {
-  font-weight: bold;
+.breadcrumbs__item--link:hover {
   text-decoration: underline;
 }
-.links-container .links .link .nav-item--anchor:hover::before {
-  content: '> ';
+.breadcrumbs__item--link:after,
+.breadcrumbs__item--no-link:after {
+  content: '/';
 }
-.links-container .links .link .nav-item--finger-pointer {
-  transform: rotate(0.25turn);
-  height: 2rem;
-  width: 2rem;
+#header-container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 10vh;
+}
+.links__container {
+  font-family: 'Press Start 2P', sans-serif;
+  margin: 0 auto;
+  text-transform: lowercase;
+  padding-top: 10px;
+  background-color: rgba(0,0,0,0.8);
+  text-align: left;
+  color: #fff;
+}
+@media only screen {
+  .links__container {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .links__container {
+    width: 70%;
+  }
+}
+.links__container .links {
+  font-size: 0.85rem;
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+}
+@media only screen {
+  .links__container .links {
+    flex-direction: column;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .links__container .links {
+    flex-direction: row;
+  }
+}
+.links__container .links__nav-item {
+  padding: 10px;
+  text-align: center;
+  flex: 4 4;
+}
+@media only screen {
+  .links__container .links__nav-item {
+    display: none;
+  }
+  .links__container .links__nav-item:first-child {
+    display: inline;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .links__container .links__nav-item {
+    display: inline;
+  }
+}
+.links__container .links__nav-item:first-child {
+  text-align: left;
+}
+.links__container .links__nav-item--anchor {
+  text-decoration: none;
+  color: #fff;
+}
+.links__container .links__nav-item--anchor:visited {
+  color: #fff;
+}
+.links__container .links__nav-item--anchor:hover {
+  text-decoration: underline;
 }

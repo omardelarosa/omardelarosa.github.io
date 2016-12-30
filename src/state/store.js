@@ -1,39 +1,44 @@
 // TODO: replace this with redux
 import _get from 'lodash/get';
-import constants from '../../config/constants';
+import {
+  SITE_HEADING_TEXT,
+} from '../../config/constants';
 
 export default {
   // Safe getter
   get(path, defaultValue) {
     return _get(this, path, defaultValue);
   },
-  siteTitle: constants.SITE_HEADING_TEXT,
+  siteTitle: SITE_HEADING_TEXT,
   subTitle: 'Engineer / Musician / Etc',
   description: 'The personal website of Omar Delarosa',
   navBar: {
     links: [
       {
-        text: 'Home',
+        text: `${SITE_HEADING_TEXT.toLowerCase().replace(/\s+/g, '')}: `
+      },
+      {
+        text: '~/',
         href: '/',
-        icon: 'home',
+        icon: 'home'
       },
       {
-        text: 'About',
+        text: 'about/',
         href: '/pages/about.html',
         icon: 'bio',
       },
       {
-        text: 'Links',
+        text: 'links/',
         href: '/pages/about.html',
         icon: 'bio',
       },
       {
-        text: 'Posts',
+        text: 'posts/',
         href: '/posts/',
         icon: 'bio',
       },
       {
-        text: 'Code',
+        text: 'code/',
         href: '/pages/about.html',
         icon: 'bio',
       }

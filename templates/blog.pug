@@ -1,12 +1,21 @@
 extends _layout.pug
+include _mixins.pug
 
 block title
   title Blog
 
 block content
-  h1(class='blog heading') Blog
-  div(class='blog blog-links-container')
-    ul(class='blog blog-links-list')
+  h1.section-heading
+    +breadcrumbs({ text: 'Posts' })
+  div.posts
+    ul.posts__list
       each post in htmlWebpackPlugin.options.posts
-        li
-          a(href='/'+post.meta.permalink) #{post.meta.title}
+        li.posts__list__item
+          .post__container
+            h1.post__title
+              a.post__title--link(href='/' + post.meta.permalink, id=post.meta.slug)= post.meta.title
+            .post__author by #{ post.meta.author }
+            .post__published= post.meta.timestamp
+            .post__body !{ post.html }
+
+

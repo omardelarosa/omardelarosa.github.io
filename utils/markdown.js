@@ -1,6 +1,4 @@
-const path = require('path');
 const marked = require('meta-marked');
-const fs = require('fs');
 
 // Set markdown options
 marked.setOptions({
