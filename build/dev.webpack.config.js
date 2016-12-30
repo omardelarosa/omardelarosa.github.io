@@ -16,10 +16,12 @@ module.exports = {
   plugins: [
     ...webpackBaseConfig.plugins,
     // Build only static pages, not posts
-    ...staticPages.map(p => new HtmlWebpackPlugin({
-      ...p,
-      // Add live page reloading on dev
-      chunks: [ ...p.chunks, 'reloader' ]
-    })),
+    ...staticPages.map(p => {
+      return new HtmlWebpackPlugin({
+        ...p,
+        // Add live page reloading on dev
+        chunks: [ ...p.chunks, 'reloader' ]
+      });
+    }),
   ]
 };

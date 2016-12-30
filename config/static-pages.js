@@ -18,7 +18,8 @@ module.exports = [
       ...baseConfig,
       title: `${route.title.toLowerCase()} // omardelarosa.com`,
       filename: path.join(__dirname, '..', route.path),
-      template: `pug?pretty!templates/${route.template}`
+      template: `pug?pretty!templates/${route.template}`,
+      chunks: [ ...baseConfig.chunks, ...(route.chunks || [])]
     })
   )
 ];

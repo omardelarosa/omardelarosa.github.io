@@ -14,7 +14,8 @@ module.exports = [
   {
     path: '/pages/code.html',
     title: 'Code',
-    template: 'code.pug'
+    template: 'code.pug',
+    chunks: [ 'code' ]
   },
   {
     path: '/pages/contact.html',

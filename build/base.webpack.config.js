@@ -8,7 +8,8 @@ const rupture = require('rupture');
 module.exports = {
   entry: {
     app: [ './src/main.js' ],
-    blog: [ './src/blog.js' ]
+    blog: [ './src/blog.js' ],
+    code: [ './src/entries/code.js' ]
   },
   output: {
     path: path.join(__dirname, '../dist'),

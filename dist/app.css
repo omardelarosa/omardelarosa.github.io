@@ -459,6 +459,9 @@ template {
 [hidden] {
   display: none;
 }
+#header-container {
+  visibility: hidden;
+}
 body {
   background-color: #000;
 }
