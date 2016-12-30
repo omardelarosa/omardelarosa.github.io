@@ -1,3 +1,5 @@
+import 'isomorphic-fetch';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -5,6 +7,8 @@ import './styles/main.styl';
 
 import HeaderContainer from './containers/HeaderContainer';
 import BackgroundContainer from './containers/BackgroundContainer';
+
+require('es6-promise').polyfill();
 
 // Render Background Container
 ReactDOM.render(

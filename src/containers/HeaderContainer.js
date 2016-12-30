@@ -6,7 +6,8 @@ class HeadingContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedLinkIndex: 0
+      selectedLinkIndex: 0,
+      hasScrolled: false
     };
   }
 

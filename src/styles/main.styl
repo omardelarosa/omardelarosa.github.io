@@ -30,10 +30,10 @@ body
   height 100vh - $header-container-height
   +above(0)
     padding 0
-    margin $header-container-height 0 0 0
+    margin 0 0 0 0
   +above('m')
     width 70%
-    margin $header-container-height auto 0 auto
+    margin 0 auto 0 auto
 
 .section-heading
   font-family $heading-font-stack
@@ -41,7 +41,7 @@ body
   padding $base-padding
   background-color rgba(0,0,0,0.8)
   +above(0)
-    margin 0 $base-padding
+    margin $base-padding
     width 90%
   +above('m')
     width 100%
@@ -64,6 +64,9 @@ body
       anchor-tag-style()
     &--link
     &--no-link
+      &:last-child
+        text-overflow clip ellipsis
+        text-overflow '…/'
       &:after
         content '/'
 // .home-content
@@ -91,17 +94,21 @@ body
 //   height 30vh
 
 #header-container
-  position absolute
+  position relative
   top 0
   width 100%
   height $header-container-height
+  +above(0)
+    background-color #000
+  +above('m')
+    background-color transparent
 
 .links__container
   font-family $heading-font-stack
   margin 0 auto
   text-transform lowercase
   padding-top $base-padding
-  background-color rgba(0,0,0,0.8)
+  // background-color rgba(0,0,0,0.8)
   text-align left
   color $base-font-color
   +above(0)
@@ -114,22 +121,29 @@ body
     list-style-type none
     display flex
     padding 0 // overrides webkit padding
-    +above(0)
-      flex-direction column
-    +above('m')
-      flex-direction row
 
     &__nav-item
-      +above(0)
-        display none
-        &:first-child
-          display inline
-      +above('m')
-        display inline
       padding $base-padding
       text-align center
       &:first-child
         text-align left
+        +below('m')
+          display none
       flex 4 4
       &--anchor
         anchor-tag-style()
+      &--anchor--text
+        +above(0)
+          display none
+          &.no-icon
+            display inline
+        +above('m')
+          display inline
+      .icon-svg
+        svg
+          margin -5px 0
+          fill $base-font-color
+          +above(0)
+            height $subheading-font-size * 2
+          +above('m')
+            display none

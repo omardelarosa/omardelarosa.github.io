@@ -19,28 +19,27 @@ export default {
       },
       {
         text: '~/',
-        href: '/',
-        icon: 'home'
+        href: '/'
       },
       {
-        text: 'about/',
+        text: 'info/',
         href: '/pages/about.html',
-        icon: 'bio',
+        icon: 'bio.svg',
       },
       {
-        text: 'links/',
+        text: 'contact/',
         href: '/pages/about.html',
-        icon: 'bio',
+        icon: 'contact.svg',
       },
       {
         text: 'posts/',
         href: '/posts/',
-        icon: 'bio',
+        icon: 'posts.svg',
       },
       {
         text: 'code/',
         href: '/pages/about.html',
-        icon: 'bio',
+        icon: 'code.svg',
       }
     ]
   },
