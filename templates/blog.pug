@@ -2,7 +2,12 @@ extends _layout.pug
 include _mixins.pug
 
 block title
-  title Blog
+  title= 'posts // omardelarosa.com'
+
+block og
+  meta(name='og:url' content='http://www.omardelarosa.com/pages/posts/')
+  meta(name='og:title' content='posts // omardelarosa.com')
+  meta(name='og:type' content='article:section')
 
 block content
   h1.section-heading
