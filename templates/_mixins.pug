@@ -8,3 +8,7 @@ mixin breadcrumbs(...items)
           a.breadcrumbs__item--link(href=item.href)= item.text
         else
           span.breadcrumbs__item--no-link= item.text
+
+mixin addscripts()
+  script(src='/assets/js/ga.js')
+  script(src='/assets/js/fb.js')

@@ -1,3 +1,4 @@
+include _mixins
 doctype html
 html
   head
@@ -22,3 +23,4 @@ html
       #content-container
         block content
     #footer !{ htmlWebpackPlugin.options.footer }
+    +addscripts()
