@@ -3,14 +3,19 @@ extends _layout.pug
 block title
   title #{ htmlWebpackPlugin.options.title }
 
+block og
+  meta(name='og:url' content='http://www.omardelarosa.com')
+  meta(name='og:title', content=htmlWebpackPlugin.options.title)
+  meta(name='og:type' content='website')
+
 block content
   div.home-page__container
     div.home-page__pusher
     h1.home-page__heading
-      span.home-page__heading--fragment Omar
+      span.home-page__heading--fragment omar
       span.home-page__heading--fragment.is-space
-      span.home-page__heading--fragment Dela
+      span.home-page__heading--fragment dela
       span.home-page__heading--fragment rosa
       span.home-page__heading--fragment.is-tld .com
-    h2.home-page__subheading SUBHEADING
+    h2.home-page__subheading an engineer / musician / writer
     .social-links__container

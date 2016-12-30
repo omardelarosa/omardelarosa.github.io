@@ -32,7 +32,7 @@ const recentPosts = _.take(posts, 10);
 
 const blogIndexConfig = {
   ...baseConfig,
-  title: 'Blog',
+  title: 'posts // omardelarosa.com',
   filename: path.join(__dirname, '..', 'posts/index.html'),
   template: 'pug?pretty!templates/blog.pug',
   posts: recentPosts

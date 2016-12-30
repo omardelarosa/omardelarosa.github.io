@@ -3,23 +3,23 @@
 module.exports = [
   {
     path: '/index.html',
-    title: 'Home',
+    title: 'the website of omar delarosa',
     template: 'index.pug'
   },
   {
     path: '/pages/bio.html',
-    title: 'Bio',
+    title: 'bio',
     template: 'bio.pug'
   },
   {
     path: '/pages/code.html',
-    title: 'Code',
+    title: 'code',
     template: 'code.pug',
     chunks: [ 'code' ]
   },
   {
     path: '/pages/contact.html',
-    title: 'Contact',
+    title: 'contact',
     template: 'code.pug'
   }
 ];
