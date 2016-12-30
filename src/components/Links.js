@@ -21,7 +21,7 @@ class Links extends Component {
         target={ link.newWindow ? '_blank' : undefined }
         >
           <span
-            className={ `links__nav-item--anchor--text${ !link.icon ? ' no-icon' : '' }` }
+            className={ `links__nav-item--anchor--text${!link.icon ? ' no-icon' : ''}` }
             >{ link.text }</span>
           { link.icon && this.makeIconElement(link) }
         </a>

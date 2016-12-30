@@ -16,7 +16,7 @@ module.exports = [
   ...routes.map(
     (route) => ({
       ...baseConfig,
-      title: `${route.title} // omardelarosa.com`,
+      title: `${route.title.toLowerCase()} // omardelarosa.com`,
       filename: path.join(__dirname, '..', route.path),
       template: `pug!templates/${route.template}`
     })

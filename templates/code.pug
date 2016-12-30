@@ -1,0 +1,10 @@
+extends _layout.pug
+include _mixins.pug
+
+block title
+  title #{ htmlWebpackPlugin.options.title }
+
+block content
+  h1.section-heading
+    +breadcrumbs({ text: 'Code' })
+  div.page-content CODE
