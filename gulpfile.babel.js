@@ -96,7 +96,6 @@ gulp.task('dev',
   gulp.parallel(
     'lint-watch',
     'webpack-dev',
-    'generate-posts-index',
     'dev-server',
     'webpack-dev-watch'
   )
