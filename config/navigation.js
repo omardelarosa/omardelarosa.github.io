@@ -34,7 +34,7 @@ module.exports = {
   HOMEPAGE_SOCIALS: [
     {
       text: 'LinkedIn',
-      href: 'https://www.linkedin.com/omardelarosa',
+      href: 'https://www.linkedin.com/in/omardelarosa',
       icon: 'linkedin-logo.svg'
     },
     {
