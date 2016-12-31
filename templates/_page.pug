@@ -6,9 +6,9 @@ block title
 
 block og
   meta(name='og:url' content="http://www.omardelarosa.com/pages/" + htmlWebpackPlugin.options.md.meta.slug + ".html")
-  meta(name='og:title' content=htmlWebpackPlugin.options.md.meta.title + " // omardelarosa.com")
+  meta(name='og:title' content=htmlWebpackPlugin.options.md.meta.title.toLowerCase() + " // omardelarosa.com")
   meta(name='og:type' content='article')
-
+  meta(name='og:description' content=htmlWebpackPlugin.options.og.description)
 block content
   h1.section-heading
     +breadcrumbs({ text: htmlWebpackPlugin.options.md.meta.title })

@@ -13,7 +13,7 @@ const slugInFileRE = new RegExp(`${POSTS_PATH}\\d+_([\\w-]+)\\.md`);
 const DEFAULT_AUTHOR = 'omardelarosa';
 const DEFAULT_TITLE = 'Untitled Post';
 const DEFAULT_BODY = 'Begin writing here..';
-
+const DEFAULT_OG_DESCRIPTION = 'an article about life, technology and/or music by omar delarosa';
 const uuid = () => Date.now().toString('16');
 
 class Posts {
@@ -93,6 +93,7 @@ class Posts {
       `author:  ${author}\n`,
       `timestamp: ${timestamp}\n`,
       `slug:    ${slug}\n`,
+      `ogDescription: ${DEFAULT_OG_DESCRIPTION}\n`,
       '---\n',
       `${body}\n`,
     ].join('');
@@ -146,6 +147,9 @@ class Posts {
     // Attaches Permalink to Post data
     post.meta.permalink = this.generatePermalinkOfPost(post);
 
+    post.og = {
+      description: post.meta.ogDescription || DEFAULT_OG_DESCRIPTION
+    };
     return post;
   }
 

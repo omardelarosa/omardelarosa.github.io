@@ -6,8 +6,9 @@ block title
 
 block og
   meta(name='og:url' content="http://www.omardelarosa.com/posts/" + htmlWebpackPlugin.options.post.meta.slug + ".html")
-  meta(name='og:title' content=htmlWebpackPlugin.options.post.meta.title + " // posts // omardelarosa.com")
+  meta(name='og:title' content=htmlWebpackPlugin.options.post.meta.title.toLowerCase() + " // posts // omardelarosa.com")
   meta(name='og:type' content='article')
+  meta(name='og:description' content=htmlWebpackPlugin.options.post.og.description)
 
 block content
   if htmlWebpackPlugin.options.post
