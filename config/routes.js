@@ -2,24 +2,24 @@
 
 module.exports = [
   {
-    path: '/index.html',
+    slug: 'index',
     title: 'the website of omar delarosa',
     template: 'index.pug'
   },
   {
-    path: '/pages/bio.html',
+    slug: 'bio',
     title: 'bio',
-    template: 'bio.pug'
+    markdown: 'bio.md'
   },
   {
-    path: '/pages/code.html',
+    slug: 'code',
     title: 'code',
     template: 'code.pug',
     chunks: [ 'code' ]
   },
   {
-    path: '/pages/contact.html',
+    slug: 'contact',
     title: 'contact',
-    template: 'code.pug'
+    markdown: 'contact.md'
   }
 ];

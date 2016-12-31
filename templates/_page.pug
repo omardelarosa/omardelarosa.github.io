@@ -1,0 +1,15 @@
+extends _layout.pug
+include _mixins.pug
+
+block title
+  title #{ htmlWebpackPlugin.options.title }
+
+block og
+  meta(name='og:url' content="http://www.omardelarosa.com/pages/" + htmlWebpackPlugin.options.md.meta.slug + ".html")
+  meta(name='og:title' content=htmlWebpackPlugin.options.md.meta.title + " // omardelarosa.com")
+  meta(name='og:type' content='article')
+
+block content
+  h1.section-heading
+    +breadcrumbs({ text: htmlWebpackPlugin.options.md.meta.title })
+  div.page-content !{htmlWebpackPlugin.options.md.html}
