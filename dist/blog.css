@@ -82,7 +82,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   color: #75715e;
 }
 pre {
-  background-color: #000;
+  background-color: #191919;
   border: 1px solid #888;
   padding: 10px;
 }
@@ -91,10 +91,11 @@ pre code {
   letter-spacing: 0.025em;
 }
 .post__container {
+  border: 3px solid #c7c7c7;
   padding: 10px;
   margin: 10px auto 0 auto;
   text-align: left;
-  background-color: rgba(0,0,0,0.8);
+  background-color: #191919;
   overflow: scroll;
 }
 @media only screen {
@@ -104,11 +105,23 @@ pre code {
 }
 @media only screen and (min-width: 600px) {
   .post__container {
-    width: 100%;
+    width: 93%;
+  }
+}
+@media only screen and (min-width: 800px) {
+  .post__container {
+    width: 95%;
+  }
+}
+@media only screen and (min-width: 1050px) {
+  .post__container {
+    width: 97%;
   }
 }
 .post__title {
   font-family: 'Roboto', sans-serif;
+  color: #5ed7ff;
+  font-size: 3rem;
 }
 .post__author {
   font-family: 'Inconsolata', monospace;
@@ -119,10 +132,33 @@ pre code {
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.025em;
 }
+.post__title--link {
+  text-decoration: none;
+  color: #5ed7ff;
+}
+.post__title--link:visited {
+  color: #50b7d9;
+}
+.post__title--link:hover {
+  text-decoration: underline;
+}
 .posts__list {
   margin: 0;
   padding-left: 0;
 }
 .posts__list__item {
   margin-bottom: 20px;
+}
+.posts .post__title {
+  font-size: 2.5rem;
+}
+@media only screen {
+  .section-heading {
+    display: none;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .section-heading {
+    display: block;
+  }
 }

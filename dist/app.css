@@ -459,11 +459,8 @@ template {
 [hidden] {
   display: none;
 }
-#header-container {
-  visibility: hidden;
-}
 body {
-  background-color: #000;
+  background-color: #191919;
 }
 #root,
 #main-container {
@@ -476,10 +473,12 @@ body {
   top: 0;
   left: 0;
   opacity: 0.3;
+  filter: blur(2px);
 }
 #content-container {
   color: #fff;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   height: 90vh;
 }
 @media only screen {
@@ -495,33 +494,38 @@ body {
   }
 }
 .section-heading {
+  border: 3px solid #c7c7c7;
   font-family: 'Press Start 2P', sans-serif;
   text-transform: lowercase;
   padding: 10px;
-  background-color: rgba(0,0,0,0.8);
-}
-@media only screen {
-  .section-heading {
-    margin: 10px;
-    width: 90%;
-  }
-}
-@media only screen and (min-width: 600px) {
-  .section-heading {
-    width: 100%;
-    margin: 0 auto 0 auto;
-  }
+  background-color: #191919;
 }
 .breadcrumbs {
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  display: flex;
 }
 @media only screen {
   .breadcrumbs {
     font-size: 0.5em;
+    flex-direction: column;
   }
 }
 @media only screen and (min-width: 600px) {
+  .breadcrumbs {
+    flex-direction: column;
+    font-size: 0.65em;
+  }
+}
+@media only screen and (min-width: 800px) {
+  .breadcrumbs {
+    font-size: 0.75em;
+    flex-direction: row;
+  }
+}
+@media only screen and (min-width: 1050px) {
   .breadcrumbs {
     font-size: 1em;
   }
@@ -548,6 +552,7 @@ body {
 .breadcrumbs__item--no-link:last-child {
   text-overflow: clip ellipsis;
   text-overflow: '\2026/';
+  display: inline;
 }
 .breadcrumbs__item--link:after,
 .breadcrumbs__item--no-link:after {
@@ -667,6 +672,7 @@ body {
 #header-container {
   position: relative;
   top: 0;
+  min-height: 60px;
   width: 100%;
   height: 10vh;
 }

@@ -1,13 +1,14 @@
 @import '~highlight.js/styles/monokai-sublime.css'
 @import '_variables';
 
-$heading-font-stack = 'Press Start 2P', sans-serif
-$base-font-stack = 'Roboto', sans-serif
-$monospace-font-stack = 'Inconsolata', monospace
+post-anchor()
+  color $blue
+  &:visited
+    color $blue-bright
 
 // Syntax boxes
 pre
-  background-color rgba(0,0,0,1.0)
+  background-color $base-font-color-inverse
   border 1px solid #888
   padding $base-padding
   code
@@ -16,17 +17,24 @@ pre
 
 .post
   &__container
+    border $container-border
     +above(0)
       width 90%
     +above('m')
-      width 100%
+      width 93%
+    +above('l')
+      width 95%
+    +above('xl')
+      width 97%
     padding $base-padding
     margin 10px auto 0 auto
     text-align left
-    background-color rgba(0,0,0,0.8)
+    background-color $base-font-color-inverse
     overflow scroll
   &__title
     font-family $base-font-stack
+    color $blue
+    font-size $heading-font-size * 1.5
   &__author
     font-family $monospace-font-stack
     font-size 0.75em
@@ -34,24 +42,23 @@ pre
   &__body
     font-family $base-font-stack
     letter-spacing 0.025em
-
+  &__title--link
+    text-decoration none
+    post-anchor()
+    &:hover
+      text-decoration underline
 .posts
   &__list
     margin 0
     padding-left 0
     &__item
       margin-bottom $base-padding * 2
-// .blog
-//   margin 0 auto 0 auto
-//   text-align left
-//   width 50vw
-//   &.heading
-//     font-family $heading-font-stack
-//   &.blog-links-container
-//     font-family $base-font-stack
-//     font-size $subheading-font-size
-//   ul
-//     list-style-type none
-//     text-align left
-//   a
-//     anchor-tag-style()
+  .post
+    &__title
+      font-size $heading-font-size * 1.25
+
+.section-heading
+  +above(0)
+    display none
+  +above('m')
+    display block

@@ -26283,7 +26283,7 @@
 	var getRGBColor = function getRGBColor(rowNum, colNum) {
 	  var isDark = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
-	  return isDark ? 'rgb(255, ' + rowNum * 2 + ',' + colNum * 1 + ')' : 'rgb(' + rowNum * 2 + ',' + colNum * 1 + ',255';
+	  return isDark ? 'rgb(255, ' + rowNum * 1 + ',' + colNum * 2 + ')' : 'rgb(' + rowNum * 2 + ',' + colNum * 1 + ',255';
 	};
 
 	var shouldRenderBox = function shouldRenderBox(rowNum, colNum, rows, cols) {

@@ -31,7 +31,9 @@ class Posts {
   }
 
   get absoluteFilePaths () {
-    return this.fileNames.map((f) => path.join(__dirname, '..', f));
+    return this.fileNames.map((f) => {
+      return path.join('..', f)
+    });
   }
 
   loadAllPosts(force = false) {

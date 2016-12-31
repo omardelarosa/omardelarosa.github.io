@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 
 const getRGBColor = (rowNum, colNum, isDark = true) => {
   return isDark
-    ? `rgb(255, ${rowNum * 2},${colNum * 1})`
+    ? `rgb(255, ${rowNum * 1},${colNum * 2})`
     : `rgb(${rowNum * 2},${colNum * 1},255`;
 };
 

@@ -3,8 +3,8 @@
 
 // Temporarily hide heading container until rest of site is done
 // TODO: unhide this later
-#header-container
-  visibility hidden
+// #header-container
+//   visibility hidden
 
 anchor-tag-style()
   text-decoration none
@@ -28,10 +28,12 @@ body
   top 0
   left 0
   opacity 0.3
+  filter blur(2px)
 
 #content-container
   color $base-font-color
-  overflow scroll
+  overflow-y scroll
+  overflow-x hidden
   height 100vh - $header-container-height
   +above(0)
     padding 0
@@ -41,23 +43,28 @@ body
     margin 0 auto 0 auto
 
 .section-heading
+  border $container-border
   font-family $heading-font-stack
   text-transform lowercase
   padding $base-padding
-  background-color rgba(0,0,0,0.8)
-  +above(0)
-    margin $base-padding
-    width 90%
-  +above('m')
-    width 100%
-    margin 0 auto 0 auto
+  background-color $base-font-color-inverse
 
 .breadcrumbs
   margin 0
   padding 0
+  width 100%
+  overflow-x hidden
+  display flex
   +above(0)
     font-size $base-font-size * 0.50
+    flex-direction column
   +above('m')
+    flex-direction column
+    font-size $base-font-size * 0.65
+  +above('l')
+    font-size $base-font-size * 0.75
+    flex-direction row
+  +above('xl')
     font-size $base-font-size
   &__item
     list-style-type none
@@ -72,6 +79,7 @@ body
       &:last-child
         text-overflow clip ellipsis
         text-overflow '…/'
+        display inline
       &:after
         content '/'
 
@@ -152,6 +160,7 @@ body
 #header-container
   position relative
   top 0
+  min-height $heading-container-base-height
   width 100%
   height $header-container-height
   +above(0)
