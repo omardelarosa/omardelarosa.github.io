@@ -692,11 +692,6 @@ body {
     display: block;
   }
 }
-@media only screen and (orientation: landscape) {
-  .home-page__heading {
-    font-size: 2rem;
-  }
-}
 .home-page__heading--fragment.is-space:after {
   content: ' ';
 }
@@ -737,11 +732,6 @@ body {
 @media only screen and (min-width: 1050px) {
   .home-page__pusher {
     height: 30vh;
-  }
-}
-@media only screen and (orientation: landscape) {
-  .home-page__pusher {
-    height: 5vh;
   }
 }
 #header-container {
