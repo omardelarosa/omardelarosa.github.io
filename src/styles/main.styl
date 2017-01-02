@@ -46,29 +46,25 @@ body
   padding 0
   margin 0 auto 0 auto
   font-family $heading-font-stack
-  // background $black
   text-transform lowercase
-  // border $container-border
   +above(0)
     margin 0
+    display none
   +above('m')
     margin 0 auto 0 auto
+    display initial
 
 .breadcrumbs
   margin 0
-  padding 0
-  // width 100%
+  padding $base-padding
   overflow-x hidden
   display flex
   +above(0)
-    font-size $base-font-size * 0.50
-    flex-direction column
+    font-size $base-font-size * 1.25
   +above('m')
-    flex-direction row
-    font-size $base-font-size * 0.65
+    font-size $base-font-size * 1.125
   +above('l')
-    font-size $base-font-size * 0.75
-    flex-direction row
+    font-size $base-font-size
   +above('xl')
     font-size $base-font-size
   &__item
@@ -102,6 +98,7 @@ body
   &__container
     width 100%
     height 100%
+    overflow-y hidden
     .social-links
       &__container
         +above(0)
@@ -122,9 +119,16 @@ body
           flex 4 4
           .icon-svg
             svg
-              height $base-font-size * 4
-              width $base-font-size * 4
               fill $base-font-color
+              +above(0)
+                height $base-font-size * 3
+                width $base-font-size * 3
+              +above('m')
+                height $base-font-size * 4
+                width $base-font-size * 4
+              +landscape()
+                height $base-font-size * 2
+                width $base-font-size * 2
   &__subheading
     display none
   &__heading
@@ -142,6 +146,8 @@ body
       flex-direction column
     +above('xl')
       display block
+    +landscape()
+      font-size $heading-font-size
     &--fragment
       &.is-space
         &:after
@@ -159,7 +165,7 @@ body
           display inline
         &.is-tld
           display none
-        flex initial
+          flex initial
   &__subheading
     font-size $subheading-font-size
     margin 0 auto 0 auto
@@ -171,7 +177,8 @@ body
       height 10vh
     +above('xl')
       height 30vh
-
+    +landscape()
+      height 5vh
 #header-container
   position relative
   top 0
@@ -188,7 +195,6 @@ body
   margin 0 auto
   text-transform lowercase
   padding-top $base-padding
-  // background-color rgba(0,0,0,0.8)
   text-align left
   color $base-font-color
   +above(0)
@@ -232,7 +238,7 @@ body
           +above('m')
             display none
 
-// BROWSER-SPECIFIC Stuff
+// BROWSER-SPECIFIC RULES
 
 .safari
   // Filters are not properly handled by safari

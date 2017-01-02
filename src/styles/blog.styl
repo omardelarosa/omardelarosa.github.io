@@ -34,6 +34,9 @@ pre
   &__body
     font-family $base-font-stack
     letter-spacing $base-letter-spacing
+    line-height 1.25
+    a
+      post-anchor()
   &__published
     font-style italic
   &__title--link
@@ -61,8 +64,3 @@ pre
       margin $base-padding auto $base-padding auto
     &__meta
       font-size $base-font-size * 0.75
-.breadcrumbs-container
-  +above(0)
-    display none
-  +above('m')
-    display block

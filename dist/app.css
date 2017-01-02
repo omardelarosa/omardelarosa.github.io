@@ -525,35 +525,34 @@ body {
 @media only screen {
   .breadcrumbs-container {
     margin: 0;
+    display: none;
   }
 }
 @media only screen and (min-width: 600px) {
   .breadcrumbs-container {
     margin: 0 auto 0 auto;
+    display: initial;
   }
 }
 .breadcrumbs {
   margin: 0;
-  padding: 0;
+  padding: 10px;
   overflow-x: hidden;
   display: flex;
 }
 @media only screen {
   .breadcrumbs {
-    font-size: 0.5em;
-    flex-direction: column;
+    font-size: 1.25em;
   }
 }
 @media only screen and (min-width: 600px) {
   .breadcrumbs {
-    flex-direction: row;
-    font-size: 0.65em;
+    font-size: 1.125em;
   }
 }
 @media only screen and (min-width: 800px) {
   .breadcrumbs {
-    font-size: 0.75em;
-    flex-direction: row;
+    font-size: 1em;
   }
 }
 @media only screen and (min-width: 1050px) {
@@ -612,6 +611,7 @@ body {
 .home-page__container {
   width: 100%;
   height: 100%;
+  overflow-y: hidden;
 }
 @media only screen {
   .home-page__container .social-links__container {
@@ -641,9 +641,25 @@ body {
   flex: 4 4;
 }
 .home-page__container .social-links__list--item .icon-svg svg {
-  height: 4em;
-  width: 4em;
   fill: #fff;
+}
+@media only screen {
+  .home-page__container .social-links__list--item .icon-svg svg {
+    height: 3em;
+    width: 3em;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .home-page__container .social-links__list--item .icon-svg svg {
+    height: 4em;
+    width: 4em;
+  }
+}
+@media only screen and (orientation: landscape) {
+  .home-page__container .social-links__list--item .icon-svg svg {
+    height: 2em;
+    width: 2em;
+  }
 }
 .home-page__subheading {
   display: none;
@@ -676,6 +692,11 @@ body {
     display: block;
   }
 }
+@media only screen and (orientation: landscape) {
+  .home-page__heading {
+    font-size: 2rem;
+  }
+}
 .home-page__heading--fragment.is-space:after {
   content: ' ';
 }
@@ -693,14 +714,12 @@ body {
   }
 }
 @media only screen and (min-width: 1050px) {
-  .home-page__heading--fragment {
-    flex: initial;
-  }
   .home-page__heading--fragment.is-space {
     display: inline;
   }
   .home-page__heading--fragment.is-tld {
     display: none;
+    flex: initial;
   }
 }
 .home-page__subheading {
@@ -718,6 +737,11 @@ body {
 @media only screen and (min-width: 1050px) {
   .home-page__pusher {
     height: 30vh;
+  }
+}
+@media only screen and (orientation: landscape) {
+  .home-page__pusher {
+    height: 5vh;
   }
 }
 #header-container {

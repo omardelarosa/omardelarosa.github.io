@@ -127,6 +127,13 @@ pre code {
 .post__body {
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.025em;
+  line-height: 1.25;
+}
+.post__body a {
+  color: #5ed7ff;
+}
+.post__body a:visited {
+  color: #50b7d9;
 }
 .post__published {
   font-style: italic;
@@ -163,14 +170,4 @@ pre code {
 }
 .posts .post__meta {
   font-size: 0.75em;
-}
-@media only screen {
-  .breadcrumbs-container {
-    display: none;
-  }
-}
-@media only screen and (min-width: 600px) {
-  .breadcrumbs-container {
-    display: block;
-  }
 }

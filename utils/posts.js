@@ -91,14 +91,14 @@ class Posts {
 
     const fileString = [
       '---\n',
-      `title:   ${title}\n`,
-      `author:  ${author}\n`,
-      `timestamp: ${timestamp}\n`,
-      `created_at: ${timestamp}\n`,
-      `published_at: ${timestamp}\n`,
-      `slug:    ${slug}\n`,
-      `ogDescription: ${DEFAULT_OG_DESCRIPTION}\n`,
-      '---\n',
+      `title:   ${title}  \n`,
+      `author:  ${author}  \n`,
+      `timestamp: ${timestamp}  \n`,
+      `created_at: ${timestamp}  \n`,
+      `published_at: ${timestamp}  \n`,
+      `slug:    ${slug}  \n`,
+      `ogDescription: ${DEFAULT_OG_DESCRIPTION}  \n`,
+      '  \n---\n',
       `${body}\n`,
     ].join('');
     const fileName = `${timestamp}_${slug}.md`;
@@ -108,8 +108,8 @@ class Posts {
       title,
       author,
       timestamp,
-      created_at,
-      published_at,
+      created_at: timestamp,
+      published_at: timestamp,
       slug,
       body,
       file: {
