@@ -10,6 +10,7 @@ block og
   meta(name='og:type' content='article')
   meta(name='og:description' content=htmlWebpackPlugin.options.og.description)
 block content
-  h1.section-heading
-    +breadcrumbs({ text: htmlWebpackPlugin.options.md.meta.title })
+  div.breadcrumbs-container
+    +breadcrumbs({ text: htmlWebpackPlugin.options.md.meta.slug })
+  h1.section-heading= htmlWebpackPlugin.options.md.meta.title
   div.page-content !{htmlWebpackPlugin.options.md.html}

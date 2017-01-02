@@ -1,0 +1,15 @@
+@import '_variables';
+
+#code-stats__container
+  .code-stats
+    &__language
+      width 50%
+      padding $base-padding
+      &--name,
+      &--count
+        margin-right $base-padding
+      &--name
+        font-weight bold
+        &:after
+          content ': '
+      

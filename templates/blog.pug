@@ -10,8 +10,9 @@ block og
   meta(name='og:type' content='article:section')
 
 block content
-  h1.section-heading
+  div.breadcrumbs-container
     +breadcrumbs({ text: 'Posts' })
+  h1.section-heading Posts
   div.posts
     ul.posts__list
       each post in htmlWebpackPlugin.options.posts
@@ -19,8 +20,7 @@ block content
           .post__container
             h1.post__title
               a.post__title--link(href='/' + post.meta.permalink, id=post.meta.slug)= post.meta.title
-            .post__author by #{ post.meta.author }
-            .post__published= post.meta.timestamp
+            +postmeta(post)
             .post__body !{ post.html }
 
 

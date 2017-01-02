@@ -5,8 +5,8 @@ block title
   title #{ htmlWebpackPlugin.options.title }
 
 block content
-  h1.section-heading
+  div.breadcrumbs-container
     +breadcrumbs({ text: 'Code' })
+  h1.section-heading Code
   div.page-content
-    .code-stats__container
-    .code-repos__container
+    #code-stats__container

@@ -1,19 +1,6 @@
 @import '~normalize.css'
 @import '_variables';
 
-// Temporarily hide heading container until rest of site is done
-// TODO: unhide this later
-#header-container
-  visibility hidden
-
-anchor-tag-style()
-  text-decoration none
-  color $base-font-color
-  &:visited
-    color $base-font-color
-  &:hover
-    text-decoration underline
-
 body
   background-color $base-font-color-inverse
 
@@ -21,8 +8,9 @@ body
 #main-container
   width 100vw
   height 100vh - $header-container-height
-
 .svg-grid
+  height 100%
+  width 100%
   z-index -1
   position absolute
   top 0
@@ -44,23 +32,39 @@ body
     margin 0 auto 0 auto
 
 .section-heading
+  standard-section-heading-text()
   border $container-border
-  font-family $heading-font-stack
-  text-transform lowercase
   padding $base-padding
   background-color $base-font-color-inverse
+  padding-left $base-padding
+  +above(0)
+    margin $base-padding
+  +above('m')
+    margin $base-padding auto 0 auto
+    
+.breadcrumbs-container
+  padding 0
+  margin 0 auto 0 auto
+  font-family $heading-font-stack
+  // background $black
+  text-transform lowercase
+  // border $container-border
+  +above(0)
+    margin 0
+  +above('m')
+    margin 0 auto 0 auto
 
 .breadcrumbs
   margin 0
   padding 0
-  width 100%
+  // width 100%
   overflow-x hidden
   display flex
   +above(0)
     font-size $base-font-size * 0.50
     flex-direction column
   +above('m')
-    flex-direction column
+    flex-direction row
     font-size $base-font-size * 0.65
   +above('l')
     font-size $base-font-size * 0.75
@@ -70,9 +74,12 @@ body
   &__item
     list-style-type none
     display inline
-    padding $base-padding
     &:first-child
       padding-left 0
+    &:nth-child(2)
+      padding-left $base-padding
+    padding 0
+    margin 0
     &--link
       anchor-tag-style()
     &--link
@@ -83,6 +90,13 @@ body
         display inline
       &:after
         content '/'
+
+.page-content
+  standard-margin()
+  background-color $black
+  border $container-border
+  font-family $base-font-stack
+  padding $base-padding
 
 .home-page
   &__container
@@ -192,9 +206,13 @@ body
       padding $base-padding
       text-align center
       &:first-child
+        padding-left 0
         text-align left
         +below('m')
           display none
+      &:nth-child(2)
+        +below('m')
+          padding-left 0
       flex 4 4
       &--anchor
         anchor-tag-style()
@@ -213,3 +231,11 @@ body
             height $subheading-font-size * 2
           +above('m')
             display none
+
+// BROWSER-SPECIFIC Stuff
+
+.safari
+  // Filters are not properly handled by safari
+  filter none
+
+

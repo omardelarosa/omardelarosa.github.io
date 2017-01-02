@@ -93,44 +93,43 @@ pre code {
 .post__container {
   border: 3px solid #c7c7c7;
   padding: 10px;
-  margin: 10px auto 0 auto;
   text-align: left;
   background-color: #191919;
   overflow: scroll;
 }
 @media only screen {
   .post__container {
-    width: 90%;
+    margin: 10px;
   }
 }
 @media only screen and (min-width: 600px) {
   .post__container {
-    width: 93%;
-  }
-}
-@media only screen and (min-width: 800px) {
-  .post__container {
-    width: 95%;
-  }
-}
-@media only screen and (min-width: 1050px) {
-  .post__container {
-    width: 97%;
+    margin: 10px auto 0 auto;
   }
 }
 .post__title {
-  font-family: 'Roboto', sans-serif;
-  color: #5ed7ff;
-  font-size: 3rem;
+  color: #50b7d9;
+  font-size: 2.5rem;
 }
-.post__author {
-  font-family: 'Inconsolata', monospace;
-  font-size: 0.75em;
-  letter-spacing: 0.025em;
+.post__author--link {
+  text-decoration: none;
+  color: #fff;
+}
+.post__author--link:visited {
+  color: #fff;
+}
+.post__author--link:hover {
+  text-decoration: underline;
+}
+.post__author:before {
+  content: 'by ';
 }
 .post__body {
   font-family: 'Roboto', sans-serif;
   letter-spacing: 0.025em;
+}
+.post__published {
+  font-style: italic;
 }
 .post__title--link {
   text-decoration: none;
@@ -142,6 +141,15 @@ pre code {
 .post__title--link:hover {
   text-decoration: underline;
 }
+.post__meta {
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.5em;
+  color: #fff;
+  letter-spacing: 0.025em;
+}
+.post__meta span {
+  margin-right: 10px;
+}
 .posts__list {
   margin: 0;
   padding-left: 0;
@@ -151,14 +159,18 @@ pre code {
 }
 .posts .post__title {
   font-size: 2.5rem;
+  margin: 10px auto 10px auto;
+}
+.posts .post__meta {
+  font-size: 0.75em;
 }
 @media only screen {
-  .section-heading {
+  .breadcrumbs-container {
     display: none;
   }
 }
 @media only screen and (min-width: 600px) {
-  .section-heading {
+  .breadcrumbs-container {
     display: block;
   }
 }

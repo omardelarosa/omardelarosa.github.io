@@ -1,5 +1,6 @@
 mixin breadcrumbs(...items)
   ul.breadcrumbs
+    li.breadcrumbs__item= '> '
     li.breadcrumbs__item
       a.breadcrumbs__item--link(href='/') ~
     each item in items
@@ -8,6 +9,12 @@ mixin breadcrumbs(...items)
           a.breadcrumbs__item--link(href=item.href)= item.text
         else
           span.breadcrumbs__item--no-link= item.text
+
+mixin postmeta(post)
+  .post__meta
+    span.post__author
+      a.post__author--link(href=post.meta.author_url)= post.meta.author
+    span.post__published= post.meta.datestring
 
 mixin addscripts()
   script(src='/assets/js/ga.js')

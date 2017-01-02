@@ -28,7 +28,11 @@ const postConfigs = posts.map(
   })
 );
 
-const recentPosts = _.take(posts, 10);
+const recentPosts = _.chain(posts)
+  .sortBy([ 'meta.timestamp' ])
+  .reverse()
+  .take(10)
+  .value();
 
 const blogIndexConfig = {
   ...baseConfig,

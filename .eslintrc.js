@@ -51,5 +51,6 @@ module.exports = {
     'array-bracket-spacing': 0,
     'no-constant-condition': 0,
     'keyword-spacing': 1,
+    'no-use-before-define': 0
   }
 };

@@ -13,27 +13,28 @@
     <meta name="og:type" content="website">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata:700|Press+Start+2P|Roboto:400,400i,700" rel="stylesheet">
-  <link href="../dist/app.css" rel="stylesheet"></head>
+  <link href="../dist/app.css" rel="stylesheet"><link href="../dist/code.css" rel="stylesheet"></head>
   <body role="document">
     <div id="header-container"></div>
     <div id="main-container">
       <div id="background-container"></div>
       <div id="content-container">
-        <h1 class="section-heading">
+        <div class="breadcrumbs-container">
           <ul class="breadcrumbs">
+            <li class="breadcrumbs__item">&gt; </li>
             <li class="breadcrumbs__item"><a class="breadcrumbs__item--link" href="/">~</a></li>
             <li class="breadcrumbs__item"><span class="breadcrumbs__item--no-link">Code</span>
             </li>
           </ul>
-        </h1>
+        </div>
+        <h1 class="section-heading">Code</h1>
         <div class="page-content">
-          <div class="code-stats__container"></div>
-          <div class="code-repos__container"></div>
+          <div id="code-stats__container"></div>
         </div>
       </div>
     </div>
     <div id="footer"></div>
     <script src="/assets/js/ga.js"></script>
     <script src="/assets/js/fb.js"></script>
-  <script type="text/javascript" src="../dist/code.js"></script><script type="text/javascript" src="../dist/app.js"></script></body>
+  <script type="text/javascript" src="../dist/app.js"></script><script type="text/javascript" src="../dist/code.js"></script></body>
 </html>

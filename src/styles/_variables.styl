@@ -24,3 +24,26 @@ $container-border = $standard-border-width solid $standard-border-color
 $heading-container-base-height = 60px
 
 $base-padding = 10px;
+
+$base-letter-spacing = 0.025em
+
+// Mixins
+anchor-tag-style()
+  text-decoration none
+  color $base-font-color
+  &:visited
+    color $base-font-color
+  &:hover
+    text-decoration underline
+    
+standard-margin()
+  +above(0)
+    margin $base-padding
+  +above('m')
+    margin $base-padding auto 0 auto
+
+standard-section-heading-text()
+  font-family $base-font-stack
+  color $blue
+  font-size $heading-font-size * 1.5
+  letter-spacing $base-letter-spacing

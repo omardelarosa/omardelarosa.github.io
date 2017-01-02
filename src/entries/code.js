@@ -1,45 +1,10 @@
-/* eslint-disable no-use-before-define */
-import isEmpty from 'lodash/isEmpty';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-function fetchGithubData(cb) {
-  let reposRaw = [];
-  let pageNum = 1;
-  const maxPage = 3;
-  const handleFetch = (res) => {
-    if (res.status >= 400) {
-      // TODO: handle errors
-      return cb(null, reposRaw);
-    }
-    return res.json();
-  };
+import '../styles/code.styl';
+import CodeStats from '../components/CodeStats';
 
-  const handleJSON = (json) => {
-    if (isEmpty(json)) return cb(null, reposRaw);
-    reposRaw = [ ...reposRaw, ...json ];
-    pageNum += 1;
-    if (pageNum < maxPage) {
-      return fetchGithubPage();
-    } else {
-      return cb(null, reposRaw);
-    }
-  };
-
-  const fetchGithubPage = () => {
-    fetch(
-      `https://api.github.com/users/omardelarosa/repos?page=${pageNum}`
-    )
-      .then(handleFetch)
-      .then(handleJSON);
-  };
-
-  fetchGithubPage();
-}
-
-console.log('Coming Soon');
-
-// fetchGithubData((err, githubData) => {
-//   if (err) {
-//     throw err;
-//   }
-//   console.log('GH', githubData);
-// });
+ReactDOM.render(
+  <CodeStats />,
+  document.getElementById('code-stats__container')
+);

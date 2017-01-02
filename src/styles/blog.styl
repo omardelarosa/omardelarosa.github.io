@@ -17,36 +17,38 @@ pre
 
 .post
   &__container
+    standard-margin()
     border $container-border
-    +above(0)
-      width 90%
-    +above('m')
-      width 93%
-    +above('l')
-      width 95%
-    +above('xl')
-      width 97%
     padding $base-padding
-    margin 10px auto 0 auto
     text-align left
     background-color $base-font-color-inverse
     overflow scroll
   &__title
-    font-family $base-font-stack
-    color $blue
-    font-size $heading-font-size * 1.5
+    color $blue-bright
+    font-size $heading-font-size * 1.25
   &__author
-    font-family $monospace-font-stack
-    font-size 0.75em
-    letter-spacing 0.025em
+    &--link
+        anchor-tag-style()
+      &:before
+        content 'by '
   &__body
     font-family $base-font-stack
-    letter-spacing 0.025em
+    letter-spacing $base-letter-spacing
+  &__published
+    font-style italic
   &__title--link
     text-decoration none
     post-anchor()
     &:hover
       text-decoration underline
+  &__meta
+    font-family $base-font-stack
+    font-size $base-font-size * 0.5
+    color $white
+    letter-spacing $base-letter-spacing
+    span
+      margin-right $base-padding
+
 .posts
   &__list
     margin 0
@@ -56,8 +58,10 @@ pre
   .post
     &__title
       font-size $heading-font-size * 1.25
-
-.section-heading
+      margin $base-padding auto $base-padding auto
+    &__meta
+      font-size $base-font-size * 0.75
+.breadcrumbs-container
   +above(0)
     display none
   +above('m')

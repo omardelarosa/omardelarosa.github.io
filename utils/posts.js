@@ -6,11 +6,12 @@ const slugify = require('slug');
 const fs = require('fs');
 const clc = require('cli-color');
 const markdown = require('./markdown');
-
+const timeUtils = require('./time');
 const POSTS_PATH = '_posts/';
 const FULL_POSTS_PATH = path.join(__dirname, '..', POSTS_PATH);
 const slugInFileRE = new RegExp(`${POSTS_PATH}\\d+_([\\w-]+)\\.md`);
 const DEFAULT_AUTHOR = 'omardelarosa';
+const DEFAULT_AUTHOR_URL = '/pages/bio.html';
 const DEFAULT_TITLE = 'Untitled Post';
 const DEFAULT_BODY = 'Begin writing here..';
 const DEFAULT_OG_DESCRIPTION = 'an article about life, technology and/or music by omar delarosa';
@@ -85,6 +86,7 @@ class Posts {
     const author = opts.author || DEFAULT_AUTHOR;
     const timestamp = opts.timestamp || Date.now();
     const slug = this.generateSlug(opts.slug, title);
+    const datestring = timeUtils.formatTimestamp(timestamp);
     const body = opts.body || DEFAULT_BODY;
 
     const fileString = [
@@ -92,6 +94,8 @@ class Posts {
       `title:   ${title}\n`,
       `author:  ${author}\n`,
       `timestamp: ${timestamp}\n`,
+      `created_at: ${timestamp}\n`,
+      `published_at: ${timestamp}\n`,
       `slug:    ${slug}\n`,
       `ogDescription: ${DEFAULT_OG_DESCRIPTION}\n`,
       '---\n',
@@ -104,6 +108,8 @@ class Posts {
       title,
       author,
       timestamp,
+      created_at,
+      published_at,
       slug,
       body,
       file: {
@@ -128,12 +134,15 @@ class Posts {
   }
 
   normalizeMarkdownImport({ meta, html, markdown }) {
+    const timestamp = Date.now();
     const post = {
       meta: {
         title: 'Untitled Post',
         author: 'Anonymous',
-        timestamp: Date.now(),
+        timestamp,
         ...meta,
+        created_at: meta.created_at || meta.timestamp || timestamp,
+        published_at: meta.published_at || meta.timestamp || timestamp,
       },
       html,
       markdown
@@ -147,6 +156,11 @@ class Posts {
     // Attaches Permalink to Post data
     post.meta.permalink = this.generatePermalinkOfPost(post);
 
+    // Attaches a formatted datestring for displaying publication date
+    post.meta.datestring = timeUtils.formatTimestamp(post.meta.published_at, 'post');
+
+    // TODO: make this dynamic
+    post.meta.author_url = DEFAULT_AUTHOR_URL;
     post.og = {
       description: post.meta.ogDescription || DEFAULT_OG_DESCRIPTION
     };

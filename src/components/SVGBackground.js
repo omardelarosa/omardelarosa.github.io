@@ -3,6 +3,9 @@ import random from 'lodash/random';
 import sample from 'lodash/sample';
 import React, { Component } from 'react';
 
+// Some SVG features don't work on certain browsers
+import browser from 'detect-browser';
+
 const getRGBColor = (rowNum, colNum, isDark = true) => {
   return isDark
     ? `rgb(255, ${rowNum * 1},${colNum * 2})`
@@ -78,7 +81,7 @@ class SVGBackground extends Component {
     const boxes = this.generateBoxes(elWidth, elHeight);
     return (
       <svg
-        className='svg-grid'
+        className={ [ 'svg-grid', browser.name ].join(' ') }
         width={ elWidth }
         height={ elHeight }
         viewBox={ '0 0 ' + elWidth + ' ' + elHeight }

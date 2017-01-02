@@ -1,0 +1,14 @@
+#code-stats__container .code-stats__language {
+  width: 50%;
+  padding: 10px;
+}
+#code-stats__container .code-stats__language--name,
+#code-stats__container .code-stats__language--count {
+  margin-right: 10px;
+}
+#code-stats__container .code-stats__language--name {
+  font-weight: bold;
+}
+#code-stats__container .code-stats__language--name:after {
+  content: ': ';
+}

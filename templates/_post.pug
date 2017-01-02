@@ -12,13 +12,13 @@ block og
 
 block content
   if htmlWebpackPlugin.options.post
-    h1.section-heading
+    div.breadcrumbs-container
       +breadcrumbs({ text: 'Posts', href: '/posts' }, { text: htmlWebpackPlugin.options.post.meta.slug })
+    h1.section-heading 
+      .section-heading__title= htmlWebpackPlugin.options.post.meta.title
+      .section-heading__subtitle.post__meta
+        +postmeta(htmlWebpackPlugin.options.post)
     .post__container
-      .post__title
-      h2.post__title= htmlWebpackPlugin.options.post.meta.title
-      .post__author by #{ htmlWebpackPlugin.options.post.meta.author }
-      .post__published= htmlWebpackPlugin.options.post.meta.timestamp
       .post__body !{ htmlWebpackPlugin.options.post.html }
 
   else
