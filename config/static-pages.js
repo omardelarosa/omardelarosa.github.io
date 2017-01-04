@@ -25,11 +25,11 @@ const getGenericDescription = (route) => {
 const baseConfig = {
   title: constants.SITE_TITLE,
   filename: path.join(PAGE_OUTPUT_PATH, 'index.html'),
-  template: 'pug?pretty!templates/main.pug',
+  template: 'pug?pretty!templates/index.pug',
   inject: true,
   hash: false,
   cache: true,
-  chunks: [ 'app' ],
+  chunks: [ 'app' ]
 };
 
 module.exports = [
@@ -42,7 +42,6 @@ module.exports = [
       if (route.markdown) {
         let mdString = loadMarkdownPage(route.markdown);
         md = mdUtils.parseMarkdown(mdString);
-
         if (!md.meta.slug) {
           md.meta.slug = route.slug;
         }
@@ -64,6 +63,11 @@ module.exports = [
       } else {
         template = generateTemplateLoaderString(route.template);
         title = route.title;
+        md = {
+          meta: {
+            slug: 'index'
+          }
+        }
       }
 
       return {

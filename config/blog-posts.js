@@ -39,7 +39,12 @@ const blogIndexConfig = {
   title: 'posts // omardelarosa.com',
   filename: path.join(__dirname, '..', 'posts/index.html'),
   template: 'pug?pretty!templates/blog.pug',
-  posts: recentPosts
+  posts: recentPosts,
+  post: {
+    meta: {
+      slug: 'index'
+    }
+  }
 };
 
 module.exports = [

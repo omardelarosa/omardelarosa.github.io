@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const staticPages = require('../config/static-pages');
 const blogPosts = require('../config/blog-posts');
+const SitemapPlugin = require('sitemap-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'production';
 
@@ -17,5 +18,19 @@ module.exports = {
 
     // Generate all posts based on contents of _posts/
     ...blogPosts.map(p => new HtmlWebpackPlugin(p)),
+
+    // Generate sitemaps
+    new SitemapPlugin(
+      'http://omardelarosa.com',
+      [
+        ...blogPosts.map(p => `/posts/${p.post.meta.slug}.html`),
+        ...staticPages.map(p => `/pages/${p.md.meta.slug}.html`)
+      ],
+      'sitemap.xml',
+      {
+        lastMod: true,
+        changeFreq: 'daily'
+      }
+    )
   ]
 };
