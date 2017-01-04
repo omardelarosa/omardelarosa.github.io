@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>posts // omardelarosa.com</title>
+    <title>Making a Markdown Blog Using Webpack</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <meta name="description" content="the website of omar delaorsa">
     <meta name="author" content="omardelarosa">
     <meta name="og:site_name" content="the website of omar delarosa">
     <meta name="og:image" content="http://www.omardelarosa.com/assets/images/og-image.png">
-    <meta name="og:url" content="http://www.omardelarosa.com/pages/posts/">
-    <meta name="og:title" content="posts // omardelarosa.com">
-    <meta name="og:type" content="article:section">
+    <meta name="og:url" content="http://www.omardelarosa.com/posts/making-a-markdown-blog-using-webpack.html">
+    <meta name="og:title" content="making a markdown blog using webpack // posts // omardelarosa.com">
+    <meta name="og:type" content="article">
+    <meta name="og:description" content="an article about making a static-file blog using webpack and html-webpack-plugin by omar delarosa">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata:700|Press+Start+2P|Roboto:400,400i,700" rel="stylesheet">
   <link href="../dist/blog.css" rel="stylesheet"><link href="../dist/app.css" rel="stylesheet"></head>
@@ -23,18 +24,20 @@
           <ul class="breadcrumbs">
             <li class="breadcrumbs__item">&gt; </li>
             <li class="breadcrumbs__item"><a class="breadcrumbs__item--link" href="/">~</a></li>
-            <li class="breadcrumbs__item"><span class="breadcrumbs__item--no-link">Posts</span>
+            <li class="breadcrumbs__item"><a class="breadcrumbs__item--link" href="/posts">Posts</a>
+            </li>
+            <li class="breadcrumbs__item"><span class="breadcrumbs__item--no-link">making-a-markdown-blog-using-webpack</span>
             </li>
           </ul>
         </div>
-        <h1 class="section-heading">Posts</h1>
-        <div class="posts">
-          <ul class="posts__list">
-            <li class="posts__list__item">
-              <div class="post__container">
-                <h1 class="post__title"><a class="post__title--link" href="/posts/making-a-markdown-blog-using-webpack.html" id="making-a-markdown-blog-using-webpack">Making a Markdown Blog Using Webpack</a></h1>
-                <div class="post__meta"><span class="post__author"><a class="post__author--link" href="/pages/bio.html">omardelarosa</a></span><span class="post__published">January 3rd 2017, 11:31:09 pm</span></div>
-                <div class="post__body"><h2 id="a-brief-background">A Brief Background</h2>
+        <h1 class="section-heading"> 
+          <div class="section-heading__title">Making a Markdown Blog Using Webpack</div>
+          <div class="section-heading__subtitle post__meta">
+            <div class="post__meta"><span class="post__author"><a class="post__author--link" href="/pages/bio.html">omardelarosa</a></span><span class="post__published">January 3rd 2017, 11:31:09 pm</span></div>
+          </div>
+        </h1>
+        <div class="post__container">
+          <div class="post__body"><h2 id="a-brief-background">A Brief Background</h2>
 <p>When I started working on this site, my first hunch was to use that <a href="https://jekyllrb.com/">classic static website builder, Jekyll</a>.  It&#39;s simplicity and tight github integration seemed great.  However, there&#39;s just one issue:  it&#39;s not easily integrated with <a href="https://webpack.github.io/">Webpack</a> and the rest of the modern front-end dev stack.  In fact, it seems written for Ruby on Rails devs--but let&#39;s save that for another post.</p>
 <p>Shortly after starting to look beyond Jekyll, I started fiddling around with the <a href="https://github.com/ampedandwired/html-webpack-plugin"><code>html-webpack-plugin</code></a> and realized:  wait a minute I think I can make a perfectly suitable blog with just this.</p>
 <h2 id="configuring-webpack">Configuring Webpack</h2>
@@ -263,37 +266,6 @@
 </ul>
 <p>Although there are a couple other things going on in the webpack configs for this project (such as a distinction between static <code>pages</code> and <code>posts</code>), the principles are basically the same as the above examples.</p>
 </div>
-              </div>
-            </li>
-            <li class="posts__list__item">
-              <div class="post__container">
-                <h1 class="post__title"><a class="post__title--link" href="/posts/new-blog.html" id="new-blog">A New Way of Blogging</a></h1>
-                <div class="post__meta"><span class="post__author"><a class="post__author--link" href="/pages/bio.html">omardelarosa</a></span><span class="post__published">January 2nd 2017, 6:12:59 pm</span></div>
-                <div class="post__body"><p>It&#39;s been a while since I wrote a blog post.  Why?  Well on the one hand, I&#39;ve had a shortage of free time.  On the other, I&#39;ve spent way too much time configuring and dealing with <a href="http://omardelarosa.tumblr.com">random</a> <a href="http://blog.omardelarosa.com">blogging</a> platforms  without really getting the things I want out of them:</p>
-<ol>
-<li>The ability to write in Markdown.</li>
-<li>Simple syntax highlighting for code.</li>
-<li>Manage my own post data using the file system.</li>
-<li>Use modern web development tools to build.</li>
-<li>Easy to publish from a bash terminal.</li>
-</ol>
-<p>These factors have made blogging just not feel very fun to me over the past few years.  However, over this past winter holiday, I decided to spend a few of my vacation days building my own platform with all of the above features.  </p>
-<p>This very post is in fact, <a href="http://github.com/omardelarosa/omardelarosa.github.io/blob/master/_posts/1483396849251_new-blog.md">written in pure markdown</a>.  It also supports:</p>
-<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> msgArray = [
-    <span class="hljs-string">'easy'</span>, <span class="hljs-string">'syntax'</span>, <span class="hljs-string">'highlighting'</span>
-].<span class="hljs-keyword">join</span>(<span class="hljs-string">' '</span>);
-</code></pre>
-<p>As for the data itself, the entire system doesn&#39;t require databases or a backend.  It uses the file system and compiles markdown (as well as ES6, stylus, etc.) to plain static assets using modern build tools like webpack.</p>
-<p>Best of all, I can publish from the terminal with a simple:</p>
-<pre><code class="lang-bash"><span class="hljs-string">$ </span>npm run build
-<span class="hljs-string">$ </span>git commit -m <span class="hljs-comment">"Added a new post!"</span>
-<span class="hljs-string">$ </span>git push origin master
-</code></pre>
-<p>So yeah, this new website is still a work in progress, but more posts and updates to come.</p>
-</div>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
     </div>

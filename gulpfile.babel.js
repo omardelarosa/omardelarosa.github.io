@@ -39,7 +39,7 @@ gulp.task('generate-posts-index', (done) => {
   const posts = new Posts();
   const filteredPostData = posts
     .allPosts
-    .map(({ meta, markdown }) => ({ meta, markdown }));
+    .map(({ meta }) => ({ meta }));
   const jsonString = JSON.stringify(filteredPostData);
   fs.writeFile('./posts/index.json', jsonString, done);
 });
