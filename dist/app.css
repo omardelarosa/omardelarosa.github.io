@@ -462,6 +462,15 @@ template {
 body {
   background-color: #191919;
 }
+pre {
+  background-color: #191919;
+  border: 1px solid #888;
+  padding: 10px;
+}
+code {
+  font-family: 'Inconsolata', monospace;
+  letter-spacing: 0.05em;
+}
 #root,
 #main-container {
   width: 100vw;

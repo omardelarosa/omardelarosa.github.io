@@ -28,6 +28,15 @@ $base-padding = 10px;
 $base-letter-spacing = 0.025em
 
 // Mixins
+syntax-block-style()
+  background-color $base-font-color-inverse
+  border 1px solid #888
+  padding $base-padding
+
+syntax-text-style()
+  font-family $monospace-font-stack
+  letter-spacing 0.05em
+
 anchor-tag-style()
   text-decoration none
   color $base-font-color
