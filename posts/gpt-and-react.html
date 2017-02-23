@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Publisher Tags and React Playing in Harmony</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="description" content="the website of omar delaorsa">
+    <meta name="author" content="omardelarosa">
+    <meta name="og:site_name" content="the website of omar delarosa">
+    <meta name="og:image" content="http://www.omardelarosa.com/assets/images/og-image.png">
+    <meta name="og:url" content="http://www.omardelarosa.com/posts/gpt-and-react.html">
+    <meta name="og:title" content="google publisher tags and react playing in harmony // posts // omardelarosa.com">
+    <meta name="og:type" content="article">
+    <meta name="og:description" content="an article about using react and google publisher tag together in harmony">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:700|Press+Start+2P|Roboto:400,400i,700" rel="stylesheet">
+  <link href="../dist/blog.css" rel="stylesheet"><link href="../dist/app.css" rel="stylesheet"></head>
+  <body role="document">
+    <div id="header-container"></div>
+    <div id="main-container">
+      <div id="background-container"></div>
+      <div id="content-container">
+        <div class="breadcrumbs-container">
+          <ul class="breadcrumbs">
+            <li class="breadcrumbs__item">&gt; </li>
+            <li class="breadcrumbs__item"><a class="breadcrumbs__item--link" href="/">~</a></li>
+            <li class="breadcrumbs__item"><a class="breadcrumbs__item--link" href="/posts">Posts</a>
+            </li>
+            <li class="breadcrumbs__item"><span class="breadcrumbs__item--no-link">gpt-and-react</span>
+            </li>
+          </ul>
+        </div>
+        <h1 class="section-heading"> 
+          <div class="section-heading__title">Google Publisher Tags and React Playing in Harmony</div>
+          <div class="section-heading__subtitle post__meta">
+            <div class="post__meta"><span class="post__author"><a class="post__author--link" href="/pages/bio.html">omardelarosa</a></span><span class="post__published">February 22nd 2017, 10:33:51 pm</span></div>
+          </div>
+        </h1>
+        <div class="post__container">
+          <div class="post__body"><h1 id="doing-google-publisher-tags-the-react-way">Doing Google Publisher Tags the React Way</h1>
+<p>For all the wonders Webpack and Babel have brought to Front-End JavaScript, the modern, modular applications you build with those tools don&#39;t play well with third-party, drop-this-JavaScript-snippet-in-the-head-tag libraries.</p>
+<p>For example, <a href="https://developers.google.com/doubleclick-gpt/reference">Google Publisher Tag (aka GPT)</a> has a great API and lots of clear documentation.  Unfortunately, they expect something clunky and external to your nice, modern bundled ES2017 application.  They expect something like this at the top of your markup:</p>
+<pre><code class="lang-html"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">async</span>=<span class="hljs-string">"async"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://www.googletagservices.com/tag/js/gpt.js"</span>&gt;</span><span class="undefined">
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
+      <span class="hljs-keyword">var</span> googletag = googletag || </span></span><span class="hljs-template-variable">{}</span><span class="xml"><span class="undefined">;
+      googletag.cmd = googletag.cmd || [];
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">'root'</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span>
+</code></pre>
+<p>Meanwhile, the rest of your modern, modular, ES2017 application code looks like a jumble of <code>() =&gt; {}</code> Arrow Functions, <code>class</code> keywords, <code>const</code> and <code>let</code> and <code>import</code> and <code>...</code> and... you get the idea.</p>
+<p>By comparison, GPT&#39;s closure-y architecture feels retro.</p>
+<h2 id="reconciling-retro-libraries-with-modern-application-code">Reconciling Retro Libraries with Modern Application Code</h2>
+<p>Alright, so very recently, I was working on a project in which I needed to fix a race condition between GPT and a React component.  What would happen was that React would render the DOM (including all the ad containers), fire all their respective component-lifecycle events before GPT was ready.</p>
+<p>After treading water and pulling my hair out for hours, I stumbled upon a very simple way to keep everything in sync.</p>
+<p>First, you need do load GPT in your head tag.  Duh:</p>
+<pre><code class="lang-javascript">var googletag = googletag <span class="hljs-string">|| {};</span>
+googletag.cmd = googletag.cmd <span class="hljs-string">|| [];</span>
+</code></pre>
+<p>Now you can let the <code>&lt;script async=&quot;async&quot; src=&quot;https://www.googletagservices.com/tag/js/gpt.js&quot;&gt;</code> take its sweet time loading, because you have that handy-dandy <code>cmd</code> <code>Array</code>.</p>
+<p>According to <a href="https://developers.google.com/doubleclick-gpt/common_implementation_mistakes">this one Google article about avoiding implementation mistakes</a>, this handy <code>cmd</code> <code>Array</code> can be your best friend.</p>
+<p>Assuming a <code>React</code> situation kinda of like this:</p>
+<pre><code class="lang-jsx">
+<span class="hljs-keyword">import</span> <span class="hljs-type">React</span>, { <span class="hljs-type">Component</span> } from <span class="hljs-symbol">'reac</span>t';
+<span class="hljs-keyword">import</span> { render } from <span class="hljs-symbol">'react</span>-dom';
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AdUnit</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
+
+    componentDidMount() {
+        <span class="hljs-keyword">this</span>.beginGPTsetup();
+    }
+
+    beginGPTSetup = () =&gt; {
+        <span class="hljs-comment">// Begin GPT slot rendering, etc.    </span>
+    }
+
+    render() {
+        <span class="hljs-keyword">return</span> (
+            &lt;div id=<span class="hljs-symbol">'ad</span>-selector-abc'&gt;&lt;/div&gt;
+        );
+    }
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
+    render() {
+        <span class="hljs-keyword">return</span> (
+            &lt;div&gt;
+                &lt;h1&gt;<span class="hljs-type">My</span> <span class="hljs-type">Application</span> <span class="hljs-type">Heading</span>&lt;/h1&gt;
+                &lt;div&gt;<span class="hljs-type">Content</span> <span class="hljs-type">Fragment</span> <span class="hljs-number">1</span>&lt;/div&gt;
+                &lt;<span class="hljs-type">AdUnit</span> /&gt;
+                &lt;div&gt;<span class="hljs-type">Content</span> <span class="hljs-type">Fragment</span> <span class="hljs-number">2</span>&lt;/div&gt;
+            &lt;div&gt;
+        )
+  }
+}
+
+render(&lt;<span class="hljs-type">App</span> /&gt;, document.getElementById(<span class="hljs-symbol">'roo</span>t'));
+</code></pre>
+<p>As much as you can control what happens <em>inside</em> You can never really guarantee that GPT will be ready and fully loaded by the time your <code>&lt;App /&gt;</code> goes to render the <code>&lt;AdUnit /&gt;</code>.</p>
+<p>However, with a few modifications, you can use React&#39;s own <code>state</code> to control your timing and avoid race conditions.</p>
+<p>Let&#39;s add a few lifecycle methods to the <code>App</code> component:</p>
+<pre><code class="lang-jsx"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
+    <span class="hljs-comment">// Create an initial state.</span>
+    state = {
+        <span class="hljs-comment">// Ensure that the GPTHasLoaded boolean is false</span>
+        <span class="hljs-type">GPTHasLoaded</span>: <span class="hljs-literal">false</span>
+    }
+
+    componentWillMount() {
+        <span class="hljs-comment">// Let's destructure the cmd array out of GPT.</span>
+        const { googletag: { cmd }} = window;
+
+        <span class="hljs-comment">// Feel free to get really paranoid here and check for Array-ness, too.</span>
+        <span class="hljs-keyword">if</span> (cmd) {
+            <span class="hljs-comment">// Enqueue a function onto GPT</span>
+            cmd.push(() =&gt; <span class="hljs-keyword">this</span>.setState({ <span class="hljs-type">GPTHasLoaded</span>: <span class="hljs-literal">true</span> });
+        }
+    }
+
+    render() {
+        <span class="hljs-comment">// Reference the GPT boolean here.</span>
+        const { state: { <span class="hljs-type">GPTHasLoaded</span> }} = <span class="hljs-keyword">this</span>;
+        <span class="hljs-keyword">return</span> (
+            &lt;div&gt;
+                &lt;h1&gt;<span class="hljs-type">My</span> <span class="hljs-type">Application</span> <span class="hljs-type">Heading</span>&lt;/h1&gt;
+                &lt;div&gt;<span class="hljs-type">Content</span> <span class="hljs-type">Fragment</span> <span class="hljs-number">1</span>&lt;/div&gt;
+                { <span class="hljs-type">GPTHasLoaded</span> &amp;&amp; &lt;<span class="hljs-type">AdUnit</span> /&gt; }
+                &lt;div&gt;<span class="hljs-type">Content</span> <span class="hljs-type">Fragment</span> <span class="hljs-number">2</span>&lt;/div&gt;
+            &lt;div&gt;
+        )
+  }
+}
+</code></pre>
+<p>And voila!  Now React&#39;s own lifecycle methods will take care of avoiding race conditions.</p>
+<p>The secret lies in how this little guy:</p>
+<pre><code class="lang-javascript">cmd.push(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">this</span>.setState({ GPTHasLoaded: <span class="hljs-literal">true</span> });
+</code></pre>
+<p>Kind of combines the best of both GPT and React in one little lambda callback of goodness.</p>
+<p>Because googletag&#39;s <code>cmd</code> queue is automatically picked up once GPT is ready, it will process your <code>setState</code> if and only if GPT has loaded.  Or in their words:</p>
+<blockquote>
+<p>googletag.cmd maintains a list of commands that will be run as soon as GPT is ready. This is the correct way to make sure your callback is run when GPT has loaded.</p>
+</blockquote>
+<p>This avoids using any event-listeners or clumsy <code>googletag.apiReady</code> checks or <code>scriptEl.onload = function () {}</code>-style callbacks.</p>
+<p>Instead, you let <code>React</code> be <code>React</code> and <code>GPT</code> be <code>GPT</code>.  A shiny, new modern library working in tandem with a semi-retro, closure-y one.</p>
+<p>[ Insert GIF of React logo shaking hands with Google For Publishers Logo Here ]</p>
+</div>
+        </div>
+      </div>
+    </div>
+    <div id="footer"></div>
+    <script src="/assets/js/ga.js"></script>
+    <script src="/assets/js/fb.js"></script>
+  <script type="text/javascript" src="../dist/blog.js"></script><script type="text/javascript" src="../dist/app.js"></script></body>
+</html>
