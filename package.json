@@ -67,7 +67,9 @@
     "server": "gulp dev-server",
     "build": "npm run clean && gulp build",
     "test": "gulp lint",
-    "create-post": "node tasks/create-post.js"
+    "create-post": "node tasks/create-post.js",
+    "deploy": "./deploy.sh",
+    "publish": "npm run build && npm run deploy"
   },
   "author": "",
   "license": "ISC"

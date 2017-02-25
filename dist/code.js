@@ -24130,9 +24130,7 @@
 	    options = options || {};
 	    var body = options.body;
 
-	    if (typeof input === 'string') {
-	      this.url = input;
-	    } else {
+	    if (input instanceof Request) {
 	      if (input.bodyUsed) {
 	        throw new TypeError('Already read');
 	      }
@@ -24147,6 +24145,8 @@
 	        body = input._bodyInit;
 	        input.bodyUsed = true;
 	      }
+	    } else {
+	      this.url = String(input);
 	    }
 
 	    this.credentials = options.credentials || this.credentials || 'omit';
@@ -24182,7 +24182,7 @@
 
 	  function parseHeaders(rawHeaders) {
 	    var headers = new Headers();
-	    rawHeaders.split('\r\n').forEach(function (line) {
+	    rawHeaders.split(/\r?\n/).forEach(function (line) {
 	      var parts = line.split(':');
 	      var key = parts.shift().trim();
 	      if (key) {
