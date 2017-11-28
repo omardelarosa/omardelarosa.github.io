@@ -1,7 +1,7 @@
 {
   "name": "odlr2",
   "version": "1.0.0",
-  "description": "a personal website for omar delarosa",
+  "description": "a personal website for omar delarosa.",
   "main": "index.js",
   "dependencies": {
     "babel": "^6.5.2",
