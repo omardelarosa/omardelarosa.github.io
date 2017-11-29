@@ -4,6 +4,10 @@
 echo "Pushing to Github..."
 git push origin master
 
+# sync with S3
+echo "Syncing S3..."
+aws s3 sync . s3://nabisco/ --exclude "node_modules/*" --exclude ".*"
+
 # purge cloudflare cache
 echo "Purging CloudFlare cache..."
 curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
