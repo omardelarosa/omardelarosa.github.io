@@ -19,7 +19,7 @@ const loadMarkdownPage = (mdFilename) => {
 const generateTemplateLoaderString = (templateName) => `pug?pretty!templates/${templateName}`
 
 const getGenericDescription = (route) => {
-  return `${route.title.toLowerCase()} page // omardelarosa.com`;
+  return `${route.title.toLowerCase()} page | omardelarosa.com`;
 }
 
 const baseConfig = {
@@ -45,9 +45,9 @@ module.exports = [
         if (!md.meta.slug) {
           md.meta.slug = route.slug;
         }
-        
+
         if (md.meta.ogDescription) {
-          og.description = md.meta.ogDescription;          
+          og.description = md.meta.ogDescription;
         } else {
           og.description = getGenericDescription(route);
         }
@@ -72,7 +72,7 @@ module.exports = [
 
       return {
         ...baseConfig,
-        title: `${title.toLowerCase()} // omardelarosa.com`,
+        title: `${title.toLowerCase()} | omardelarosa.com`,
         filename: path.join(PAGE_OUTPUT_PATH, `${route.slug}.html`),
         template,
         chunks: [ ...baseConfig.chunks, ...(route.chunks || [])],

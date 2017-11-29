@@ -36,7 +36,7 @@ const recentPosts = _.chain(posts)
 
 const blogIndexConfig = {
   ...baseConfig,
-  title: 'posts // omardelarosa.com',
+  title: 'posts | omardelarosa.com',
   filename: path.join(__dirname, '..', 'posts/index.html'),
   template: 'pug?pretty!templates/blog.pug',
   posts: recentPosts,

@@ -3,7 +3,7 @@
 module.exports = [
   {
     slug: 'index',
-    title: 'the website of omar delarosa',
+    title: 'omar delarosa\'s website',
     template: 'index.pug'
   },
   {
