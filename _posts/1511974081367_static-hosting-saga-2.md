@@ -1,5 +1,5 @@
 ---
-title:   East HTTPS Static Hosting AWS S3 + CloudFlare
+title:   Easy HTTPS Static Hosting AWS S3 + CloudFlare
 author:  omardelarosa  
 timestamp: 1511974081367  
 created_at: 1511974081367  
@@ -9,7 +9,7 @@ ogDescription: an article about getting static hosting to work via Amazon S3 and
   
 ---
 
-After a bit more investigation yesterday, I realized that github pages forces my website headers to always be 30x.  This is not ideal. Furthermore, it makes it tough to use `https` protocol for my custom domain which is now a requirement for appearing in any kind of search results.
+After a bit more investigation yesterday, I realized that github pages forces my website headers to always be 30x.  This is not ideal. Furthermore, it makes it tough to use `https` protocol for my custom domain, which [google now favors in search results.](https://thenextweb.com/google/2015/12/17/unsecured-websites-are-about-to-get-hammered-in-googles-search-ranking/)
 
 Thought I was never one to fully [blog like a hacker](http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html), I'm now even closer to that hacker-blogging destiny by hosting this page via S3 + CloudFront.  Without going too deep into the "why", I think with the limited time available for personal projects the low devops-y maintenance overhead for using static files instead of WordPress or fancy CMS is the main appeal.
 
