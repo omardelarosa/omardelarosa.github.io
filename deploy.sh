@@ -22,4 +22,4 @@ echo "\n"
 
 echo "Uploading site maps to Google"
 # notify google of sitemap change
-curl 'http://www.google.com/webmasters/sitemaps/ping?sitemap=https://www.omardelarosa.com/dist/sitemap.xml'
+curl 'http://www.google.com/webmasters/sitemaps/ping?sitemap=https://omardelarosa.com/dist/sitemap.xml'
