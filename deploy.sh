@@ -6,7 +6,10 @@ git push origin master
 
 # sync with S3
 echo "Syncing S3..."
-aws s3 sync . s3://omardelarosa.com/ --exclude "node_modules/*" --exclude ".*"
+aws s3 sync . s3://omardelarosa.com/ \
+  --exclude "node_modules/*" \
+  --exclude ".*" \
+  --acl public-read
 
 # purge cloudflare cache
 echo "Purging CloudFlare cache..."
