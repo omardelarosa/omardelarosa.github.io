@@ -21,7 +21,7 @@ module.exports = {
 
     // Generate sitemaps
     new SitemapPlugin(
-      'http://omardelarosa.com',
+      'https://omardelarosa.com',
       [
         ...blogPosts.map(p => `/posts/${p.post.meta.slug}.html`),
         ...staticPages.map(p => `/pages/${p.md.meta.slug}.html`)
