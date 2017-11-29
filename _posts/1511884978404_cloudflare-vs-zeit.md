@@ -1,5 +1,5 @@
 ---
-title:   CloudFlare VS Zeit  
+title:   Static Hosting Updates 1
 author:  omardelarosa  
 timestamp: 1511884978404  
 created_at: 1511884978404  
