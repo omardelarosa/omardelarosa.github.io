@@ -32,6 +32,79 @@
           <ul class="posts__list">
             <li class="posts__list__item">
               <div class="post__container">
+                <h1 class="post__title"><a class="post__title--link" href="/posts/markov-chain-music.html" id="markov-chain-music">Making Markov Chain Hip Hop with SonicPi</a></h1>
+                <div class="post__meta"><span class="post__author"><a class="post__author--link" href="/pages/bio.html">omardelarosa</a></span><span class="post__published">June 5th 2018, 10:16:27 pm</span></div>
+                <div class="post__body"><p>For a long time, I&#39;ve tried to merge two significant pursuits in my life: music and code.  Although the two are not mutually exclusive, I&#39;ve pursued them each relatively independently of one another.  Or at least, <a href="https://littleinsects.bandcamp.com/">my primary music project, Little Insects</a> has never been overtly &quot;high tech&quot;.</p>
+<p><em>(Though, under the hood, it very much has been a product of using a lot of digital recording software like Logic and hardware/software synthesizers.  For the purposes of this post, however, I shall create a temporary dichotomy between &quot;high&quot; and &quot;low&quot; tech musics.)</em></p>
+<p>However, a few weeks ago, I stumbled upon a satisfactorily &quot;high tech&quot; form of music-making that simultaneously scratches both itches.  During a conversation about digital music making at last month&#39;s, hip-hop themed <a href="http://monthlymusichackathon.org/">monthly music hackathon</a> in NYC I was introduced to <a href="https://sonic-pi.net/">SonicPi</a> by another attendee.  Although I had recently dabbled in some (as of now non-public) experiments with hip hop production and trap beats, these failed to properly merge music and code for me.  Manually programming beats in Logic Pro felt &quot;mid tech&quot; at best, but not &quot;high tech&quot;.</p>
+<p>For years, I&#39;d known people who used code to make music with tools such as Pure Data and Max/MSP and experimented with those tools myself, but I found them to be too un-intuitive for my tastes as a musician (perhaps so &quot;high tech&quot; it was tough for me to make interesting music with them).  SonicPi, on the other hand, has a really intuitive syntax that I liked for expressing pieces of music as blocks associated with event-like ruby symbols, much closer to how my own brain is wired to think about music:</p>
+<pre><code class="lang-ruby">live_loop <span class="hljs-symbol">:melody</span> <span class="hljs-keyword">do</span>
+    play (ring <span class="hljs-symbol">:d</span>, <span class="hljs-symbol">:f</span>, <span class="hljs-symbol">:a</span>, <span class="hljs-symbol">:f</span>).tick
+    sleep <span class="hljs-number">0</span>.<span class="hljs-number">25</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>SonicPi&#39;s creator, <a href="https://www.youtube.com/watch?v=ENfyOndcvP0">Sam Aaron, seems to have the right idea</a> making something that&#39;s both a good teaching tool and a useful, &quot;real&quot; musical instrument.  This does a good job of satisfying my intuitiveness requirements for this kind of too.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ENfyOndcvP0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+<p>So now, I had a good starting point, but I didn&#39;t feel like what I was making was really listenable just yet.  Or at least, I didn&#39;t know how to make it feel more like music and not just noodling.</p>
+<p>I then started doing some research online and stumbled about another interesting figure:  Andrew Sorensen.  His video &quot;The Concert Programmer&quot; really inspired me by suggesting a system with which to select notes via state machines and markov chaining.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yY1FSsUV-8c" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<p>Although Sorensen used a Scheme-based programming language for his live coding music, I was easily able to translate some of Sorensen&#39;s ideas into SonicPi and came up with a system of helper functions and hashes to represent the random note selection process using the state-management methods <code>set</code> and <code>get</code> in SonicPi:</p>
+<pre><code class="lang-ruby">
+<span class="hljs-comment"># State management functions</span>
+define <span class="hljs-symbol">:markov</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|a, h|</span> h[a].sample; <span class="hljs-keyword">end</span> <span class="hljs-comment"># Chooses the next state at  random from hash</span>
+define <span class="hljs-symbol">:g</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|k|</span> get[k]; <span class="hljs-keyword">end</span> <span class="hljs-comment"># simplified root note in scale getter</span>
+define <span class="hljs-symbol">:s</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|k, n|</span> set k, n; <span class="hljs-keyword">end</span> <span class="hljs-comment"># simplified root note setter</span>
+define <span class="hljs-symbol">:mnote</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|key,chain|</span> s key, (markov (g key), chain); g key; <span class="hljs-keyword">end</span>
+</code></pre>
+<p>Using these helper functions, you can represent the data as follows:</p>
+<pre><code class="lang-ruby"># Scale as a ring in SonicPi
+sc = (scale 62, :minor)
+
+# Hash representation of the state machine
+H = {
+  8 =&gt; [0],
+  7 =&gt; [8],
+  6 =&gt; [2],
+  5 =&gt; [2, 2, 0, 0, 7, 7], # the repeated values for "weighted" randomization via .sample
+  4 =&gt; [1, 1, 2, 2, 6, 6],
+  3 =&gt; [5],
+  2 =&gt; [4, 4, 0],
+  1 =&gt; [3, 3, 3, 0, 0, 0],
+  0 =&gt; [<span class="hljs-string">-2</span>, 2, 4, 4, 0],
+  <span class="hljs-string">-1</span> =&gt; [<span class="hljs-string">-3</span>, <span class="hljs-string">-3</span>, 0, 0],
+  <span class="hljs-string">-2</span> =&gt; [<span class="hljs-string">-4</span>, <span class="hljs-string">-4</span>, 0],
+  <span class="hljs-string">-3</span> =&gt; [<span class="hljs-string">-5</span>],
+  <span class="hljs-string">-4</span> =&gt; [<span class="hljs-string">-1</span>, <span class="hljs-string">-1</span>, <span class="hljs-string">-2</span>, <span class="hljs-string">-2</span>, <span class="hljs-string">-6</span>, <span class="hljs-string">-6</span>],
+  <span class="hljs-string">-5</span> =&gt; [<span class="hljs-string">-2</span>, <span class="hljs-string">-2</span>, 0, 0, <span class="hljs-string">-7</span>, <span class="hljs-string">-7</span>],
+  <span class="hljs-string">-6</span> =&gt; [2],
+  <span class="hljs-string">-7</span> =&gt; [8],
+  <span class="hljs-string">-8</span> =&gt; [0],
+}
+</code></pre>
+<p>Afterwards, you can then generate a markov-ized, 16th note melody in your <code>live_loop</code> as follows:</p>
+<pre><code class="lang-ruby">M = <span class="hljs-number">4.0</span> <span class="hljs-comment"># measure length -- helps make timing more sane</span>
+
+live_loop <span class="hljs-symbol">:lead</span> <span class="hljs-keyword">do</span>
+  use_synth <span class="hljs-symbol">:piano</span>  <span class="hljs-comment"># select piano sound</span>
+  n = mnote <span class="hljs-symbol">:n</span>, N   <span class="hljs-comment"># choose next note in chain and update state</span>
+  play sc[n]        <span class="hljs-comment"># play the nth note in the scale sc</span>
+  sleep M / <span class="hljs-number">16</span>      <span class="hljs-comment"># set 1/16th note duration</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>To see this in action, here&#39;s a brief video I made using this system to generate a backing track to <a href="https://www.youtube.com/watch?v=sX9DgavXiN4">The Weeknd&#39;s &quot;High For This&quot;</a>.  All of the melodic components use this system:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/GhzMj-6Js2Y" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+
+<p><em>NOTE: I have posted all the code for that video and <a href="https://gist.github.com/omardelarosa/e962e595de9bd1b7f94afde803997831">a slightly more detailed explanation with a neat graph as a gist.</a></em></p>
+<p>For now, I am still experimenting with how to make more intricate music using this system.  For example, I would like to better randomize beat programming with this system in the near future.  However, I will probably save that for a future post.</p>
+</div>
+              </div>
+            </li>
+            <li class="posts__list__item">
+              <div class="post__container">
                 <h1 class="post__title"><a class="post__title--link" href="/posts/static-hosting-saga-2.html" id="static-hosting-saga-2">Simple HTTPS Setup S3 + CloudFlare</a></h1>
                 <div class="post__meta"><span class="post__author"><a class="post__author--link" href="/pages/bio.html">omardelarosa</a></span><span class="post__published">November 29th 2017, 11:48:01 am</span></div>
                 <div class="post__body"><p>After a bit more investigation yesterday, I realized that github pages forces my website headers to always be 30x.  This is not ideal. Furthermore, it makes it tough to use <code>https</code> protocol for my custom domain, which <a href="https://thenextweb.com/google/2015/12/17/unsecured-websites-are-about-to-get-hammered-in-googles-search-ranking/">google now favors in search results.</a></p>
