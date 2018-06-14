@@ -6,9 +6,22 @@ block title
 
 block og
   meta(name='og:url' content="https://omardelarosa.com/posts/" + htmlWebpackPlugin.options.post.meta.slug + ".html")
-  meta(name='og:title' content=htmlWebpackPlugin.options.post.meta.title.toLowerCase() + " | posts | omardelarosa.com")
+  meta(name='og:title' content=htmlWebpackPlugin.options.post.meta.title + " | Posts | omardelarosa.com")
   meta(name='og:type' content='article')
   meta(name='og:description' content=htmlWebpackPlugin.options.post.og.description)
+  meta(name='article:published_time' content=htmlWebpackPlugin.options.post.og.published_time)
+  meta(name='article:modified_time' content=htmlWebpackPlugin.options.post.og.modified_time)
+  // Schema.org
+  meta(itemprop='name' content=htmlWebpackPlugin.options.post.meta.title + " | Posts | omardelarosa.com")
+  meta(itemprop='description' content=htmlWebpackPlugin.options.post.og.description)
+  meta(itemprop='image' content=htmlWebpackPlugin.options.post.og.image || "https://omardelarosa.com/assets/images/og-image.png")
+  // Twitter Card Data
+  meta(name='twitter:card' content='summary_large_image')
+  meta(name='twitter:site' content='@omardelarosa')
+  meta(name='twitter:title' content=htmlWebpackPlugin.options.post.meta.title)
+  meta(name='twitter:description' content=htmlWebpackPlugin.options.post.og.description)
+  meta(name='twitter:creator' content='@omardelarosa')
+  meta(name='twitter:image:src' content=htmlWebpackPlugin.options.post.og.image || "https://omardelarosa.com/assets/images/og-image.png")
 
 block content
   if htmlWebpackPlugin.options.post

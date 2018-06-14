@@ -17,6 +17,9 @@ const DEFAULT_BODY = 'Begin writing here..';
 const DEFAULT_OG_DESCRIPTION = 'an article about life, technology and/or music by omar delarosa';
 const uuid = () => Date.now().toString('16');
 
+// The global "modified at" time.
+const BUILD_TIME = (new Date());
+
 class Posts {
   constructor(opts = {}) {
     this.init();
@@ -162,7 +165,10 @@ class Posts {
     // TODO: make this dynamic
     post.meta.author_url = DEFAULT_AUTHOR_URL;
     post.og = {
-      description: post.meta.ogDescription || DEFAULT_OG_DESCRIPTION
+      description: post.meta.ogDescription || DEFAULT_OG_DESCRIPTION,
+      published_time: timeUtils.toISO8601(post.meta.published_at),
+      created_time: timeUtils.toISO8601(post.meta.created_at),
+      modified_time: BUILD_TIME.toISOString(),
     };
     return post;
   }
