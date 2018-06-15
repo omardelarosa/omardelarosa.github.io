@@ -21,6 +21,6 @@ npm run dev
 ## Creating a new post
 
 ```
-node ./create-post.js [--title={title of post}]"
+node ./create-post.js [--title={title_of_post}]"
 
 ```
