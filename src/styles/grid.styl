@@ -1,0 +1,92 @@
+// Variables
+$GRID_WIDTH = 1200px
+$GUTTER_WIDTH = 20px
+$MAX_COLS = 12
+
+// For now only two breakpoints are fine
+$BREAKPOINTS = {
+  xs: 0,
+  s: 400,
+  m: 600,
+  l: 800,
+  xl: 1080
+}
+
+// Mixins
+
+// Generates a clearfix for the rows
+clearfixer()
+  &:after
+    display table
+    clear both
+    content ''
+
+// Applies the column properties
+columnProperties(n,gutterWidth)
+  w = unit(gutterWidth * n, px)
+  width "calc(calc(100% - %s) / %s)" % (w n)
+  margin-right (gutterWidth / 2)
+  margin-left (gutterWidth / 2)
+  float left
+
+// Global Rules
+html
+  box-sizing border-box
+
+*,
+*:before,
+*:after
+  box-sizing inherit
+
+// Utility classes
+.k-center
+  text-align center
+
+.k-container
+  width 100%
+  height 100%
+  display block
+  max-width $GRID_WIDTH
+
+// Grid stuff
+.k-wrap
+  max-width 1200px
+  margin-left auto
+  margin-right auto
+  clearfixer()
+
+.k-row
+  clearfixer()
+
+.k-col
+  // Make standard column defs
+  for n in (1..$MAX_COLS)
+    &.k-c-{n}
+      columnProperties(n, $GUTTER_WIDTH)
+  // Make breakpoint specific column defs
+  for bk, val in $BREAKPOINTS
+    for n in (1..$MAX_COLS)
+      @media (min-width: unit(val, px))
+        &.k-c-{n}-{bk}
+          columnProperties(n, $GUTTER_WIDTH)
+
+// Utility boxes
+
+// Inset containers
+$MAX_INSET = 4
+for n in (0..$MAX_INSET)
+  .k-inset-{n}
+    if n > 0
+      padding (($GUTTER_WIDTH / $MAX_INSET) * n)
+    else
+      padding 0
+
+// Make breakpoint specific insets
+for bk, val in $BREAKPOINTS
+  for n in (0..$MAX_INSET)
+    @media (min-width: unit(val, px))
+      .k-inset-{n}-{bk}
+        if n > 0
+          padding (($GUTTER_WIDTH / $MAX_INSET) * n)
+        else
+          padding 0

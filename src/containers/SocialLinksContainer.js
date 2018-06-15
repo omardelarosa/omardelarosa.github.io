@@ -9,7 +9,7 @@ class SocialLinksContainer extends Component {
         return (
           <li
             key={ `social-links__list--item_${idx}` }
-            className='social-links__list--item'>
+            className='social-links__list--item k-col k-c-4'>
             <a
               alt={i.text}
               href={i.href}
@@ -25,7 +25,7 @@ class SocialLinksContainer extends Component {
   render() {
     const socialLinksItems = store.get('homepage.links', []);
     return (
-      <ul className='social-links__list'>
+      <ul className='social-links__list k-wrap'>
         { this.makeSocialLinks(socialLinksItems) }
       </ul>
     );

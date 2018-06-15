@@ -27,7 +27,7 @@ block content
   if htmlWebpackPlugin.options.post
     div.breadcrumbs-container
       +breadcrumbs({ text: 'Posts', href: '/posts' }, { text: htmlWebpackPlugin.options.post.meta.slug })
-    h1.section-heading
+    h1.section-heading.k-inset-2-xs.k-inset-4-m
       .section-heading__title= htmlWebpackPlugin.options.post.meta.title
       .section-heading__subtitle.post__meta
         +postmeta(htmlWebpackPlugin.options.post)

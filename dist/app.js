@@ -26308,8 +26308,7 @@
 	          'li',
 	          {
 	            key: 'nav-item-' + index,
-	            className: 'links__nav-item'
-	          },
+	            className: 'links__nav-item k-col k-c-' + items.length + '-l k-c-' + (items.length - 1) + '-xs' },
 	          _react2.default.createElement(
 	            'a',
 	            {
@@ -26335,10 +26334,10 @@
 	      var items = this.props.items;
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'links__container' },
+	        { className: 'links__container k-wrap' },
 	        _react2.default.createElement(
 	          'ul',
-	          { className: 'links' },
+	          { className: 'links k-wrap' },
 	          this.makeLinkElements()
 	        )
 	      );
@@ -26705,7 +26704,7 @@
 	          'li',
 	          {
 	            key: 'social-links__list--item_' + idx,
-	            className: 'social-links__list--item' },
+	            className: 'social-links__list--item k-col k-c-4' },
 	          _react2.default.createElement(
 	            'a',
 	            {
@@ -26724,7 +26723,7 @@
 	      var socialLinksItems = _store2.default.get('homepage.links', []);
 	      return _react2.default.createElement(
 	        'ul',
-	        { className: 'social-links__list' },
+	        { className: 'social-links__list k-wrap' },
 	        this.makeSocialLinks(socialLinksItems)
 	      );
 	    }

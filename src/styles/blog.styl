@@ -17,7 +17,7 @@ code
 
 .post
   &__container
-    standard-margin()
+    margin 10px
     border $container-border
     padding $base-padding
     text-align left
@@ -35,6 +35,7 @@ code
     font-family $base-font-stack
     letter-spacing $base-letter-spacing
     line-height 1.25
+    color $base-font-color
     a
       post-anchor()
   &__published
@@ -51,6 +52,11 @@ code
     letter-spacing $base-letter-spacing
     span
       margin-right $base-padding
+  &__body
+    iframe
+      max-width 90vw // constrains embeds
+    pre
+      overflow-x scroll // allows code to scroll
 
 .posts
   &__list

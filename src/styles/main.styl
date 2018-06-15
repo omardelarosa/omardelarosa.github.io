@@ -1,12 +1,13 @@
 @import '~normalize.css'
+@import 'grid';
 @import '_variables';
 
 body
   background-color $base-font-color-inverse
-  
+
 pre
   syntax-block-style()
-  
+
 code
   syntax-text-style()
 
@@ -24,33 +25,13 @@ code
   opacity 0.3
   filter blur(2px)
 
-#content-container
-  color $base-font-color
-  overflow-y scroll
-  -webkit-overflow-scrolling touch
-  overflow-x hidden
-  height 100vh - $header-container-height
-  +above(0)
-    padding 0
-    margin 0 0 0 0
-  +above('m')
-    width 70%
-    margin 0 auto 0 auto
-
 .section-heading
   standard-section-heading-text()
-  border $container-border
-  padding $base-padding
   background-color $base-font-color-inverse
-  padding-left $base-padding
-  +above(0)
-    margin $base-padding
-  +above('m')
-    margin $base-padding auto 0 auto
-    
+  margin 10px
+  border $container-border
+
 .breadcrumbs-container
-  padding 0
-  margin 0 auto 0 auto
   font-family $heading-font-stack
   text-transform lowercase
   +above(0)
@@ -62,9 +43,6 @@ code
 
 .breadcrumbs
   margin 0
-  padding $base-padding
-  overflow-x hidden
-  display flex
   +above(0)
     font-size $base-font-size * 1.25
   +above('m')
@@ -76,53 +54,37 @@ code
   &__item
     list-style-type none
     display inline
-    &:first-child
-      padding-left 0
-    &:nth-child(2)
-      padding-left $base-padding
-    padding 0
-    margin 0
+    color $base-font-color
     &--link
       anchor-tag-style()
     &--link
     &--no-link
       &:last-child
-        text-overflow clip ellipsis
-        text-overflow '…/'
-        display inline
+        text-overflow ellipsis
       &:after
         content '/'
 
+// TODO: consolidate this component and post
 .page-content
-  standard-margin()
-  background-color $black
-  border $container-border
-  font-family $base-font-stack
   padding $base-padding
+  margin $base-padding
+  border $container-border
+  background-color $black
+  font-family $base-font-stack
+  color $base-font-color
+  a
+    post-anchor()
 
 .home-page
   &__container
-    width 100%
-    height 100%
     overflow-y hidden
     .social-links
-      &__container
-        +above(0)
-          margin 0
-        +above('s')
-          margin 0 100px 0 100px
-        +above('xl')
-          margin 0
       &__list
         list-style-type none
-        display flex
-        padding-left 0
-        flex-wrap wrap
+        padding-left 0 // overrides
         &--item
-          padding $base-padding
           font-family $heading-font-stack
           text-align center
-          flex 4 4
           .icon-svg
             svg
               fill $base-font-color
@@ -194,34 +156,21 @@ code
 
 .links__container
   font-family $heading-font-stack
+  padding-top $base-padding
   margin 0 auto
   text-transform lowercase
-  padding-top $base-padding
   text-align left
   color $base-font-color
-  +above(0)
-    width 100%
-  +above('m')
-    width 70%
 
   .links
+    padding-left 0 // overrides browser defaults
     font-size $subheading-font-size
     list-style-type none
-    display flex
-    padding 0 // overrides webkit padding
-
     &__nav-item
-      padding $base-padding
       text-align center
       &:first-child
-        padding-left 0
-        text-align left
         +below('m')
           display none
-      &:nth-child(2)
-        +below('m')
-          padding-left 0
-      flex 4 4
       &--anchor
         anchor-tag-style()
       &--anchor--text
@@ -245,5 +194,3 @@ code
 .safari
   // Filters are not properly handled by safari
   filter none
-
-

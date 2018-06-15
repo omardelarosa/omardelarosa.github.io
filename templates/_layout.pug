@@ -17,10 +17,10 @@ html
     meta(name="viewport" content="width=device-width, initial-scale=1")
     link(href="https://fonts.googleapis.com/css?family=Inconsolata:700|Press+Start+2P|Roboto:400,400i,700" rel="stylesheet")
   body(role='document')
-    #header-container
+    #header-container.k-wrap.k-container
     #main-container
       #background-container
-      #content-container
+      #content-container.k-wrap.k-container
         block content
     #footer !{ htmlWebpackPlugin.options.footer }
     +addscripts()

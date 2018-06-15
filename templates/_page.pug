@@ -12,5 +12,5 @@ block og
 block content
   div.breadcrumbs-container
     +breadcrumbs({ text: htmlWebpackPlugin.options.md.meta.slug })
-  h1.section-heading= htmlWebpackPlugin.options.md.meta.title
+  h1.section-heading.k-inset-2= htmlWebpackPlugin.options.md.meta.title
   div.page-content !{htmlWebpackPlugin.options.md.html}

@@ -13,8 +13,7 @@ class Links extends Component {
     return items.map((link, index) => (
       <li
         key={ `nav-item-${index}` }
-        className={ 'links__nav-item' }
-        >
+        className={ `links__nav-item k-col k-c-${items.length}-l k-c-${items.length - 1}-xs` }>
       <a
         className='links__nav-item--anchor'
         href={link.href}
@@ -32,8 +31,8 @@ class Links extends Component {
   render() {
     const items = this.props.items;
     return (
-      <div className='links__container'>
-        <ul className='links'>
+      <div className='links__container k-wrap'>
+        <ul className='links k-wrap'>
           { this.makeLinkElements() }
         </ul>
       </div>
