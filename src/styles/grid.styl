@@ -48,14 +48,17 @@ html
   display block
   max-width $GRID_WIDTH
 
-// Grid stuff
-.k-wrap
-  max-width 1200px
+.k-centered-container
+  display block
   margin-left auto
   margin-right auto
-  clearfixer()
 
-.k-row
+// Grid stuff
+.k-row,
+.k-wrap
+  max-width $GRID_WIDTH
+  margin-left auto
+  margin-right auto
   clearfixer()
 
 .k-col

@@ -476,17 +476,19 @@ html {
   display: block;
   max-width: 1200px;
 }
+.k-centered-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.k-row,
 .k-wrap {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
 }
+.k-row:after,
 .k-wrap:after {
-  display: table;
-  clear: both;
-  content: '';
-}
-.k-row:after {
   display: table;
   clear: both;
   content: '';
