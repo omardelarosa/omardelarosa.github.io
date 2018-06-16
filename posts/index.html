@@ -32,6 +32,153 @@
           <ul class="posts__list">
             <li class="posts__list__item">
               <div class="post__container">
+                <h1 class="post__title"><a class="post__title--link" href="/posts/micro-responsive-grid-system-in-stylus.html" id="micro-responsive-grid-system-in-stylus">How To Build A Tiny Grid System with Stylus</a></h1>
+                <div class="post__meta"><span class="post__author"><a class="post__author--link" href="/pages/bio.html">omardelarosa</a></span><span class="post__published">June 16th 2018, 11:57:17 am</span></div>
+                <div class="post__body"><h2 id="background">Background</h2>
+<p>Since <a href="https://www.omardelarosa.com/posts/new-blog.html">I moved my site/blog/etc over to this static, micro-site a while back</a>, I haven&#39;t given it much ❤️  codewise.  There are a lot of little visual issues, etc. I haven&#39;t had time to fix in my personal site that I spend all day fixing during my day job.  Part of the issue is that I didn&#39;t design the stylesheets very well for this site and they can take time to reason about and edit.  In an attempt to change that, I&#39;ve built a micro, responsive grid system here to hopefully make visual updates to this site less painful based on <a href="https://zellwk.com/blog/responsive-grid-system/">a pretty decent tutorial I found</a>.</p>
+<h3 id="how-to-build-your-grid-system">How To Build Your Grid System</h3>
+<h4 id="variables">Variables</h4>
+<p>So for starters, you need to define a few variables.  Think of these as the parameters for your grid system.  These parameters are as follows:</p>
+<pre><code class="lang-stylus">
+<span class="hljs-comment">// Variables</span>
+$GRID_WIDTH = <span class="hljs-number">1200</span>px <span class="hljs-comment">// How wide is your outer container?</span>
+$GUTTER_WIDTH = <span class="hljs-number">20</span>px <span class="hljs-comment">// How wide are your spaces between cells?</span>
+$MAX_COLS = <span class="hljs-number">12</span> <span class="hljs-comment">// How many total columns do you need?</span>
+
+<span class="hljs-comment">// Breakpoint HashMap</span>
+$BREAKPOINTS = {
+<span class="hljs-symbol">  xs:</span> <span class="hljs-number">0</span>,
+<span class="hljs-symbol">  s:</span> <span class="hljs-number">400</span>,
+<span class="hljs-symbol">  m:</span> <span class="hljs-number">600</span>,
+<span class="hljs-symbol">  l:</span> <span class="hljs-number">800</span>,
+<span class="hljs-symbol">  xl:</span> <span class="hljs-number">1080</span>
+}
+</code></pre>
+<h5 id="-grid_width-"><code>$GRID_WIDTH</code></h5>
+<p>So the first parameter above is your <code>$GRID_WIDTH</code>, which determines how wide your outer container is.  Think of this as a bound for how big your row can get from side to side.</p>
+<h5 id="-gutter_width-"><code>$GUTTER_WIDTH</code></h5>
+<p>The second parameter above is your <code>$GUTTER_WIDTH</code>.  This determines the size of the spaces between each of your cells in the grid.  Be careful adjusting this value, as it goes up, the space in your cells can be reduced.  Keeping this balanced is important.  (NOTE: I&#39;ve opted for the &quot;split&quot; system that distributes this value across both left/right.  You can read more about this in the post I linked to above&#39;s &quot;Method 3: Split gutters (Margin)&quot; section.)</p>
+<h5 id="-max_cols-"><code>$MAX_COLS</code></h5>
+<p>The third parameter is your <code>$MAX_COLS</code> or the maximum number of columns your grid will support.  This can be tricky to select, since it depends on your overall design.  However, I tend to like 12 because it has both 2 and 3 as prime factors.  This allows for more subdivision options that don&#39;t require rounding, etc.  Taken in conjunction with my <code>$GRID_WIDTH</code> value above, this neatly makes my most atomic cell 100px in size, which is a nice bit to work with.</p>
+<h5 id="-breakpoints-"><code>$BREAKPOINTS</code></h5>
+<p>The <code>$BREAKPOINTS</code> mapping helps me abstract out the breakpoints in such a way as to make them trivially configurable later and not have to hard-code numbers elsewhere in my code (only string key names).</p>
+<h4 id="mixins">Mixins</h4>
+<p>In order to keep this code DRY and easier to work with, I implemented a few helpful mixins.  This also avoids copy-pasting very similar code all over the place.  That being said, you have to be careful not to over-abstract too early and so I kept the mixins to a minimum of 2:</p>
+<h5 id="-clearfixer-"><code>clearfixer()</code></h5>
+<pre><code class="lang-stylus"><span class="hljs-function"><span class="hljs-title">clearfixer</span><span class="hljs-params">()</span></span>
+  &amp;:after
+    <span class="hljs-attribute">display</span> table
+    <span class="hljs-attribute">clear</span> both
+    <span class="hljs-attribute">content</span> <span class="hljs-string">''</span>
+</code></pre>
+<p>The <code>clearfixer()</code> mixin generates the pseudo-selector after element that vertically pushes down each cell in a row.  Since they are floating, this is required.  Perhaps in a subsequent iteration I might try to use a different type of system that avoids this, but for now it&#39;s simple and more widely supported than alternatives.</p>
+<h5 id="-columnproperties-n-gutterwidth-"><code>columnProperties(n, gutterWidth)</code></h5>
+<pre><code class="lang-stylus">columnProperties(<span class="hljs-built_in">n</span>, gutterWidth)
+  w = unit(gutterWidth * <span class="hljs-built_in">n</span>, px)
+  width <span class="hljs-string">"calc(calc(100% - %s) / %s)"</span> % (w <span class="hljs-built_in">n</span>)
+  margin-<span class="hljs-built_in">right</span> (gutterWidth / <span class="hljs-number">2</span>)
+  margin-<span class="hljs-built_in">left</span> (gutterWidth / <span class="hljs-number">2</span>)
+  float <span class="hljs-built_in">left</span>
+</code></pre>
+<p>The <code>columnProperties(n, gutterWidth)</code> mixin generates the rules for each <code>.k-c-{n}</code> and <code>.k-c-{n}-{bk}</code> class.  This allows me to define it in one place and easily scale it out to many breakpoints, etc.  In a sense, this defines the meat of each column&#39;s class and makes the necessary calculations based on my input variables.  I&#39;ve also parameterized them into this mixin to keep it somewhat flexible and usable in any context later.</p>
+<h4 id="css-rules-and-classes">CSS Rules and Classes</h4>
+<p>So for starters, a few global properties will need to be used in order to make sure our <code>box-sizing</code> is universally what we expect.  For the reasoning behind this, I recommend <a href="https://zellwk.com/blog/understanding-css-box-sizing/">reading about box-sizing elsewhere.</a>.  It&#39;s a bit out of scope here.</p>
+<pre><code class="lang-stylus"><span class="hljs-selector-tag">html</span>
+  <span class="hljs-attribute">box-sizing</span> <span class="hljs-attribute">border</span>-box
+
+  *,
+  *:before,
+  *:after
+    <span class="hljs-attribute">box-sizing</span> <span class="hljs-attribute">inherit</span>
+</code></pre>
+<p>Afterwards, a utility class can be setup to define the row container.  I recommend adding a pseudo-vendor prefix.  I used <code>k-*</code> to help me distinguish my class names from others brought it via libraries and implement a micro-name-space:</p>
+<pre><code class="lang-stylus"><span class="hljs-selector-class">.k-row</span>
+  <span class="hljs-attribute">max-width</span> <span class="hljs-variable">$GRID_WIDTH</span>
+  <span class="hljs-attribute">margin-left</span> <span class="hljs-attribute">auto</span>
+  <span class="hljs-attribute">margin-right</span> <span class="hljs-attribute">auto</span>
+  clearfixer()
+</code></pre>
+<p>Finally, you are ready to define your <code>.*-col</code> classes:</p>
+<pre><code class="lang-stylus"><span class="hljs-selector-class">.k-col</span>
+  <span class="hljs-comment">// Make standard column defs</span>
+  <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> (<span class="hljs-number">1</span>..<span class="hljs-variable">$MAX_COLS</span>)
+    &amp;.k-c-{n}
+      columnProperties(n, <span class="hljs-variable">$GUTTER_WIDTH</span>)
+  <span class="hljs-comment">// Make breakpoint specific column defs</span>
+  <span class="hljs-keyword">for</span> bk, val <span class="hljs-keyword">in</span> <span class="hljs-variable">$BREAKPOINTS</span>
+    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> (<span class="hljs-number">1</span>..<span class="hljs-variable">$MAX_COLS</span>)
+      @media (<span class="hljs-attribute">min-width</span>: unit(val, px))
+        &amp;.k-c-{n}-{bk}
+          columnProperties(n, <span class="hljs-variable">$GUTTER_WIDTH</span>)
+</code></pre>
+<p>In the end, this will generate your tiny, highly configurable grid system in ~50 lines of stylus:</p>
+<p>Here it is altogether:</p>
+<pre><code class="lang-stylus"><span class="hljs-comment">// --- Variables ---</span>
+$GRID_WIDTH = <span class="hljs-number">1200</span>px
+$GUTTER_WIDTH = <span class="hljs-number">20</span>px
+$MAX_COLS = <span class="hljs-number">12</span>
+
+<span class="hljs-comment">// For now only two breakpoints are fine</span>
+$BREAKPOINTS = {
+  xs: <span class="hljs-number">0</span>,
+  s: <span class="hljs-number">400</span>,
+  m: <span class="hljs-number">600</span>,
+  l: <span class="hljs-number">800</span>,
+  xl: <span class="hljs-number">1080</span>
+}
+
+<span class="hljs-comment">// --- Mixins ---</span>
+<span class="hljs-comment">// Generates a clearfix for the rows</span>
+clearfixer()
+  &amp;:after
+    display table
+    <span class="hljs-keyword">clear</span> both
+    content <span class="hljs-string">''</span>
+
+<span class="hljs-comment">// Applies the column properties</span>
+columnProperties(n,gutterWidth)
+  w = <span class="hljs-keyword">unit</span>(gutterWidth * n, px)
+  width <span class="hljs-string">"calc(calc(100% - %s) / %s)"</span> % (w n)
+  margin-right (gutterWidth / <span class="hljs-number">2</span>)
+  margin-left (gutterWidth / <span class="hljs-number">2</span>)
+  <span class="hljs-keyword">float</span> left
+
+<span class="hljs-comment">// --- Global Rules ---</span>
+html
+  box-sizing border-box
+
+*,
+*:before,
+*:after
+  box-sizing inherit
+
+.k-row,
+.k-wrap
+  <span class="hljs-keyword">max</span>-width $GRID_WIDTH
+  margin-left auto
+  margin-right auto
+  clearfixer()
+
+.k-col
+  <span class="hljs-comment">// Make standard column defs</span>
+  <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> (<span class="hljs-number">1.</span>.$MAX_COLS)
+    &amp;.k-c-{n}
+      columnProperties(n, $GUTTER_WIDTH)
+  <span class="hljs-comment">// Make breakpoint specific column defs</span>
+  <span class="hljs-keyword">for</span> bk, val <span class="hljs-keyword">in</span> $BREAKPOINTS
+    <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> (<span class="hljs-number">1.</span>.$MAX_COLS)
+      @media (<span class="hljs-keyword">min</span>-width: <span class="hljs-keyword">unit</span>(val, px))
+        &amp;.k-c-{n}-{bk}
+          columnProperties(n, $GUTTER_WIDTH)
+</code></pre>
+<p>For examples on how to use this, you can check out <a href="https://github.com/omardelarosa/omardelarosa.github.io/blob/master/src/styles/grid.styl">the source code for this site&#39;s grid.styl on Github</a> or this Codepen I made using this grid system:</p>
+<iframe height='265' scrolling='no' title='Simple CSS Grid' src='//codepen.io/omdel/embed/vrJwJQ/?height=265&theme-id=0&default-tab=html,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/omdel/pen/vrJwJQ/'>Simple CSS Grid</a> by omar delarosa (<a href='https://codepen.io/omdel'>@omdel</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+</div>
+              </div>
+            </li>
+            <li class="posts__list__item">
+              <div class="post__container">
                 <h1 class="post__title"><a class="post__title--link" href="/posts/moving-back-to-github-pages.html" id="moving-back-to-github-pages">Moving Back To Github Pages (or Static Hosting Saga 3)</a></h1>
                 <div class="post__meta"><span class="post__author"><a class="post__author--link" href="/pages/bio.html">omardelarosa</a></span><span class="post__published">June 13th 2018, 10:30:11 pm</span></div>
                 <div class="post__body"><p>A while back, <a href="https://www.omardelarosa.com/posts/static-hosting-saga-2.html">I made a big deal about moving this site to Cloudflare and using HTTPS</a>.  Well now that <a href="https://blog.github.com/2018-05-01-github-pages-custom-domains-https/">Github Pages supports HTTPS for custom domains</a> it&#39;s time I moved back (Ultimately, Ilove the convenience of GH Pages.)</p>
