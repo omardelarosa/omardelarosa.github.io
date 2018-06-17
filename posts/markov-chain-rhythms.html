@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Markov Chain Rhythms using SonicPi (ft. Drake)</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="description" content="Omar Delarosa's Website">
+    <meta name="author" content="omardelarosa">
+    <meta name="og:site_name" content="Omar Delarosa's Website">
+    <meta name="og:image" content="https://omardelarosa.com/assets/images/og-image.png">
+    <meta name="og:url" content="https://omardelarosa.com/posts/markov-chain-rhythms.html">
+    <meta name="og:title" content="Markov Chain Rhythms using SonicPi (ft. Drake) | Posts | omardelarosa.com">
+    <meta name="og:type" content="article">
+    <meta name="og:description" content="an article about building rhythms, chords and melodic patterns using markov chaining and then applying drake's voice on top by omar delarosa">
+    <meta name="article:published_time" content="2018-06-17T15:13:08.892Z">
+    <meta name="article:modified_time" content="2018-06-17T16:52:09.733Z">
+    <!-- Schema.org-->
+    <meta itemprop="name" content="Markov Chain Rhythms using SonicPi (ft. Drake) | Posts | omardelarosa.com">
+    <meta itemprop="description" content="an article about building rhythms, chords and melodic patterns using markov chaining and then applying drake's voice on top by omar delarosa">
+    <meta itemprop="image" content="https://omardelarosa.com/assets/images/og-image.png">
+    <!-- Twitter Card Data-->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@omardelarosa">
+    <meta name="twitter:title" content="Markov Chain Rhythms using SonicPi (ft. Drake)">
+    <meta name="twitter:description" content="an article about building rhythms, chords and melodic patterns using markov chaining and then applying drake's voice on top by omar delarosa">
+    <meta name="twitter:creator" content="@omardelarosa">
+    <meta name="twitter:image:src" content="https://omardelarosa.com/assets/images/og-image.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:700|Press+Start+2P|Roboto:400,400i,700" rel="stylesheet">
+  <link href="../dist/blog.css" rel="stylesheet"><link href="../dist/app.css" rel="stylesheet"></head>
+  <body role="document">
+    <div class="k-wrap k-container" id="header-container"></div>
+    <div id="main-container">
+      <div id="background-container"></div>
+      <div class="k-wrap k-container" id="content-container">
+        <div class="breadcrumbs-container">
+          <ul class="breadcrumbs k-inset-2">
+            <li class="breadcrumbs__item">&gt; </li>
+            <li class="breadcrumbs__item"><a class="breadcrumbs__item--link" href="/">~</a></li>
+            <li class="breadcrumbs__item"><a class="breadcrumbs__item--link" href="/posts">Posts</a>
+            </li>
+            <li class="breadcrumbs__item"><span class="breadcrumbs__item--no-link">markov-chain-rhythms</span>
+            </li>
+          </ul>
+        </div>
+        <h1 class="section-heading k-inset-2-xs k-inset-4-m">
+          <div class="section-heading__title">Markov Chain Rhythms using SonicPi (ft. Drake)</div>
+          <div class="section-heading__subtitle post__meta">
+            <div class="post__meta"><span class="post__author"><a class="post__author--link" href="/pages/bio.html">omardelarosa</a></span><span class="post__published">June 17th 2018, 11:13:08 am</span></div>
+          </div>
+        </h1>
+        <div class="post__container">
+          <div class="post__body"><p>A few weeks back <a href="https://www.omardelarosa.com/posts/markov-chain-music.html">I started dabbling in using markov chains to make hip hop music</a>.  When I wrote that last post, there was one hurdle that I failed to overcome:  generative beats.  However, I spent the past few weeks thinking about how best to represent beats in a sane way in code.</p>
+<h2 id="discovering-the-atoms">Discovering the Atoms</h2>
+<p>What are beats?  Are they the individual triggerings of samples?  Or are they groups of triggerings?  Or are they the span of time between triggering samples?  I have settled on something close to the latter:  beats can best be described as the time intervals (or &quot;durations&quot;) between triggering samples, which I shall henceforth call &quot;notes&quot;.  Okay, so what are the atomic units here?</p>
+<p>Given a simple rhythm such as this, where C is a kick drum hit and G is a snare drum note:</p>
+<p><img src="https://i.imgur.com/XV5CvfK.png" alt=""></p>
+<p>(<strong>Fig. 1</strong>)</p>
+<p>Is each quarter note the most atomic unit?  Are the pairs?  When I first started, I tried to think of each note as the most atomic unit and randomize the durations.  However, this generated some pretty a-rhythmic, unsteady sounding stuff.  For example, imagine the following SonicPi &quot;random duration generator&quot;</p>
+<pre><code class="lang-ruby"><span class="hljs-selector-tag">live_loop</span> <span class="hljs-selector-pseudo">:randomized_kicks</span> <span class="hljs-selector-tag">do</span>
+  <span class="hljs-selector-tag">sample</span> <span class="hljs-selector-pseudo">:bd_mehackit</span>
+  <span class="hljs-selector-tag">sleep</span> <span class="hljs-selector-tag">rand</span>(0<span class="hljs-selector-class">.0</span>.<span class="hljs-selector-class">.1</span><span class="hljs-selector-class">.0</span>)
+<span class="hljs-selector-tag">end</span>
+</code></pre>
+<p>This generates some extremely arhythmic, unlistenable stuff.  Clearly the individual note is <em>not</em> the atomic unit of rhythm.</p>
+<p>Taking a bit of a cue from how TidalCycles defines its DSL as little strings defining cycles of note data, I got to thinking:  what if the groupings of note/durations are the atomic unit?  The &quot;pattern&quot; or cycle is the atom and each note/duration is just an electron/proton/muon/gluon-type elementary particle?</p>
+<p>Let&#39;s consider a different way to express the rhythm using a new atomic unit:  the rhythm word.</p>
+<pre><code class="lang-ruby">
+T = <span class="hljs-number">4.0</span> <span class="hljs-comment"># To make the durations more readable and use a sort of time signature</span>
+
+<span class="hljs-comment"># Collection of pattern "atoms" or "rhythm words"</span>
+patterns = [
+    (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),   <span class="hljs-comment"># Kick / C</span>
+    (bools, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>)    <span class="hljs-comment"># Snare / G</span>
+]
+
+live_loop <span class="hljs-symbol">:kicks</span> <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:bd_mehackit</span> <span class="hljs-keyword">if</span> patterns[<span class="hljs-number">0</span>].tick
+    sleep T/<span class="hljs-number">16</span>   <span class="hljs-comment"># 16 is the total length of the pattern or its resolution</span>
+<span class="hljs-keyword">end</span>
+
+live_loop <span class="hljs-symbol">:snares</span> <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:sn_dolf</span> <span class="hljs-keyword">if</span> patterns[<span class="hljs-number">0</span>].tick
+    sleep T/<span class="hljs-number">16</span>   <span class="hljs-comment"># 16 is the total length of the pattern or its resolution</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>Now this is much more &quot;rhythmic&quot;.  It has regularity and from an aesthetic perspective passes as &quot;music&quot;.  However, it lacks variety and interestingness as a listenable piece of music.  It seems like atoms alone don&#39;t cut it.  The atoms require a chemistry and the rhythm words require a grammar.</p>
+<h2 id="discovering-chemistry">Discovering Chemistry</h2>
+<p>In &quot;interesting&quot; music, the same pattern doesn&#39;t usually repeat for several minutes and then terminate.  Sure, there are some repitions but there are also variations on the pattern.  These occur at different points selected by the &quot;composer&quot;.  What we need is a way to select different patterns and form chains of patterns emulating the decisions made by a composer at &quot;build time&quot;.</p>
+<p>One way we could do this is using pure chance:</p>
+<pre><code class="lang-ruby">T = <span class="hljs-number">4.0</span>
+
+kick_patterns = [
+  (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>), <span class="hljs-comment"># Kick Pattern 1 / C</span>
+  (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>) <span class="hljs-comment"># Kick Pattern 2 / C</span>
+].ring
+
+snare_patterns = [
+  (bools, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>), <span class="hljs-comment"># Snare Pattern 1 / G</span>
+  (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)  <span class="hljs-comment"># Snare Pattern 2 / G</span>
+].ring
+
+live_loop <span class="hljs-symbol">:kicks</span> <span class="hljs-keyword">do</span>
+  pat = kick_patterns.choose <span class="hljs-comment"># randomly select pattern</span>
+  pat.length.times <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:bd_mehackit</span> <span class="hljs-keyword">if</span> pat.tick
+    sleep T/<span class="hljs-number">16</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+live_loop <span class="hljs-symbol">:snares</span> <span class="hljs-keyword">do</span>
+  pat = snare_patterns.choose <span class="hljs-comment"># randomly select pattern</span>
+  pat.length.times <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:sn_dolf</span> <span class="hljs-keyword">if</span> pat.tick
+    sleep T/<span class="hljs-number">16</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>This actually begins to sound more &quot;composed&quot; now.  There are variations here.</p>
+<p>However, the &quot;grammar&quot; isn&#39;t very smart.  For example if Snare Pattern 2 is followed by another Snare Pattern 2 you end up with something like:</p>
+<p><img src="https://i.imgur.com/8BWeVwi.png" alt=""></p>
+<p>Notice the weird string of eight notes in the middle there.  Assuming unweighted randomization and &quot;fair coins&quot; during each <code>.choose</code> call, this weird string of eight note snares would happen once every 4 cycles on average.  We can do better.</p>
+<h2 id="better-coin-flips">Better Coin Flips</h2>
+<p>By bringing in markov chaining, we can preserve the randomness and non-determinism, but avoid too many &quot;weird sounding&quot; moments.  Let&#39;s use a different data structure here:</p>
+<pre><code class="lang-ruby">T = <span class="hljs-number">4.0</span>
+
+<span class="hljs-comment"># State machine utility functions</span>
+define <span class="hljs-symbol">:markov</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|a, h|</span> h[a].sample; <span class="hljs-keyword">end</span> <span class="hljs-comment"># Chooses the next state at  random from hash</span>
+define <span class="hljs-symbol">:g</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|k|</span> get[k]; <span class="hljs-keyword">end</span> <span class="hljs-comment"># simplified root note in scale getter</span>
+define <span class="hljs-symbol">:s</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|k, n|</span> set k, n; <span class="hljs-keyword">end</span> <span class="hljs-comment"># simplified root note setter</span>
+define <span class="hljs-symbol">:mnote</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|key,chain|</span> s key, (markov (g key), chain); g key; <span class="hljs-keyword">end</span>
+
+set <span class="hljs-symbol">:k</span>, <span class="hljs-number">0</span>
+set <span class="hljs-symbol">:s</span>, <span class="hljs-number">0</span>
+
+K = {
+  <span class="hljs-number">0</span> =&gt; [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>],
+  <span class="hljs-number">1</span> =&gt; [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>]
+}
+
+S = {
+  <span class="hljs-number">0</span> =&gt; [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>], <span class="hljs-comment"># 1/8 chance of choosing snare pattern 2</span>
+  <span class="hljs-number">1</span> =&gt; [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>] <span class="hljs-comment"># 1/16 chance of choosing snare pattern 2</span>
+}
+
+kick_patterns = [
+  (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>), <span class="hljs-comment"># Kick Pattern 1 / C</span>
+  (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>) <span class="hljs-comment"># Kick Pattern 2 / C</span>
+].ring
+
+snare_patterns = [
+  (bools, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>), <span class="hljs-comment"># Snare Pattern 1 / G</span>
+  (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)  <span class="hljs-comment"># Snare Pattern 2 / G</span>
+].ring
+
+live_loop <span class="hljs-symbol">:kicks</span> <span class="hljs-keyword">do</span>
+  pat = kick_patterns[mnote <span class="hljs-symbol">:k</span>, K] <span class="hljs-comment"># markov select pattern</span>
+  pat.length.times <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:bd_mehackit</span> <span class="hljs-keyword">if</span> pat.tick
+    sleep T/<span class="hljs-number">16</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+live_loop <span class="hljs-symbol">:snares</span> <span class="hljs-keyword">do</span>
+  pat = snare_patterns[mnote <span class="hljs-symbol">:s</span>, S] <span class="hljs-comment"># markov select pattern</span>
+  pat.length.times <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:sn_dolf</span> <span class="hljs-keyword">if</span> pat.tick
+    sleep T/<span class="hljs-number">16</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>By using markov chaining, we&#39;ve now sort of &quot;stacked the deck&quot; or, to mix metaphors even further, created a strategically unfair coin.  We&#39;ve now reduced the probability of two measures of Snare Pattern 2 following each other to just <code>1/16 * 1/16</code> or <code>1/256</code>.  This makes the weirdness of too many snare 1/8th notes happen way less often (or statistically maybe not happen at all on most songs).</p>
+<p>This creates an overall less weird-sounding rhythm.</p>
+<h2 id="but-does-it-scale-">But Does It Scale?</h2>
+<p>Now the question is: can we apply this system to harmonies?  The answer is absolutely.  Each scale often brings with it a &quot;family&quot; of chords.  7 per scale when dealing with standard western standard &quot;major&quot; scales: <code>I - ii - iii - IV - V - vi - vii*</code>.  (<a href="https://en.wikipedia.org/wiki/Roman_numeral_analysis">You can read more about chord degrees elsewhere</a>, if you are interested.)</p>
+<p>We can apply the same approach of rhythm pattern selection to chord selection:</p>
+<pre><code class="lang-ruby">
+<span class="hljs-comment">## -- Add state-machine stuff here...</span>
+
+set <span class="hljs-symbol">:k</span>, <span class="hljs-number">1</span>
+
+<span class="hljs-comment"># Scale</span>
+sc_root = <span class="hljs-symbol">:F2</span>
+sc_type = <span class="hljs-symbol">:major</span>
+sc = scale(sc_root, sc_type)
+
+<span class="hljs-comment"># Chords in scale -- chords are defined here.</span>
+chords = (<span class="hljs-number">1</span>..<span class="hljs-number">7</span>).map {<span class="hljs-params">|n|</span> chord_degree n, sc_root, sc_type }.ring
+
+<span class="hljs-comment"># Markov chain representing a I-IV-V chord progression, with a little randomness</span>
+K = {
+  <span class="hljs-number">1</span> =&gt; [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>],
+  <span class="hljs-number">4</span> =&gt; [<span class="hljs-number">5</span>],
+  <span class="hljs-number">5</span> =&gt; [<span class="hljs-number">1</span>,<span class="hljs-number">4</span>]
+}
+
+live_loop <span class="hljs-symbol">:chords</span> <span class="hljs-keyword">do</span>
+  use_synth <span class="hljs-symbol">:fm</span>
+  chr = chords[mnote <span class="hljs-symbol">:k</span>, K]
+  dur = T/<span class="hljs-number">1</span>
+  play chr[<span class="hljs-number">0</span>], <span class="hljs-symbol">release:</span> dur <span class="hljs-comment"># first note of triad</span>
+  play chr[<span class="hljs-number">1</span>], <span class="hljs-symbol">release:</span> dur <span class="hljs-comment"># second note of triad</span>
+  play chr[<span class="hljs-number">2</span>], <span class="hljs-symbol">release:</span> dur <span class="hljs-comment"># third note of triad</span>
+  play chr[<span class="hljs-number">3</span>], <span class="hljs-symbol">release:</span> dur <span class="hljs-comment"># 7th note for "flavor"</span>
+  sleep dur
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>We can even combine this with the beat above and create a rudimentary tune:</p>
+<pre><code class="lang-ruby">
+<span class="hljs-comment">## Define patterns and helper functions here...</span>
+
+live_loop <span class="hljs-symbol">:chords</span> <span class="hljs-keyword">do</span>
+  use_synth <span class="hljs-symbol">:fm</span>
+  chr = chords[mnote <span class="hljs-symbol">:k</span>, K]
+  dur = T/<span class="hljs-number">1</span>
+  play chr[<span class="hljs-number">0</span>], <span class="hljs-symbol">release:</span> dur
+  play chr[<span class="hljs-number">1</span>], <span class="hljs-symbol">release:</span> dur
+  play chr[<span class="hljs-number">2</span>], <span class="hljs-symbol">release:</span> dur
+  play chr[<span class="hljs-number">3</span>], <span class="hljs-symbol">release:</span> dur
+  sleep dur
+<span class="hljs-keyword">end</span>
+
+live_loop <span class="hljs-symbol">:kicks</span> <span class="hljs-keyword">do</span>
+  pat = kick_patterns[mnote <span class="hljs-symbol">:b</span>, B] <span class="hljs-comment"># markov select pattern</span>
+  pat.length.times <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:bd_mehackit</span> <span class="hljs-keyword">if</span> pat.tick
+    sleep T/<span class="hljs-number">16</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+live_loop <span class="hljs-symbol">:snares</span> <span class="hljs-keyword">do</span>
+  pat = snare_patterns[mnote <span class="hljs-symbol">:s</span>, S] <span class="hljs-comment"># markov select pattern</span>
+  pat.length.times <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:sn_dolf</span> <span class="hljs-keyword">if</span> pat.tick
+    sleep T/<span class="hljs-number">16</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<h2 id="adding-the-sugar">Adding the Sugar</h2>
+<p>The only thing missing here is a little bit of melody.  The melody works exactly in the same way as all the pattern selection stuff above, with only minor variation.  At first, I attempt to just let the melody be a free floating markov chain.  But like the simple randomization which can put awkward patterns together, letting the melody be a single, giant markov chain failed to capture the atomic unit of melody:  the musical phrase.</p>
+<p>So like chords and rhythm patterns, melodies need atomic units from which to select using the markov chain and building the atomic unit randomly can sound too weird/randomized and non-musical.  So let&#39;s begin with how to generate the melodies randomly but keep each randomized pattern &quot;frozen&quot; so the markov chain can return to phrases and maintain a sort of motif/theme (again, better aesthetically speaking):</p>
+<pre><code class="lang-ruby"># Melody Maker -- makes a single melody <span class="hljs-built_in">pattern</span> of length len and moves away from root <span class="hljs-built_in">in</span> range <span class="hljs-number">2</span>
+define :make_melody <span class="hljs-built_in">do</span> |<span class="hljs-type">len</span> = <span class="hljs-number">16</span>, rng = <span class="hljs-number">2</span>|
+  <span class="hljs-type">(1</span>..len).map{|<span class="hljs-type">n</span>| <span class="hljs-type">((rng</span>*<span class="hljs-number">-1</span>)..rng).to_a.sample }.<span class="hljs-built_in">ring</span>  # This uses a .sample and a range, but can also be done <span class="hljs-built_in">with</span> cosine functions.
+<span class="hljs-keyword">end</span>
+
+# Generates <span class="hljs-number">4</span> melody patterns
+melodies = (<span class="hljs-number">1.</span><span class="hljs-number">.4</span>).map{|<span class="hljs-type">n</span>| <span class="hljs-type">make_melody</span>(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>)}.<span class="hljs-built_in">ring</span>
+
+# Melodies -- markov chain <span class="hljs-keyword">for</span> switching patterns
+Y = {
+  <span class="hljs-number">0</span> =&gt; [<span class="hljs-number">1</span>],
+  <span class="hljs-number">1</span> =&gt; [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>],
+  <span class="hljs-number">2</span> =&gt; [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>],
+  <span class="hljs-number">3</span> =&gt; [<span class="hljs-number">1</span>]
+}
+</code></pre>
+<p>This melody patterning can be combined with all the bits above by modifying the <code>:chords</code> <code>live_loop</code> as follows:</p>
+<pre><code class="lang-ruby">live_loop :chords <span class="hljs-keyword">do</span>
+  use_synth :fm
+  <span class="hljs-keyword">chr</span> = chords[mnote :k, K]
+  dur = T/<span class="hljs-number">1</span>
+  play <span class="hljs-keyword">chr</span>[<span class="hljs-number">0</span>], <span class="hljs-keyword">release</span>: dur
+  play <span class="hljs-keyword">chr</span>[<span class="hljs-number">1</span>], <span class="hljs-keyword">release</span>: dur
+  play <span class="hljs-keyword">chr</span>[<span class="hljs-number">2</span>], <span class="hljs-keyword">release</span>: dur
+  play <span class="hljs-keyword">chr</span>[<span class="hljs-number">3</span>], <span class="hljs-keyword">release</span>: dur
+
+  melody = melodies[mnote :y, Y]
+  use_synth :pretty_bell
+  <span class="hljs-number">4.</span>times <span class="hljs-keyword">do</span>
+    play sc[melody.tick] + <span class="hljs-number">36</span>
+    <span class="hljs-keyword">sleep</span> T/<span class="hljs-number">4</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<h2 id="all-together-now">All Together Now</h2>
+<p>So with this system you can make better sounding randomized music than using pure randomization.  Here is the whole SonicPi piece together:</p>
+<pre><code class="lang-ruby">T = <span class="hljs-number">4.0</span>
+
+<span class="hljs-comment"># State machine utility functions</span>
+define <span class="hljs-symbol">:markov</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|a, h|</span> h[a].sample; <span class="hljs-keyword">end</span> <span class="hljs-comment"># Chooses the next state at  random from hash</span>
+define <span class="hljs-symbol">:g</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|k|</span> get[k]; <span class="hljs-keyword">end</span> <span class="hljs-comment"># simplified root note in scale getter</span>
+define <span class="hljs-symbol">:s</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|k, n|</span> set k, n; <span class="hljs-keyword">end</span> <span class="hljs-comment"># simplified root note setter</span>
+define <span class="hljs-symbol">:mnote</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|key,chain|</span> s key, (markov (g key), chain); g key; <span class="hljs-keyword">end</span>
+
+<span class="hljs-comment"># Initializes states for all state machines</span>
+set <span class="hljs-symbol">:k</span>, <span class="hljs-number">1</span>
+set <span class="hljs-symbol">:b</span>, <span class="hljs-number">0</span>
+set <span class="hljs-symbol">:s</span>, <span class="hljs-number">0</span>
+set <span class="hljs-symbol">:y</span>, <span class="hljs-number">0</span>
+
+<span class="hljs-comment"># Scale</span>
+sc_root = <span class="hljs-symbol">:F2</span>
+sc_type = <span class="hljs-symbol">:major</span>
+sc = scale(sc_root, sc_type)
+
+<span class="hljs-comment"># Chords in scale -- chords are defined here.</span>
+chords = (<span class="hljs-number">1</span>..<span class="hljs-number">7</span>).map {<span class="hljs-params">|n|</span> chord_degree n, sc_root, sc_type }.ring
+
+K = {
+  <span class="hljs-number">1</span> =&gt; [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>],
+  <span class="hljs-number">4</span> =&gt; [<span class="hljs-number">5</span>],
+  <span class="hljs-number">5</span> =&gt; [<span class="hljs-number">1</span>,<span class="hljs-number">4</span>]
+}
+
+B = {
+  <span class="hljs-number">0</span> =&gt; [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>],
+  <span class="hljs-number">1</span> =&gt; [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>]
+}
+
+S = {
+  <span class="hljs-number">0</span> =&gt; [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>], <span class="hljs-comment"># 1/8 chance of choosing snare pattern 2</span>
+  <span class="hljs-number">1</span> =&gt; [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>] <span class="hljs-comment"># 1/16 chance of choosing snare pattern 2</span>
+}
+
+kick_patterns = [
+  (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>), <span class="hljs-comment"># Kick Pattern 1 / C</span>
+  (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>) <span class="hljs-comment"># Kick Pattern 2 / C</span>
+].ring
+
+snare_patterns = [
+  (bools, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>), <span class="hljs-comment"># Snare Pattern 1 / G</span>
+  (bools, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>, <span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>)  <span class="hljs-comment"># Snare Pattern 2 / G</span>
+].ring
+
+<span class="hljs-comment"># Melody Maker -- makes a single melody pattern of length len and moves away from root in range 2</span>
+define <span class="hljs-symbol">:make_melody</span> <span class="hljs-keyword">do</span> <span class="hljs-params">|len = 16, rng = 2|</span>
+  (<span class="hljs-number">1</span>..len).map{<span class="hljs-params">|n|</span> ((rng*-<span class="hljs-number">1</span>)..rng).to_a.sample }.ring  <span class="hljs-comment"># This uses a .sample and a range, but can also be done with cosine functions.</span>
+<span class="hljs-keyword">end</span>
+
+<span class="hljs-comment"># Generates 4 melody patterns</span>
+melodies = (<span class="hljs-number">1</span>..<span class="hljs-number">4</span>).map{<span class="hljs-params">|n|</span> make_melody(<span class="hljs-number">16</span>,<span class="hljs-number">2</span>)}.ring
+
+<span class="hljs-comment"># Melodies -- markov chain for switching patterns</span>
+Y = {
+  <span class="hljs-number">0</span> =&gt; [<span class="hljs-number">1</span>],
+  <span class="hljs-number">1</span> =&gt; [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>],
+  <span class="hljs-number">2</span> =&gt; [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>],
+  <span class="hljs-number">3</span> =&gt; [<span class="hljs-number">1</span>]
+}
+
+live_loop <span class="hljs-symbol">:kicks</span> <span class="hljs-keyword">do</span>
+  pat = kick_patterns[mnote <span class="hljs-symbol">:b</span>, B] <span class="hljs-comment"># markov select pattern</span>
+  pat.length.times <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:bd_mehackit</span> <span class="hljs-keyword">if</span> pat.tick
+    sleep T/<span class="hljs-number">16</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+live_loop <span class="hljs-symbol">:snares</span> <span class="hljs-keyword">do</span>
+  pat = snare_patterns[mnote <span class="hljs-symbol">:s</span>, S] <span class="hljs-comment"># markov select pattern</span>
+  pat.length.times <span class="hljs-keyword">do</span>
+    sample <span class="hljs-symbol">:sn_dolf</span> <span class="hljs-keyword">if</span> pat.tick
+    sleep T/<span class="hljs-number">16</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+
+live_loop <span class="hljs-symbol">:chords</span> <span class="hljs-keyword">do</span>
+  use_synth <span class="hljs-symbol">:fm</span>
+  chr = chords[mnote <span class="hljs-symbol">:k</span>, K]
+  dur = T/<span class="hljs-number">1</span>
+  play chr[<span class="hljs-number">0</span>], <span class="hljs-symbol">release:</span> dur
+  play chr[<span class="hljs-number">1</span>], <span class="hljs-symbol">release:</span> dur
+  play chr[<span class="hljs-number">2</span>], <span class="hljs-symbol">release:</span> dur
+  play chr[<span class="hljs-number">3</span>], <span class="hljs-symbol">release:</span> dur
+
+  melody = melodies[mnote <span class="hljs-symbol">:y</span>, Y]
+  use_synth <span class="hljs-symbol">:pretty_bell</span>
+  <span class="hljs-number">4</span>.times <span class="hljs-keyword">do</span>
+    play sc[melody.tick] + <span class="hljs-number">36</span>
+    sleep T/<span class="hljs-number">4</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>This system scales well for samples too.  Now to figure out how to scale this out to OSC-driver browser visualizations.</p>
+<p>For now, check out a markov-chain-powered remix of &quot;Hotline Bling&quot; by Drake I auto-composed using this technique on YouTube:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/4SemYvZ58FU" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+        </div>
+      </div>
+    </div>
+    <div id="footer"></div>
+    <script src="/assets/js/ga.js"></script>
+    <script src="/assets/js/fb.js"></script>
+  <script type="text/javascript" src="../dist/blog.js"></script><script type="text/javascript" src="../dist/app.js"></script></body>
+</html>
