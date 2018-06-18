@@ -56,7 +56,7 @@ live_loop :snares do
 end
 ```
 
-Now this is much more "rhythmic".  It has regularity and from an aesthetic perspective passes as "music".  However, it lacks variety and interestingness as a listenable piece of music.  It seems like atoms alone don't cut it.  The atoms require a chemistry and the rhythm words require a grammar.
+Now this is much more "rhythmic", avoiding the issues with the pattern pairing in Fig. 1  It has regularity and from an aesthetic perspective passes as "music".  However, it lacks variety and interestingness as a listenable piece of music.  It seems like atoms alone don't cut it.  The atoms require a chemistry and the rhythm "words" require a grammar.
 
 ## Discovering Chemistry
 
@@ -100,7 +100,7 @@ However, the "grammar" isn't very smart.  For example if Snare Pattern 2 is foll
 
 ![](https://i.imgur.com/8BWeVwi.png)
 
-Notice the weird string of eight notes in the middle there.  Assuming unweighted randomization and "fair coins" during each `.choose` call, this weird string of eight note snares would happen once every 4 cycles on average.  We can do better.
+Notice the weird string of eighth notes in the middle there.  Assuming unweighted randomization and "fair coins" during each `.choose` call, this weird string of eighth note snares would happen once every 4 cycles on average.  We can do better.
 
 ## Better Coin Flips
 
@@ -162,7 +162,13 @@ This creates an overall less weird-sounding rhythm.
 
 ## But Does It Scale?
 
-Now the question is: can we apply this system to harmonies?  The answer is absolutely.  Each scale often brings with it a "family" of chords.  7 per scale when dealing with standard western standard "major" scales: `I - ii - iii - IV - V - vi - vii*`.  ([You can read more about chord degrees elsewhere](https://en.wikipedia.org/wiki/Roman_numeral_analysis), if you are interested.)
+Now the question is: can we apply this system to harmonies?  The answer is absolutely.  Each scale often brings with it a "family" of chords.  7 per scale when dealing with standard western standard "major" scales:
+
+```
+I - ii - iii - IV - V - vi - vii*
+```
+
+([You can read more about chord degrees elsewhere](https://en.wikipedia.org/wiki/Roman_numeral_analysis), if you are interested.)
 
 We can apply the same approach of rhythm pattern selection to chord selection:
 

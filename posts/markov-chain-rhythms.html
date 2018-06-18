@@ -13,7 +13,7 @@
     <meta name="og:type" content="article">
     <meta name="og:description" content="an article about building rhythms, chords and melodic patterns using markov chaining and then applying drake's voice on top by omar delarosa">
     <meta name="article:published_time" content="2018-06-17T15:13:08.892Z">
-    <meta name="article:modified_time" content="2018-06-17T16:52:09.733Z">
+    <meta name="article:modified_time" content="2018-06-18T02:25:55.083Z">
     <!-- Schema.org-->
     <meta itemprop="name" content="Markov Chain Rhythms using SonicPi (ft. Drake) | Posts | omardelarosa.com">
     <meta itemprop="description" content="an article about building rhythms, chords and melodic patterns using markov chaining and then applying drake's voice on top by omar delarosa">
@@ -84,7 +84,7 @@ live_loop <span class="hljs-symbol">:snares</span> <span class="hljs-keyword">do
     sleep T/<span class="hljs-number">16</span>   <span class="hljs-comment"># 16 is the total length of the pattern or its resolution</span>
 <span class="hljs-keyword">end</span>
 </code></pre>
-<p>Now this is much more &quot;rhythmic&quot;.  It has regularity and from an aesthetic perspective passes as &quot;music&quot;.  However, it lacks variety and interestingness as a listenable piece of music.  It seems like atoms alone don&#39;t cut it.  The atoms require a chemistry and the rhythm words require a grammar.</p>
+<p>Now this is much more &quot;rhythmic&quot;, avoiding the issues with the pattern pairing in Fig. 1  It has regularity and from an aesthetic perspective passes as &quot;music&quot;.  However, it lacks variety and interestingness as a listenable piece of music.  It seems like atoms alone don&#39;t cut it.  The atoms require a chemistry and the rhythm &quot;words&quot; require a grammar.</p>
 <h2 id="discovering-chemistry">Discovering Chemistry</h2>
 <p>In &quot;interesting&quot; music, the same pattern doesn&#39;t usually repeat for several minutes and then terminate.  Sure, there are some repitions but there are also variations on the pattern.  These occur at different points selected by the &quot;composer&quot;.  What we need is a way to select different patterns and form chains of patterns emulating the decisions made by a composer at &quot;build time&quot;.</p>
 <p>One way we could do this is using pure chance:</p>
@@ -119,7 +119,7 @@ live_loop <span class="hljs-symbol">:snares</span> <span class="hljs-keyword">do
 <p>This actually begins to sound more &quot;composed&quot; now.  There are variations here.</p>
 <p>However, the &quot;grammar&quot; isn&#39;t very smart.  For example if Snare Pattern 2 is followed by another Snare Pattern 2 you end up with something like:</p>
 <p><img src="https://i.imgur.com/8BWeVwi.png" alt=""></p>
-<p>Notice the weird string of eight notes in the middle there.  Assuming unweighted randomization and &quot;fair coins&quot; during each <code>.choose</code> call, this weird string of eight note snares would happen once every 4 cycles on average.  We can do better.</p>
+<p>Notice the weird string of eighth notes in the middle there.  Assuming unweighted randomization and &quot;fair coins&quot; during each <code>.choose</code> call, this weird string of eighth note snares would happen once every 4 cycles on average.  We can do better.</p>
 <h2 id="better-coin-flips">Better Coin Flips</h2>
 <p>By bringing in markov chaining, we can preserve the randomness and non-determinism, but avoid too many &quot;weird sounding&quot; moments.  Let&#39;s use a different data structure here:</p>
 <pre><code class="lang-ruby">T = <span class="hljs-number">4.0</span>
@@ -172,7 +172,9 @@ live_loop <span class="hljs-symbol">:snares</span> <span class="hljs-keyword">do
 <p>By using markov chaining, we&#39;ve now sort of &quot;stacked the deck&quot; or, to mix metaphors even further, created a strategically unfair coin.  We&#39;ve now reduced the probability of two measures of Snare Pattern 2 following each other to just <code>1/16 * 1/16</code> or <code>1/256</code>.  This makes the weirdness of too many snare 1/8th notes happen way less often (or statistically maybe not happen at all on most songs).</p>
 <p>This creates an overall less weird-sounding rhythm.</p>
 <h2 id="but-does-it-scale-">But Does It Scale?</h2>
-<p>Now the question is: can we apply this system to harmonies?  The answer is absolutely.  Each scale often brings with it a &quot;family&quot; of chords.  7 per scale when dealing with standard western standard &quot;major&quot; scales: <code>I - ii - iii - IV - V - vi - vii*</code>.  (<a href="https://en.wikipedia.org/wiki/Roman_numeral_analysis">You can read more about chord degrees elsewhere</a>, if you are interested.)</p>
+<p>Now the question is: can we apply this system to harmonies?  The answer is absolutely.  Each scale often brings with it a &quot;family&quot; of chords.  7 per scale when dealing with standard western standard &quot;major&quot; scales:</p>
+<pre><code><span class="hljs-keyword">I</span> - ii - iii - IV - V - vi - vii*
+</code></pre><p>(<a href="https://en.wikipedia.org/wiki/Roman_numeral_analysis">You can read more about chord degrees elsewhere</a>, if you are interested.)</p>
 <p>We can apply the same approach of rhythm pattern selection to chord selection:</p>
 <pre><code class="lang-ruby">
 <span class="hljs-comment">## -- Add state-machine stuff here...</span>
